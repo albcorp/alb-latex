@@ -1,4 +1,3 @@
-#! /bin/bash
 #
 # AlbAVM/alb-avm-profile.sh
 #
