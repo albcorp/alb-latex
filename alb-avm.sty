@@ -27,80 +27,91 @@
 % No packages required.
 
 
+
+\makeatletter
+
+
+
 % 
 % "albAvm" environment.
 % 
-% Attribute value matrix is entered via the supporting commands:
-% "\albAvmTag{tag}{xxxsub}", "\albAvmRef{tag}", "\albAvmType{type}", and
-% "\albAvmFeat{feat}{sub}".  In addition, inequations are supported by
-% including a sequence of comma separated "\albAvmIneqtn{lhs}{rhs}"  
+% An attribute value matrix is entered via the supporting commands:
+% \albAvmTag{TAG}{XXXSUB}, \albAvmRef{TAG}, \albAvmType{TYPE}, and
+% \albAvmFeat{FEAT}{SUB}.  In addition, inequations are supported by
+% including a sequence of comma separated \albAvmIneqtn{LHS}{RHS}
 % commands as the last line in the environment.
 
-\newenvironment{albAvm}[0]{%
-  $\left[
-    \begin{array}[c]{l}
-  }{%
-    \end{array}
-  \right]$
+\newenvironment{albAvm}[0]{% BEGIN PART of albAvm
+  \ensuremath{%
+    \left[%
+      \begin{array}[c]{l}%
+  }{% END PART of albAvm
+      \end{array}%
+    \right]%
+    }%
   }
 
 
 % 
-% "\albAvmTag{tag}{xxxsub}" command.
+% \albAvmTag{TAG}{XXXSUB} command.
 % 
-% Use where a substructure is required. "tag" is used to label the
+% Use where a substructure is required.  TAG is used to label the
 % substructure and is subsequently used to refer to the substructure.
-% "xxxsub" should be an explicit substructure, i.e., an "albAvmType" command
-% followed by a possibly empty list of "albAvmFeat" commands.
+% XXXSUB should be an explicit substructure, i.e., an \albAvmType
+% command followed by a possibly empty list of \albAvmFeat commands.
 
 \newcommand{\albAvmTag}[2]{%
-  \mbox{\framebox{#1}\ } #2
+  \mbox{\framebox{#1}\ } #2%
   }
 
 
 % 
-% "\albAvmRef{tag}" command.
+% \albAvmRef{TAG} command.
 % 
-% Use where a substructure is required. "tag" refers to a substructure
-% previously defined with an "albAvmTag" command.
+% Use where a substructure is required.  TAG refers to a substructure
+% previously defined with an \albAvmTag command.
 
 \newcommand{\albAvmRef}[1]{%
-  \mbox{\framebox{#1}}
+  \mbox{\framebox{#1}}%
   }
 
 
 % 
-% "\albAvmType{type}" and "\albAvmFeat{feat}{sub}" commands.
+% \albAvmType{TYPE} and \albAvmFeat{FEAT}{SUB} commands.
 % 
-% Use where an substructure or explicit substructure is required. "type" is
-% the type label for the substructure.  Each pair "{feat}{sub}" is a
+% Use where a substructure or explicit substructure is required.  TYPE
+% is the type label for the substructure.  Each pair (FEAT, SUB) is a
 % feature-value pair in the substructure.
 
 \newcommand{\albAvmType}[1]{%
-  \mbox{\textbf{#1}} \\
+  \mbox{\textbf{#1}} \\%
   }
 
 \newcommand{\albAvmFeat}[2]{%
-  \mbox{\textsc{#1}} : 
-  \left[
-    \begin{array}[c]{l}
-      #2  
-    \end{array}
-  \right] \\
+  \mbox{\textsc{#1}} :%
+  \left[%
+    \begin{array}[c]{l}%
+      #2%
+    \end{array}%
+  \right] \\%
   }
 
 
 % 
-% "\albAvmIneqtn{lhs}{rhs}" command.
+% \albAvmIneqtn{LHS}{RHS} command.
 % 
-% Use where an inequation is required.  "lhs" and "rhs" refer to substructures
-% previously defined with "albAvmTag" commands.  Sequences of "albAvmIneqtn"
-% commands should be separated by commas and may require the manual insertion
-% of line breaks with "\\".
+% Use where an inequation is required.  LHS and RHS refer to
+% substructures previously defined with \albAvmTag commands.  Sequences
+% of \albAvmIneqtn commands should be separated by commas and may
+% require the manual insertion of line breaks with "\\".
 
 \newcommand{\albAvmIneqtn}[2]{%
-  \mbox{\framebox{#1}} \not\leftrightarrow \mbox{\framebox{#2}}
+  \mbox{\framebox{#1}} \not\leftrightarrow \mbox{\framebox{#2}}%
   }
+
+
+
+\makeatother
 
 
 
