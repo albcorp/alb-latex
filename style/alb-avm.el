@@ -1,21 +1,10 @@
-;;;
+;;; 
 ;;; style/alb-avm.el
-;;;
+;;; 
 ;;;   - Customise AUCTeX to provide guided recursive construction of typed
 ;;;     feature structures in attribute-value matrix (AVM) notation.
-;;;
+;;; 
 ;;; $Id$
-;;;
-;;; $Log$
-;;; Revision 1.3  2000/02/28 14:29:12  andrew
-;;; Cosmetic rearrangement.
-;;;
-;;; Revision 1.2  1999/04/15 13:51:18  andrew
-;;; Improved comments to include hyperlinks between the mutually recursive
-;;; functions.
-;;;
-;;; Revision 1.1  1999/04/15 04:57:22  andrew
-;;; Initial revision
 ;;;
 
 
