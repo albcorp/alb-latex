@@ -8,6 +8,11 @@
 # 
 
 
-# Extend the TEXINPUTS search path to include this package.
+# Extend TEXINPUTS search path to include this package.
 
 export TEXINPUTS="${TEXINPUTS%:}:${HOME}/Config/AlbThesis:"
+
+
+# Extend TEXINPUTS to search the chapter and figure subdirectories.
+
+export TEXINPUTS=".:./Chapters:./Figures:${TEXINPUTS#.:}"
