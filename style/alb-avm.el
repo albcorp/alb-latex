@@ -7,6 +7,9 @@
 ;;; $Id$
 ;;;
 ;;; $Log$
+;;; Revision 1.3  2000/02/28 14:29:12  andrew
+;;; Cosmetic rearrangement.
+;;;
 ;;; Revision 1.2  1999/04/15 13:51:18  andrew
 ;;; Improved comments to include hyperlinks between the mutually recursive
 ;;; functions.
@@ -14,6 +17,14 @@
 ;;; Revision 1.1  1999/04/15 04:57:22  andrew
 ;;; Initial revision
 ;;;
+
+
+
+;;; *** PROVIDED FEATURE ******************************************************
+
+
+
+;;; *** REQUIRED FEATURES *****************************************************
 
 
 
@@ -31,21 +42,6 @@ construction of \"albAvm\" environments via `alb-LaTeX-env-avm'.")
   '()
   "Global history list of feature labels entered during automated
 construction of \"albAvm\" environments via `alb-LaTeX-env-avm'.")
-
-
-
-;;; *** ACTIONS ***************************************************************
-
-
-;;   + Gang AUCTeX style hook to import new environment.  Macros are not
-;;     declared explcitly, but rather handled through the
-;;     "alb-LaTeX-env-avm" function.
-
-(TeX-add-style-hook "alb-avm"
- (function
-  (lambda ()
-    (LaTeX-add-environments
-     '("albAvm" alb-LaTeX-env-avm)))))
 
 
 
@@ -206,3 +202,26 @@ AUCTeX customisation."
 	(progn (insert ", \\albAvmIneqtn{" next-lhs "}{" next-rhs "}")
 	       (alb-LaTeX-sym-avmIneqtn tags))
       (progn (newline-and-indent)))))
+
+
+
+;;; *** ACTIONS ***************************************************************
+
+
+;;   + Gang AUCTeX style hook to import new environment.  Macros are not
+;;     declared explcitly, but rather handled through the
+;;     "alb-LaTeX-env-avm" function.
+
+(TeX-add-style-hook "alb-avm"
+ (function
+  (lambda ()
+    (LaTeX-add-environments
+     '("albAvm" alb-LaTeX-env-avm)))))
+
+
+
+
+
+;;; Local Variables: 
+;;; mode: emacs-lisp
+;;; End: 
