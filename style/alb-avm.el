@@ -1,7 +1,7 @@
 ;;; 
-;;; style/alb-avm.el
+;;; AlbThesis/style/alb-avm.el
 ;;; 
-;;;     Copyright (C) 1999-2002 Andrew Lincoln Burrow
+;;;     Copyright (C) 1999-2003 Andrew Lincoln Burrow
 ;;; 
 ;;;     This library is free software; you can redistribute it and/or
 ;;;     modify it under the terms of the GNU General Public License as
