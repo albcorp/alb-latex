@@ -5,23 +5,14 @@ This covers typed feature structures, order theory, algorithms, and
 complex mathematical figures.
 
 You should checkout this package from the albcorp cvs repository into
-the "~/Local" directory.  You should then make symbolic links in the
-"~/Local/Config.d" directory.  Namely, you should
-
-    cd ~/Local
-    cvs AlbThesis checkout
-
-and then
-
-    cd ~/Local/Config.d
-    ln -s ../AlbThesis/alb-thesis-profile.sh \
-       alb-thesis-profile.sh
+the "~/" directory.  This will cause the package to automatically
+become available to LaTeX the next time you login.
 
 The advantage to this scheme is that you can keep each package up to
 date by changing into its directory and issuing the cvs update
 command.  For example, 
 
-    cd ~/Local/AlbThesis
+    cd ~/Config/AlbThesis
     cvs update
 
 

@@ -10,8 +10,4 @@
 
 # Extend the TEXINPUTS search path to include this package.
 
-if [ -z "${TEXINPUTS}" ] ; then
-    export TEXINPUTS=".:${HOME}/Local/AlbThesis:"
-else
-    export TEXINPUTS="${TEXINPUTS%:}:${HOME}/Local/AlbThesis:"
-fi
+export TEXINPUTS="${TEXINPUTS%:}:${HOME}/Config/AlbThesis:"
