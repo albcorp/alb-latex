@@ -1,26 +1,27 @@
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%
-%% avm-examples.tex
-%%
-%%   - Examples for the _alb-avm_ package.
-%%
-%% $Id$
-%%
-%% $Log$
-%% Revision 1.1  1999/04/06 15:17:36  andrew
-%% Initial revision
-%%
+%%% 
+%%% Documentation/avm-examples.tex
+%%% 
+%%%   - Examples for the _alb-avm_ package.
+%%% 
+%%% $Id$
+%%% 
 
 
 
-\documentclass[a4paper]{article}
+\documentclass[a4paper,11pt]{article}
 
 
 
-%
+% 
 % AVM notation for typed feature structures.
 
 \usepackage{alb-avm}
+
+
+% 
+% Typeset version of AUCTeX name.
+
+\newcommand{\AUCTeX}[0]{AUC\TeX{}}
 
 
 
@@ -28,8 +29,9 @@
 
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% TITLE
+%%% 
+%%% TITLE
+%%% 
 
 \title{%
   Attribute-Value Matrix Depiction of Typed Feature Structures%
@@ -43,14 +45,15 @@
   Australia%
   }
 
-\date{7 April 1999}
+\date{$Revision$, $Date$}
 
 \maketitle{}
 
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% SECTION: Introduction
+%%% 
+%%% INTRODUCTION
+%%% 
 
 \section{Introduction}
 \label{sec:introduction}
@@ -58,20 +61,21 @@
 The \texttt{alb-avm} package provides a single environment for type
 setting typed feature structures and inequated typed feature structures
 in attribute-value matrix (AVM) notation.  The package is supported by
-an emacs lisp file customising AUCTeX to automate the insertion of typed
-feature structures.
+an emacs lisp file customising \AUCTeX{} to automate the insertion of
+typed feature structures.
 
 Section~\ref{sec:using-texttt-envir} covers the use of the
 \texttt{albAvm} environment and supporting macros.  The examples also
-demonstrate a source code layout that is known to work well with AUCTeX.
-Section~\ref{sec:auct-cust} describes how the commands are quickly
-entered under AUCTeX.  This is the best way to enter the AVM macros
-since it handles tags and source indentation automatically.
+demonstrate a source code layout that is known to work well with
+\AUCTeX{}.  Section~\ref{sec:auct-cust} describes how the commands are
+quickly entered under \AUCTeX{}.  This is the best way to enter the AVM
+macros since it handles tags and source indentation automatically.
 
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% SECTION: Using the \texttt{albAvm} Environment and Macros
+%%% 
+%%% USING THE \texttt{albAvm} ENVIRONMENT AND MACROS
+%%% 
 
 \section{Using the \texttt{albAvm} Environment and Macros}
 \label{sec:using-texttt-envir}
@@ -176,7 +180,6 @@ yields
   \end{albAvm}
 \end{quote}
 
-\pagebreak{}
 
 \subsection{Feature Structures with Structure Sharing}
 \label{sec:feat-struct-with}
@@ -302,20 +305,21 @@ yields
  
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% SECTION: AUCTeX Customisations
+%%% 
+%%% AUCTEX CUSTOMISATIONS
+%%% 
 
-\section{AUCTeX Customisations}
+\section{\AUCTeX{} Customisations}
 \label{sec:auct-cust}
 
-Under AUCTeX the file \texttt{alb-avm.el} is automatically loaded
-(subject to certain AUCTeX configuration options).  This customises
-AUCTeX to automate the entry of AVM notation through a collection of
+Under \AUCTeX{} the file \texttt{alb-avm.el} is automatically loaded
+(subject to certain \AUCTeX{} configuration options).  This customises
+\AUCTeX{} to automate the entry of AVM notation through a collection of
 mutually recursive functions that interrogate the user for AVM input.
 
 Automatic entry of AVM notation is triggered when an \texttt{albAvm}
 environment is inserted by the \texttt{LaTeX-environment} command.  By
-default AUCTeX binds \texttt{LaTeX-environment} to the keys \texttt{C-c
+default \AUCTeX{} binds \texttt{LaTeX-environment} to the keys \texttt{C-c
   C-e}.  Automatic entry corresponds to a depth-first walk of the
 feature structure.  At each substructure the user is prompted for
 a description of the substructure.  The prompt contains the current
@@ -345,11 +349,31 @@ strings are prefixed by the current path.  In addition, the source code
 is incrementally entered with balanced parenthesis and indentation so
 that it offers a useful cue to the substructure being defined.
 
+As an exercise attempt to enter this feature structure:
+
+\begin{quote}
+  \begin{albAvm}
+    \albAvmType{child}
+    \albAvmFeat{FATHER}{%
+      \albAvmType{human}
+      \albAvmFeat{MOTHER}{%
+        \albAvmType{human}
+        }
+      \albAvmFeat{NAME}{%
+        \albAvmType{name}
+        }
+      }
+    \albAvmFeat{MOTHER}{%
+      \albAvmType{human}
+      }
+  \end{albAvm}
+\end{quote}
 
 
 \end{document}
 
 
+
 
 %%% Local Variables: 
 %%% mode: latex
