@@ -1,21 +1,14 @@
-%%%
+%%% 
 %%% alb-avm.sty
-%%%
+%%% 
 %%%   - Provides environments and commands to typeset typed feature
 %%%     structures and inequated typed feature structures in
 %%%     attribute-value matrix (AVM) notation.
-%%%
+%%% 
 %%%   - See: "avm-examples.tex".
-%%%
+%%% 
 %%% $Id$
-%%%
-%%% $Log$
-%%% Revision 1.2  2000/02/28 14:44:12  andrew
-%%% Cosmetic changes to do with indentation of LaTeX comments.
-%%%
-%%% Revision 1.1  1999/04/06 15:18:37  andrew
-%%% Initial revision
-%%%
+%%% 
 
 
 
@@ -24,19 +17,19 @@
 
 
 
-%
+% 
 % No options recognised.
 
 \ProcessOptions
 
 
-%
+% 
 % No packages required.
 
 
-%
+% 
 % "albAvm" environment.
-%
+% 
 % Attribute value matrix is entered via the supporting commands:
 % "\albAvmTag{tag}{xxxsub}", "\albAvmRef{tag}", "\albAvmType{type}", and
 % "\albAvmFeat{feat}{sub}".  In addition, inequations are supported by
@@ -52,9 +45,9 @@
   }
 
 
-%
+% 
 % "\albAvmTag{tag}{xxxsub}" command.
-%
+% 
 % Use where a substructure is required. "tag" is used to label the
 % substructure and is subsequently used to refer to the substructure.
 % "xxxsub" should be an explicit substructure, i.e., an "albAvmType" command
@@ -65,9 +58,9 @@
   }
 
 
-%
+% 
 % "\albAvmRef{tag}" command.
-%
+% 
 % Use where a substructure is required. "tag" refers to a substructure
 % previously defined with an "albAvmTag" command.
 
@@ -76,9 +69,9 @@
   }
 
 
-%
+% 
 % "\albAvmType{type}" and "\albAvmFeat{feat}{sub}" commands.
-%
+% 
 % Use where an substructure or explicit substructure is required. "type" is
 % the type label for the substructure.  Each pair "{feat}{sub}" is a
 % feature-value pair in the substructure.
@@ -97,9 +90,9 @@
   }
 
 
-%
+% 
 % "\albAvmIneqtn{lhs}{rhs}" command.
-%
+% 
 % Use where an inequation is required.  "lhs" and "rhs" refer to substructures
 % previously defined with "albAvmTag" commands.  Sequences of "albAvmIneqtn"
 % commands should be separated by commas and may require the manual insertion
