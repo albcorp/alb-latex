@@ -1,28 +1,32 @@
 README.AlbAVM
 
-The AlbAVM LaTeX package provides environments and commands to typeset
-typed feature structures and inequated typed feature structures in
-attribute-value matrix (AVM) notation.
+  The AlbAVM LaTeX package provides environments and commands to typeset
+  typed feature structures and inequated typed feature structures in
+  attribute-value matrix (AVM) notation.
 
-See "alb-avm-documentation.pdf" for further information.
-
-
-You should checkout this package from the albcorp cvs repository into
-the "~/Config" directory.  Namely, you should
-
-    cd
-    cvs checkout Config/AlbAVM
-
-This will cause the package to automatically become available to LaTeX
-the next time you login.
-
-The advantage to this scheme is that you can keep each package up to
-date by changing into its directory and issuing the cvs update
-command.  For example,
-
-    cd ~/Config/AlbAVM
-    cvs update
+  See 'alb-avm-documentation.pdf' for further information.
 
 
-Andrew
+Installation
+
+  You should checkout this package from the albCorp CVS repository into
+  the '~/Config' directory.  Namely, you should::
+
+      cd
+      cvs checkout Config/AlbAVM
+
+  This will cause the package to automatically become available to LaTeX
+  the next time you login.
+
+
+Updates
+
+  You can keep the package up to date by changing into its directory and
+  issuing the cvs update command.  For example::
+
+      cd ~/Config/AlbAVM
+      cvs update
+
+
+Andrew Burrow
 $Id$
