@@ -11,40 +11,22 @@
 
 
 
-\documentclass[11pt,letter,oneside]{article}
+\documentclass[11pt,a4paper,oneside]{article}
 
 
 
 %
 % albCorp documentation style.
 %
-% See: "~/Local/AlbCorpDoc/Documentation/alb-corp-doc-example.dvi".
+% See: 'alb-corp-layout-documentation.pdf'.
 
-\usepackage{alb-corp-doc}
+\usepackage{alb-corp-layout}
 
 
 %
 % The package being documented.
 
 \usepackage{alb-avm}
-
-
-%
-% Environment for full page width text.
-
-\newenvironment{fullwidth}[0]{%
-  \begin{list}{}{%
-      \setlength{\topsep}{0pt}%
-      \setlength{\leftmargin}{-\marginparwidth}%
-      \addtolength{\leftmargin}{-\marginparsep}%
-      \setlength{\listparindent}{\parindent}%
-      \setlength{\itemindent}{0pt}%
-      \setlength{\parsep}{\parskip}%
-      }
-  \item
-  }{%
-  \end{list}
-  }
 
 
 
@@ -65,7 +47,7 @@
   \albTitlePageSection{Author}
 
   Andrew Lincoln Burrow\\
-  \texttt{alburrow@telus.net}\\
+  \texttt{albcorp@internode.on.net}\\
   \albLogo{} Corp%
 
 
@@ -80,14 +62,14 @@
 
   \albTitlePageSection{Copyright}
 
-  Copyright \copyright{} 1999--2002 Andrew Lincoln Burrow.\\
-  Permission is granted to copy, distribute and/or modify this
-  document under the terms of the GNU Free Documentation License,
-  Version 1.1 or any later version published by the Free Software
-  Foundation; with no Invariant Sections, with no Front-Cover Texts,
-  and with no Back-Cover Texts.  A copy of the license is included in
-  Section~\ref{sec:alb-corp-doc:gnu-free-doc-license} entitled
-  \emph{GNU Free Documentation License}.
+  Copyright \copyright{} 1999--2003 Andrew Lincoln Burrow.\\
+  Permission is granted to copy, distribute and/or modify this document
+  under the terms of the GNU Free Documentation License, Version 1.1 or
+  any later version published by the Free Software Foundation; with no
+  Invariant Sections, with no Front-Cover Texts, and with no Back-Cover
+  Texts.  A copy of the license is included in
+  Section~\ref{sec:gnu-free-doc-license} entitled \emph{GNU Free
+    Documentation License}.
 
 
   \albTitlePageSection{Version Information}
@@ -95,7 +77,7 @@
   \verb$Revision$\\
   \verb$Date$
 
-\end{list}
+\end{albTitlePage}
 
 
 
@@ -425,13 +407,14 @@ As an exercise attempt to enter this feature structure:
 %%%
 
 \section{GNU Free Documentation License}
-\label{sec:alb-corp-doc:gnu-free-doc-license}
+\label{sec:gnu-free-doc-license}
 
-Version~1.1, March 2000\\[0.25\baselineskip]
-Copyright \copyright\ 2000  Free Software Foundation,
-Inc.\\[0.25\baselineskip]
-59 Temple Place, Suite 330, Boston, MA  02111-1307  USA\\
-Everyone is permitted to copy and distribute verbatim copies of this
+Version~1.1, March 2000\\
+ [0.25\baselineskip] Copyright \copyright\
+2000 Free Software Foundation, Inc.\\
+ [0.25\baselineskip] 59 Temple
+Place, Suite 330, Boston, MA 02111-1307 USA\\
+ Everyone is permitted to copy and distribute verbatim copies of this
 license document, but changing it is not allowed.
 
 
@@ -460,7 +443,7 @@ works whose purpose is instruction or reference.
 
 
 \subsection{Applicability and Definitions}
-\label{sec:alb-corp-doc:appl-defin}
+\label{sec:gnu-free-doc-license:appl-defin}
 
 This License applies to any manual or other work that contains a notice
 placed by the copyright holder saying it can be distributed under the
@@ -520,7 +503,7 @@ beginning of the body of the text.
 
 
 \subsection{Verbatim Copying}
-\label{sec:alb-corp-doc:verb-copy}
+\label{sec:gnu-free-doc-license:verb-copy}
 
 You may copy and distribute the Document in any medium, either
 commercially or noncommercially, provided that this License, the
@@ -531,14 +514,14 @@ technical measures to obstruct or control the reading or further copying
 of the copies you make or distribute.  However, you may accept
 compensation in exchange for copies.  If you distribute a large enough
 number of copies you must also follow the conditions in
-Section~\ref{sec:alb-corp-doc:copy-quant}.
+Section~\ref{sec:gnu-free-doc-license:copy-quant}.
 
 You may also lend copies, under the same conditions stated above, and
 you may publicly display copies.
 
 
 \subsection{Copying in Quantity}
-\label{sec:alb-corp-doc:copy-quant}
+\label{sec:gnu-free-doc-license:copy-quant}
 
 If you publish printed copies of the Document numbering more than 100,
 and the Document's license notice requires Cover Texts, you must enclose
@@ -577,15 +560,16 @@ them a chance to provide you with an updated version of the Document.
 
 
 \subsection{Modifications}
-\label{sec:alb-corp-doc:modif}
+\label{sec:gnu-free-doc-license:modif}
 
 You may copy and distribute a Modified Version of the Document under the
-conditions of Sections~\ref{sec:alb-corp-doc:verb-copy}
-and~\ref{sec:alb-corp-doc:copy-quant} above, provided that you release
-the Modified Version under precisely this License, with the Modified
-Version filling the role of the Document, thus licensing distribution
-and modification of the Modified Version to whoever possesses a copy of
-it.  In addition, you must do these things in the Modified Version:
+conditions of Sections~\ref{sec:gnu-free-doc-license:verb-copy}
+and~\ref{sec:gnu-free-doc-license:copy-quant} above, provided that you
+release the Modified Version under precisely this License, with the
+Modified Version filling the role of the Document, thus licensing
+distribution and modification of the Modified Version to whoever
+possesses a copy of it.  In addition, you must do these things in the
+Modified Version:
 
 \begin{itemize}
 \item Use in the Title Page (and on the covers, if any) a title distinct
@@ -666,14 +650,15 @@ imply endorsement of any Modified Version.
 
 
 \subsection{Combining Documents}
-\label{sec:alb-corp-doc:comb-docum}
+\label{sec:gnu-free-doc-license:comb-docum}
 
 You may combine the Document with other documents released under this
-License, under the terms defined in Section~\ref{sec:alb-corp-doc:modif}
-above for modified versions, provided that you include in the
-combination all of the Invariant Sections of all of the original
-documents, unmodified, and list them all as Invariant Sections of your
-combined work in its license notice.
+License, under the terms defined in
+Section~\ref{sec:gnu-free-doc-license:modif} above for modified
+versions, provided that you include in the combination all of the
+Invariant Sections of all of the original documents, unmodified, and
+list them all as Invariant Sections of your combined work in its license
+notice.
 
 The combined work need only contain one copy of this License, and
 multiple identical Invariant Sections may be replaced with a single
@@ -692,7 +677,7 @@ must delete all sections entitled ``Endorsements.''
 
 
 \subsection{Collections of Documents}
-\label{sec:alb-corp-doc:coll-docum}
+\label{sec:gnu-free-doc-license:coll-docum}
 
 You may make a collection consisting of the Document and other documents
 released under this License, and replace the individual copies of this
@@ -707,7 +692,7 @@ other respects regarding verbatim copying of that document.
 
 
 \subsection{Aggregation With Independent Works}
-\label{sec:alb-corp-doc:aggr-with-indep-works}
+\label{sec:gnu-free-doc-license:aggr-with-indep-works}
 
 A compilation of the Document or its derivatives with other separate and
 independent documents or works, in or on a volume of a storage or
@@ -719,30 +704,31 @@ with the Document, on account of their being thus compiled, if they are
 not themselves derivative works of the Document.
 
 If the Cover Text requirement of
-Section~\ref{sec:alb-corp-doc:copy-quant} is applicable to these copies
-of the Document, then if the Document is less than one quarter of the
-entire aggregate, the Document's Cover Texts may be placed on covers
+Section~\ref{sec:gnu-free-doc-license:copy-quant} is applicable to these
+copies of the Document, then if the Document is less than one quarter of
+the entire aggregate, the Document's Cover Texts may be placed on covers
 that surround only the Document within the aggregate.  Otherwise they
 must appear on covers around the whole aggregate.
 
 
 \subsection{Translation}
-\label{sec:alb-corp-doc:transl}
+\label{sec:gnu-free-doc-license:transl}
 
 Translation is considered a kind of modification, so you may distribute
 translations of the Document under the terms of
-Section~\ref{sec:alb-corp-doc:modif}.  Replacing Invariant Sections with
-translations requires special permission from their copyright holders,
-but you may include translations of some or all Invariant Sections in
-addition to the original versions of these Invariant Sections.  You may
-include a translation of this License provided that you also include the
-original English version of this License.  In case of a disagreement
-between the translation and the original English version of this
-License, the original English version will prevail.
+Section~\ref{sec:gnu-free-doc-license:modif}.  Replacing Invariant
+Sections with translations requires special permission from their
+copyright holders, but you may include translations of some or all
+Invariant Sections in addition to the original versions of these
+Invariant Sections.  You may include a translation of this License
+provided that you also include the original English version of this
+License.  In case of a disagreement between the translation and the
+original English version of this License, the original English version
+will prevail.
 
 
 \subsection{Termination}
-\label{sec:alb-corp-doc:term}
+\label{sec:gnu-free-doc-license:term}
 
 You may not copy, modify, sublicense, or distribute the Document except
 as expressly provided for under this License.  Any other attempt to
@@ -754,7 +740,7 @@ in full compliance.
 
 
 \subsection{Future Revisions of This License}
-\label{sec:alb-corp-doc:future-revis-this-license}
+\label{sec:gnu-free-doc-license:future-revis-this-license}
 
 The Free Software Foundation may publish new, revised versions of the
 GNU Free Documentation License from time to time.  Such new versions
@@ -802,6 +788,7 @@ their use in free software.
 
 
 \end{document}
+
 
 
 
