@@ -77,22 +77,22 @@ in attribute-value matrix (AVM) notation.  The package is supported by
 an emacs lisp file customising \AUCTeX{} to automate the insertion of
 typed feature structures.
 
-Section~\ref{sec:avm-examples:using-texttt-envir-macros} covers the use
-of the \texttt{albAvm} environment and supporting macros.  The examples
+Section~\ref{sec:avm-examples:using-texttt-envir-comm} covers the use of
+the \texttt{albAvm} environment and supporting commands.  The examples
 also demonstrate a source code layout that is known to work well with
 \AUCTeX{}.  Section~\ref{sec:avm-examples:auctex-cust} describes how the
 commands are quickly entered under \AUCTeX{}.  This is the best way to
-enter the AVM macros since it handles tags and source indentation
+enter the AVM commands since it handles tags and source indentation
 automatically.
 
 
 
 %%% 
-%%% USING THE \texttt{albAvm} ENVIRONMENT AND MACROS
+%%% USING THE \texttt{albAvm} ENVIRONMENT AND COMMANDS
 %%% 
 
-\section{Using the \texttt{albAvm} Environment and Macros}
-\label{sec:avm-examples:using-texttt-envir-macros}
+\section{Using the \texttt{albAvm} Environment and Commands}
+\label{sec:avm-examples:using-texttt-envir-comm}
 
 Each topmost feature structure is represented by an instance of the
 \texttt{albAvm} environment.  Within such an environment the
@@ -198,9 +198,9 @@ yields
 \subsection{Feature Structures with Structure Sharing}
 \label{sec:avm-examples:feat-struct-with-struct-s}
 
-The \texttt{alb-avm} macros also provide for substructure tagging.  This
-is not automated by \LaTeX{} counters: automatic tags implemented by
-extending the \LaTeX{} mechanism for labels and cross references is
+The \texttt{alb-avm} commands also provide for substructure tagging.
+This is not automated by \LaTeX{} counters: automatic tags implemented
+by extending the \LaTeX{} mechanism for labels and cross references is
 beyond the scope of this implementation.  Instead tags must be
 explicitly entered.  For a substructure to be tagged, place the tags as
 the first argument to the \texttt{albAvmTag} command and place the
