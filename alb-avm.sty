@@ -1,0 +1,115 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%% alb-avm.sty
+%%
+%%   - Provides environments and commands to typeset typed feature
+%%     structures and inequated typed feature structures in
+%%     attribute-value matrix (AVM) notation.
+%%
+%%   - See: "avm-examples.tex".
+%%
+%% $Id$
+%%
+%% $Log$
+%% Revision 1.1  1999/04/06 15:18:37  andrew
+%% Initial revision
+%%
+
+
+
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{alb-avm}
+
+
+
+%
+% No options recognised.
+
+\ProcessOptions
+
+
+%
+% No packages required.
+
+
+%
+% "albAvm" environment.
+%
+% Attribute value matrix is entered via the supporting commands:
+% "\albAvmTag{tag}{xxxsub}", "\albAvmRef{tag}", "\albAvmType{type}", and
+% "\albAvmFeat{feat}{sub}".  In addition, inequations are supported by
+% including a sequence of comma separated "\albAvmIneqtn{lhs}{rhs}"  
+% commands as the last line in the environment.
+
+\newenvironment{albAvm}[0]{%
+  $\left[
+    \begin{array}[c]{l}
+  }{%
+    \end{array}
+  \right]$
+  }
+
+
+%
+% "\albAvmTag{tag}{xxxsub}" command.
+%
+% Use where a substructure is required. "tag" is used to label the
+% substructure and is subsequently used to refer to the substructure.
+% "xxxsub" should be an explicit substructure, i.e., an "albAvmType" command
+% followed by a possibly empty list of "albAvmFeat" commands.
+
+\newcommand{\albAvmTag}[2]{%
+  \mbox{\framebox{#1}\ } #2
+  }
+
+
+%
+% "\albAvmRef{tag}" command.
+%
+% Use where a substructure is required. "tag" refers to a substructure
+% previously defined with an "albAvmTag" command.
+
+\newcommand{\albAvmRef}[1]{%
+  \mbox{\framebox{#1}}
+  }
+
+
+%
+% "\albAvmType{type}" and "\albAvmFeat{feat}{sub}" commands.
+%
+% Use where an substructure or explicit substructure is required. "type" is
+% the type label for the substructure.  Each pair "{feat}{sub}" is a
+% feature-value pair in the substructure.
+
+\newcommand{\albAvmType}[1]{%
+  \mbox{\textbf{#1}} \\
+  }
+
+\newcommand{\albAvmFeat}[2]{%
+  \mbox{\textsc{#1}} : 
+  \left[
+    \begin{array}[c]{l}
+      #2  
+    \end{array}
+  \right] \\
+  }
+
+
+%
+% "\albAvmIneqtn{lhs}{rhs}" command.
+%
+% Use where an inequation is required.  "lhs" and "rhs" refer to substructures
+% previously defined with "albAvmTag" commands.  Sequences of "albAvmIneqtn"
+% commands should be separated by commas and may require the manual insertion
+% of line breaks with "\\".
+
+\newcommand{\albAvmIneqtn}[2]{%
+  \mbox{\framebox{#1}} \not\leftrightarrow \mbox{\framebox{#2}}
+  }
+
+
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: t
+%%% End: 

@@ -1,0 +1,357 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%% avm-examples.tex
+%%
+%%   - Examples for the _alb-avm_ package.
+%%
+%% $Id$
+%%
+%% $Log$
+%% Revision 1.1  1999/04/06 15:17:36  andrew
+%% Initial revision
+%%
+
+
+
+\documentclass[a4paper]{article}
+
+
+
+%
+% AVM notation for typed feature structures.
+
+\usepackage{alb-avm}
+
+
+
+\begin{document}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% TITLE
+
+\title{%
+  Attribute-Value Matrix Depiction of Typed Feature Structures%
+  }
+
+\author{%
+  Andrew Burrow, \texttt{alburrow@cs.adelaide.edu.au}\\
+  Department of Computer Science,\\
+  University of Adelaide,\\
+  Adelaide SA 5005\\
+  Australia%
+  }
+
+\date{7 April 1999}
+
+\maketitle{}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% SECTION: Introduction
+
+\section{Introduction}
+\label{sec:introduction}
+
+The \texttt{alb-avm} package provides a single environment for type
+setting typed feature structures and inequated typed feature structures
+in attribute-value matrix (AVM) notation.  The package is supported by
+an emacs lisp file customising AUCTeX to automate the insertion of typed
+feature structures.
+
+Section~\ref{sec:using-texttt-envir} covers the use of the
+\texttt{albAvm} environment and supporting macros.  The examples also
+demonstrate a source code layout that is known to work well with AUCTeX.
+Section~\ref{sec:auct-cust} describes how the commands are quickly
+entered under AUCTeX.  This is the best way to enter the AVM macros
+since it handles tags and source indentation automatically.
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% SECTION: Using the \texttt{albAvm} Environment and Macros
+
+\section{Using the \texttt{albAvm} Environment and Macros}
+\label{sec:using-texttt-envir}
+
+Each topmost feature structure is represented by an instance of the
+\texttt{albAvm} environment.  Within such an environment the
+\texttt{albAvmType} command generates type labels, and the
+\texttt{albAvmFeat} command generates feature-value pairs.  You must not
+nest \texttt{albAvm} environments as nesting and tag numbering is
+automated within the \texttt{albAvm} environment.  Instead, the
+\texttt{albAvmFeat} and \texttt{albAvmTag} commands each take a second
+arguments which is rendered as a nested substructure.
+
+
+\subsection{Simple Feature Structures}
+\label{sec:simple-feat-struct}
+
+The most compact typed feature structure is a simple type.  It is the
+only form expressed without nesting.  This simple form is just an
+\texttt{albAvmType} command contained within an \texttt{albAvm}
+environment, viz:
+\begin{quote}
+\begin{verbatim}
+\begin{albAvm}
+  \albAvmType{universal}
+\end{albAvm}
+\end{verbatim}
+\end{quote}
+which yields
+\begin{quote}
+  \begin{albAvm}
+    \albAvmType{universal}
+  \end{albAvm}
+\end{quote}
+
+Feature-values requires nesting.  This is achieved by placing the
+contents of the feature-value as the second argument to the
+\texttt{albAvmFeat} command.  Note that an \texttt{albAvm}-like
+environment is automatically wrapped around the second argument to
+\texttt{albAvmFeat}.  For example,
+\begin{quote}
+\begin{verbatim}
+\begin{albAvm}
+  \albAvmType{child}
+  \albAvmFeat{FATHER}{%
+    \albAvmType{human}
+    }
+  \albAvmFeat{MOTHER}{%
+    \albAvmType{human}
+    }
+\end{albAvm}
+\end{verbatim}
+\end{quote}
+yields
+\begin{quote}  
+  \begin{albAvm}
+    \albAvmType{child}
+    \albAvmFeat{FATHER}{%
+      \albAvmType{human}
+      }
+    \albAvmFeat{MOTHER}{%
+      \albAvmType{human}
+      }
+  \end{albAvm}
+\end{quote}
+Also, deeper nesting proceeds in the obvious way, so that 
+\begin{quote}
+\begin{verbatim}
+\begin{albAvm}
+  \albAvmType{child}
+  \albAvmFeat{FATHER}{%
+    \albAvmType{human}
+    \albAvmFeat{MOTHER}{%
+      \albAvmType{human}
+      }
+    \albAvmFeat{NAME}{%
+      \albAvmType{name}
+      }
+    }
+  \albAvmFeat{MOTHER}{%
+    \albAvmType{human}
+    }
+\end{albAvm}
+\end{verbatim}
+\end{quote}
+yields
+\begin{quote}
+  \begin{albAvm}
+    \albAvmType{child}
+    \albAvmFeat{FATHER}{%
+      \albAvmType{human}
+      \albAvmFeat{MOTHER}{%
+        \albAvmType{human}
+        }
+      \albAvmFeat{NAME}{%
+        \albAvmType{name}
+        }
+      }
+    \albAvmFeat{MOTHER}{%
+      \albAvmType{human}
+      }
+  \end{albAvm}
+\end{quote}
+
+\pagebreak{}
+
+\subsection{Feature Structures with Structure Sharing}
+\label{sec:feat-struct-with}
+
+The \texttt{alb-avm} macros also provide for substructure tagging.  This
+is not automated by \LaTeX{} counters: automatic tags implemented by
+extending the \LaTeX{} mechanism for labels and cross references is
+beyond the scope of this implementation.  Instead tags must be
+explicitly entered.  For a substructure to be tagged, place the tags as
+the first argument to the \texttt{albAvmTag} command and place the
+contents of the substructure as the second argument.  The
+\texttt{albAvmTag} command occurs in place of the substructure.
+Likewise, to refer to a substructure place the substructure's tag as the
+only argument to the \texttt{albAvmRef} command.  This command also
+occurs in place of the substructure.  For example, the liar sentence is
+entered as
+\begin{quote}
+\begin{verbatim}
+\begin{albAvm}
+  \albAvmTag{1}{%
+    \albAvmType{false}
+    \albAvmFeat{ARG}{%
+      \albAvmRef{1}
+      }
+    }
+\end{albAvm}
+\end{verbatim}
+\end{quote}
+which yields
+\begin{quote}
+  \begin{albAvm}
+    \albAvmTag{1}{%
+      \albAvmType{false}
+      \albAvmFeat{ARG}{%
+        \albAvmRef{1}
+        }
+      }
+  \end{albAvm}
+\end{quote}
+
+
+\subsection{Inequated Feature Structures}
+\label{sec:ineq-feat-struct}
+
+Finally, provision is included for inequated feature structures.
+Inequated feature structures are also entered using the \texttt{albAvm}
+environment.  The initial part of the environment's body is entered like
+a feature structure without inequations, excepting that all
+substructures referred to in the inequations must be tagged.  The
+remainder of the environment contains a comma separated list of
+inequations.  Each inequation is entered with the \texttt{albAvmIneqtn}
+command.  This command takes two arguments, which are simply the tags of
+the substructures to be inequated.  For example,
+\begin{quote}
+\begin{verbatim}
+\begin{albAvm}
+  \albAvmType{house}
+  \albAvmFeat{BEDROOM}{%
+    \albAvmTag{1}{%
+      \albAvmType{room}
+      }
+    }
+  \albAvmFeat{KITCHEN}{%
+    \albAvmTag{2}{%
+      \albAvmType{room}
+      }
+    }
+  \albAvmFeat{DININGROOM}{%
+    \albAvmTag{3}{%
+      \albAvmType{room}
+      }
+    }
+  \albAvmFeat{LIVINGROOM}{%
+    \albAvmTag{4}{%
+      \albAvmType{room}
+      }
+    }
+  \albAvmFeat{BATHROOM}{%
+    \albAvmTag{5}{%
+      \albAvmType{room}
+      }
+    }
+  \albAvmIneqtn{1}{2}, \albAvmIneqtn{1}{5},
+  \albAvmIneqtn{2}{5}, \albAvmIneqtn{3}{5},
+  \albAvmIneqtn{4}{5}
+\end{albAvmIneq}
+\end{verbatim}
+\end{quote}
+yields
+\begin{quote}
+  \begin{albAvm}
+    \albAvmType{house}
+    \albAvmFeat{BEDROOM}{%
+      \albAvmTag{1}{%
+        \albAvmType{room}
+        }
+      }
+    \albAvmFeat{KITCHEN}{%
+      \albAvmTag{2}{%
+        \albAvmType{room}
+        }
+      }
+    \albAvmFeat{DININGROOM}{%
+      \albAvmTag{3}{%
+        \albAvmType{room}
+        }
+      }
+    \albAvmFeat{LIVINGROOM}{%
+      \albAvmTag{4}{%
+        \albAvmType{room}
+        }
+      }
+    \albAvmFeat{BATHROOM}{%
+      \albAvmTag{5}{%
+        \albAvmType{room}
+        }
+      }
+    \albAvmIneqtn{1}{2}, \albAvmIneqtn{1}{5},
+    \albAvmIneqtn{2}{5}, \albAvmIneqtn{3}{5},
+    \albAvmIneqtn{4}{5} 
+  \end{albAvm}
+\end{quote}
+ 
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% SECTION: AUCTeX Customisations
+
+\section{AUCTeX Customisations}
+\label{sec:auct-cust}
+
+Under AUCTeX the file \texttt{alb-avm.el} is automatically loaded
+(subject to certain AUCTeX configuration options).  This customises
+AUCTeX to automate the entry of AVM notation through a collection of
+mutually recursive functions that interrogate the user for AVM input.
+
+Automatic entry of AVM notation is triggered when an \texttt{albAvm}
+environment is inserted by the \texttt{LaTeX-environment} command.  By
+default AUCTeX binds \texttt{LaTeX-environment} to the keys \texttt{C-c
+  C-e}.  Automatic entry corresponds to a depth-first walk of the
+feature structure.  At each substructure the user is prompted for
+a description of the substructure.  The prompt contains the current
+feature path to the substructure.
+
+The first question about a substructure concerns its tag.  The history
+list contains the tags entered for the feature structure.  If no value
+is entered, then the tag is omitted; if the tag matches an existing tag,
+then the substructure is represented by a simple reference to the
+existing substructure; otherwise, the substructure is tagged with the
+value.
+
+Given a substructure has been allocated a new tag or no tag at all, it
+must be explicitly constructed.  In this case the second question about
+a substructure concerns its type.  The history list contains the types
+entered during the current editing session.  If no value is entered,
+then the substructure defaults to \texttt{universal} with the no
+feature-values; otherwise, the type is recorded and feature-values
+collected.  Feature-values are collected while non-empty strings are
+returned for the features.  The history list contains the features
+entered during the current editing session.  Recursion occurs in the
+entry of the value part of the feature-values because each feature-value
+is itself a substructure.
+
+To prevent confusion while recursing into the substructures the prompt
+strings are prefixed by the current path.  In addition, the source code
+is incrementally entered with balanced parenthesis and indentation so
+that it offers a useful cue to the substructure being defined.
+
+
+
+\end{document}
+
+
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: t
+%%% End: 
