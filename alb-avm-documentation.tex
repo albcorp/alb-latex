@@ -45,9 +45,22 @@
   Australia%
   }
 
-\date{$Revision$, $Date$}
+\date{}
 
 \maketitle{}
+
+
+
+%%% 
+%%% VERSION INFORMATION
+%%% 
+
+
+\section{Version Information}
+\label{sec:avm-examples:vers-inform}
+
+\verb$Revision$\\
+\verb$Date$
 
 
 
@@ -56,7 +69,7 @@
 %%% 
 
 \section{Introduction}
-\label{sec:introduction}
+\label{sec:avm-examples:intr}
 
 The \texttt{alb-avm} package provides a single environment for type
 setting typed feature structures and inequated typed feature structures
@@ -64,12 +77,13 @@ in attribute-value matrix (AVM) notation.  The package is supported by
 an emacs lisp file customising \AUCTeX{} to automate the insertion of
 typed feature structures.
 
-Section~\ref{sec:using-texttt-envir} covers the use of the
-\texttt{albAvm} environment and supporting macros.  The examples also
-demonstrate a source code layout that is known to work well with
-\AUCTeX{}.  Section~\ref{sec:auct-cust} describes how the commands are
-quickly entered under \AUCTeX{}.  This is the best way to enter the AVM
-macros since it handles tags and source indentation automatically.
+Section~\ref{sec:avm-examples:using-texttt-envir-macros} covers the use
+of the \texttt{albAvm} environment and supporting macros.  The examples
+also demonstrate a source code layout that is known to work well with
+\AUCTeX{}.  Section~\ref{sec:avm-examples:auctex-cust} describes how the
+commands are quickly entered under \AUCTeX{}.  This is the best way to
+enter the AVM macros since it handles tags and source indentation
+automatically.
 
 
 
@@ -78,7 +92,7 @@ macros since it handles tags and source indentation automatically.
 %%% 
 
 \section{Using the \texttt{albAvm} Environment and Macros}
-\label{sec:using-texttt-envir}
+\label{sec:avm-examples:using-texttt-envir-macros}
 
 Each topmost feature structure is represented by an instance of the
 \texttt{albAvm} environment.  Within such an environment the
@@ -91,7 +105,7 @@ arguments which is rendered as a nested substructure.
 
 
 \subsection{Simple Feature Structures}
-\label{sec:simple-feat-struct}
+\label{sec:avm-examples:simple-feat-struct}
 
 The most compact typed feature structure is a simple type.  It is the
 only form expressed without nesting.  This simple form is just an
@@ -182,7 +196,7 @@ yields
 
 
 \subsection{Feature Structures with Structure Sharing}
-\label{sec:feat-struct-with}
+\label{sec:avm-examples:feat-struct-with-struct-s}
 
 The \texttt{alb-avm} macros also provide for substructure tagging.  This
 is not automated by \LaTeX{} counters: automatic tags implemented by
@@ -222,7 +236,7 @@ which yields
 
 
 \subsection{Inequated Feature Structures}
-\label{sec:ineq-feat-struct}
+\label{sec:avm-examples:ineq-feat-struct}
 
 Finally, provision is included for inequated feature structures.
 Inequated feature structures are also entered using the \texttt{albAvm}
@@ -310,7 +324,7 @@ yields
 %%% 
 
 \section{\AUCTeX{} Customisations}
-\label{sec:auct-cust}
+\label{sec:avm-examples:auctex-cust}
 
 Under \AUCTeX{} the file \texttt{alb-avm.el} is automatically loaded
 (subject to certain \AUCTeX{} configuration options).  This customises
