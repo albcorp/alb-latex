@@ -8,8 +8,131 @@
 
 
 
-\documentclass[a4paper,11pt]{article}
+\documentclass[11pt,a4paper,oneside]{article}
 
+
+
+% 
+% Page layout.
+% 
+% See: "/usr/share/texmf/doc/latex/geometry/geometry.dvi".
+
+\usepackage[
+    verbose, dvips,
+    width=180mm, height=260mm, top=12mm,
+    headheight=24pt, headsep=30pt, nofoot,
+    marginparwidth=50mm, marginparsep=6mm, reversemp
+  ]{geometry}
+
+
+% 
+% Headers and footers.
+% 
+% See: "/usr/share/texmf/doc/latex/fancyhdr/fancyhdr.dvi".
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+
+% Place the headers across the entire printable page.
+\addtolength{\headwidth}{\marginparsep}
+\addtolength{\headwidth}{\marginparwidth}
+
+% Capture the section titles.
+\newcommand{\albCurrentSection}{}
+\newcommand{\albCurrentSectionTitle}{}
+\renewcommand{\sectionmark}[1]{%
+  \renewcommand{\albCurrentSection}{Section~\thesection}%
+  \renewcommand{\albCurrentSectionTitle}{#1}%
+  }
+
+% Define a plain style with empty headers and footers.
+\fancypagestyle{plain}{%
+  \fancyhf{}
+  \renewcommand{\headrulewidth}{0pt}
+  \renewcommand{\footrulewidth}{0pt}
+  }
+
+% Define a style with document and section title on all pages, and with
+% no footer.
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+\fancyhead[L]{\normalfont\sffamily\itshape%
+  \begin{minipage}[t]{0.5\headwidth}%
+    Typesetting Attribute-Value Matrices Under \LaTeX{}%
+  \end{minipage}%
+  }
+\fancyhead[R]{\normalfont\sffamily\itshape%%
+  \begin{minipage}[t]{0.375\headwidth}%
+    \begin{flushright}%
+      \albCurrentSectionTitle%
+    \end{flushright}%
+  \end{minipage}%
+  \begin{minipage}[t]{3em}%
+    \begin{flushright}%
+      \thepage{}%
+    \end{flushright}%
+  \end{minipage}%
+  }
+
+
+%
+% Section heading formats.
+% 
+% There are non-trivial tricks in the definitions of section heading
+% styles using the @startsection macro.  The descriptions of the
+% mandatory fields are therefore given here:
+%   name        The name of the user level command.
+%               E.g., `section'.
+%   level       A number, denoting the depth of the section.
+%               E.g., chapter=1, section = 2.
+%   indent      The indentation of the heading from the left margin.
+%   beforeskip  The absolute value gives the skip to leave above the
+%               heading.  If the value is negative, then the paragraph
+%               indent of the text following the heading is suppressed.
+%   afterskip   If positive, this gives the skip to leave below the
+%               heading, else it gives the skip to leave to the right of
+%               a run-in heading. 
+%   style       Commands to set the style of the heading.
+
+% Add section numbering down to subsubsections.
+\setcounter{secnumdepth}{3}
+
+% Sections headings are: sans-serif, bold, Large, upper/lowercase.
+\makeatletter
+\renewcommand{\section}{\@startsection%
+  {section}% Name
+  {1}% Level
+  {0mm}% Indent
+  {-2\baselineskip}% Before skip
+  {\baselineskip}% After skip
+  {\normalfont\sffamily\bfseries\Large}% Style
+  }
+\makeatother
+
+% Subsections headings are: sans-serif, bold, large, upper/lowercase.
+\makeatletter
+\renewcommand{\subsection}{\@startsection%
+  {subsection}% Name
+  {2}% Level
+  {0mm}% Indent
+  {-\baselineskip}% Before skip
+  {0.5\baselineskip}% After skip
+  {\normalfont\sffamily\bfseries\large}% Style
+  }
+\makeatother
+
+% Subsubsections are: sans-serif, bold, upper/lowercase.
+\makeatletter
+\renewcommand{\subsubsection}{\@startsection%
+  {subsubsection}% Name
+  {3}% Level
+  {0mm}% Indent
+  {-\baselineskip}% Before skip
+  {0.25\baselineskip}% After skip
+  {\normalfont\sffamily\bfseries}% Style
+  }
+\makeatother
 
 
 % 
@@ -24,6 +147,24 @@
 \newcommand{\AUCTeX}[0]{AUC\TeX{}}
 
 
+% 
+% Environment for full page width text.
+
+\newenvironment{fullwidth}[0]{%
+  \begin{list}{}{%
+      \setlength{\topsep}{0pt}%
+      \setlength{\leftmargin}{-\marginparwidth}%
+      \addtolength{\leftmargin}{-\marginparsep}%
+      \setlength{\listparindent}{\parindent}%
+      \setlength{\itemindent}{0pt}%
+      \setlength{\parsep}{\parskip}%
+      }
+  \item 
+  }{%
+  \end{list}
+  }
+
+
 
 \begin{document}
 
@@ -33,34 +174,39 @@
 %%% TITLE
 %%% 
 
-\title{%
-  Attribute-Value Matrix Depiction of Typed Feature Structures%
-  }
+\thispagestyle{plain}
 
-\author{%
-  Andrew Burrow, \texttt{alburrow@cs.adelaide.edu.au}\\
-  Department of Computer Science,\\
-  University of Adelaide,\\
-  Adelaide SA 5005\\
-  Australia%
-  }
+\begin{fullwidth}
+  \sffamily\bfseries\LARGE%
+  Typesetting Attribute-Value Matrices Under \LaTeX{}%
+\end{fullwidth}
 
-\date{}
+\begin{list}{}{%
+    \setlength{\leftmargin}{20mm}%
+    \setlength{\topsep}{9mm}%
+    \setlength{\itemsep}{9mm}%
+    \setlength{\parsep}{0mm}%
+    }
 
-\maketitle{}
+\item \textsf{\textbf{Andrew Burrow}}\\
+  \texttt{alburrow@cs.adelaide.edu.au}\\
+  \textsf{Department of Computer Science\\
+    The University of Adelaide}
+  
+\item \textsf{\textbf{Abstract}}
+  \begin{sloppypar}
+    The \texttt{alb-avm} package provides a single environment for type
+    setting typed feature structures and inequated typed feature structures
+    in attribute-value matrix (AVM) notation.  The package is supported by
+    an emacs lisp file customising \AUCTeX{} to automate the insertion of
+    typed feature structures.
+  \end{sloppypar}
 
+\item \textsf{\textbf{Version Information}}\\
+  \verb$Revision$\\
+  \verb$Date$
 
-
-%%% 
-%%% VERSION INFORMATION
-%%% 
-
-
-\section{Version Information}
-\label{sec:avm-examples:vers-inform}
-
-\verb$Revision$\\
-\verb$Date$
+\end{list}
 
 
 
@@ -77,9 +223,9 @@ in attribute-value matrix (AVM) notation.  The package is supported by
 an emacs lisp file customising \AUCTeX{} to automate the insertion of
 typed feature structures.
 
-Section~\ref{sec:avm-examples:using-texttt-envir-comm} covers the use of
-the \texttt{albAvm} environment and supporting commands.  The examples
-also demonstrate a source code layout that is known to work well with
+Section~\ref{sec:avm-examples:using-envir-comm} covers the use of the
+\texttt{albAvm} environment and supporting commands.  The examples also
+demonstrate a source code layout that is known to work well with
 \AUCTeX{}.  Section~\ref{sec:avm-examples:auctex-cust} describes how the
 commands are quickly entered under \AUCTeX{}.  This is the best way to
 enter the AVM commands since it handles tags and source indentation
@@ -88,11 +234,11 @@ automatically.
 
 
 %%% 
-%%% USING THE \texttt{albAvm} ENVIRONMENT AND COMMANDS
+%%% USING THE ENVIRONMENTS AND COMMANDS
 %%% 
 
-\section{Using the \texttt{albAvm} Environment and Commands}
-\label{sec:avm-examples:using-texttt-envir-comm}
+\section{Using the Environments and Commands}
+\label{sec:avm-examples:using-envir-comm}
 
 Each topmost feature structure is represented by an instance of the
 \texttt{albAvm} environment.  Within such an environment the
