@@ -1,17 +1,16 @@
 %%%
-%%% alb-avm-documentation.tex
+%%% AlbAlgorithms/alb-avm-documentation.tex
 %%%
-%%%     Copyright (C) 1999-2006 Andrew Lincoln Burrow
-%%%     See license in text.
+%%%     See copyright notice and license in text.
 %%%
-%%%   - Documentation for the AlbAVM LaTeX package.
+%%%   - Documentation for the 'alb-avm' LaTeX package.
 %%%
 %%% $Id$
 %%%
 
 
 
-\documentclass[11pt,a4paper,oneside]{alb-corp}
+\documentclass[11pt,a4paper,oneside,titlepage]{alb-corp}
 
 
 
@@ -27,6 +26,14 @@
 % The package being documented.
 
 \usepackage{alb-avm}
+
+
+%
+% Sloppy Line Breaks
+%
+% Turn off careful line breaks and hyphenation.
+
+\sloppy
 
 
 
@@ -47,25 +54,25 @@
   \albTitlePageSection{Author}
 
   Andrew Lincoln Burrow\\
-  \texttt{albcorp@internode.on.net}\\
-  \albLogo{} Corp%
+  \texttt{albcorp@internode.on.net}
 
 
   \albTitlePageSection{Abstract}
 
-  The \texttt{alb-avm} package extends \LaTeX{} in order to typeset
-  typed feature structures and inequated typed feature structures in
-  attribute-value matrix (AVM) notation.  This support is provided by an
-  environment and associated markup commands.  In marking up AVM
-  material, the resulting \LaTeX{} structure is isomorphic to AVM
-  structure.  The markup is placed in the \albLogo{} namespace.  The
-  package is supported by an emacs lisp file customising \AUCTeX{} to
-  automate the insertion of typed feature structures by a depth-first
-  traversal of the AVM structure.
+  The \texttt{AlbAVM} package provides a single \texttt{alb-avm}
+  \LaTeX{} package to typeset typed feature structures and inequated
+  typed feature structures in attribute-value matrix (AVM) notation.
+  This support is provided by an environment and associated markup
+  commands.  In marking up AVM material, the resulting \LaTeX{}
+  structure is isomorphic to the AVM structure.  The markup is placed in
+  the \albLogo{} namespace.  The package is supported by an emacs lisp
+  file customising \AUCTeX{} to automate the insertion of typed feature
+  structures by a depth-first traversal of the AVM structure.
 
 
   \albTitlePageSection{Copyright}
 
+  Copyright \copyright{} 1999--2006 Andrew Lincoln Burrow.\\
   This program may be distributed and/or modified under the conditions
   of the \LaTeX{} Project Public License, either version 1.3 of this
   license or (at your option) any later version.
@@ -110,11 +117,11 @@
 \section{Introduction}
 \label{sec:alb-avm-documentation:intr}
 
-The \texttt{alb-avm} package provides a single environment for type
-setting typed feature structures and inequated typed feature structures
-in attribute-value matrix (AVM) notation.  The package is supported by
-an emacs lisp file customising \AUCTeX{} to automate the insertion of
-typed feature structures.
+The \texttt{alb-avm} \LaTeX{} package is designed to typeset typed
+feature structures and inequated typed feature structures in
+attribute-value matrix (AVM) notation.  The package is supported by an
+emacs lisp file customising \AUCTeX{} to automate the insertion of typed
+feature structures.
 
 Section~\ref{sec:alb-avm-documentation:using-envir-comm} covers the use
 of the \texttt{albAvm} environment and supporting commands.  The
@@ -142,6 +149,7 @@ nest \texttt{albAvm} environments as nesting and tag numbering is
 automated within the \texttt{albAvm} environment.  Instead, the
 \texttt{albAvmFeat} and \texttt{albAvmTag} commands each take a second
 arguments which is rendered as a nested substructure.
+
 
 
 \subsection{Simple Feature Structures}
