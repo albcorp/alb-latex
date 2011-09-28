@@ -20,8 +20,6 @@
 ;;;
 ;;;   - Customise AUCTeX for "alb-avm" LaTeX package.
 ;;;
-;;; $Id$
-;;;
 
 
 
