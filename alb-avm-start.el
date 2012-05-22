@@ -46,7 +46,7 @@
 
 
 (add-hook
- 'LaTeX-mode-hook
+ 'after-init-hook
  (function
   (lambda ()
     ;; Extend TeX-style-private
