@@ -18,7 +18,7 @@
 ;;;     Software Foundation, Inc., 59 Temple Place - Suite 330, Boston,
 ;;;     MA 02111-1307, USA.
 ;;;
-;;;   - Site start code to advertise SiaReportLayout to AUCTeX.
+;;;   - Site start code to advertise AlbAVM to AUCTeX.
 ;;;
 
 
