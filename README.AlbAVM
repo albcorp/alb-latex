@@ -3,6 +3,7 @@ README.AlbAVM
 =============
 
 :Authors: Andrew Lincoln Burrow
+:Contact: albcorp@gmail.com
 :Copyright: 2000-2010 Andrew Lincoln Burrow
 
 The `AlbAVM` LaTeX package provides environments and commands to typeset
@@ -10,7 +11,6 @@ typed feature structures and inequated typed feature structures in
 attribute-value matrix (AVM) notation.
 
 See ``alb-avm-documentation.pdf`` for further information.
-
 
 .. Local Variables:
 .. mode: rst
