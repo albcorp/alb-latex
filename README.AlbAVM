@@ -2,9 +2,10 @@
 README.AlbAVM
 =============
 
+:Precis: LaTeX style file for attribute-value matrix (AVM) notation
 :Authors: Andrew Lincoln Burrow
 :Contact: albcorp@gmail.com
-:Copyright: 2000-2010 Andrew Lincoln Burrow
+:Copyright: 2000-2010, 2012 Andrew Lincoln Burrow
 
 The `AlbAVM` LaTeX package provides environments and commands to typeset
 typed feature structures and inequated typed feature structures in
