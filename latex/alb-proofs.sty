@@ -1,0 +1,289 @@
+%%%
+%%% AlbProofs/alb-proofs.sty
+%%%
+%%%     Copyright (C) 1999-2006 Andrew Lincoln Burrow
+%%%
+%%%     This program may be distributed and/or modified under the
+%%%     conditions of the LaTeX Project Public License, either version
+%%%     1.3 of this license or (at your option) any later version.
+%%%
+%%%     The latest version of this license is in
+%%%
+%%%         http://www.latex-project.org/lppl.txt
+%%%
+%%%     and version 1.3 or later is part of all distributions of LaTeX
+%%%     version 2005/12/01 or later.
+%%%
+%%%     This work has the LPPL maintenance status 'author-maintained'.
+%%%
+%%%     This program consists of the files 'alb-proofs.sty' and
+%%%     'alb-proofs-documentation.tex'.
+%%%
+%%%   - Provides the 'albProof' environment which implements Lamport's
+%%%     structured proofs described in the paper:
+%%%
+%%%         Leslie Lamport, _Howto Write a Proof_, 1993.
+%%%
+%%%   - See: 'alb-proofs-documentation.pdf'.
+%%%
+
+
+
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{alb-proofs}
+
+
+
+%
+% No options recognised.
+
+\ProcessOptions
+
+
+%
+% Load required packages.
+
+% Require an \ifthenelse{}{}{} command to tailor definitions for the
+% class.
+% See: 'ifthen.dvi'.
+\RequirePackage{ifthen}
+
+% Use the 'calc' package to simplify length expressions.
+% See: 'calc.dvi'.
+\RequirePackage{calc}
+
+
+
+\makeatletter
+
+
+
+%
+% Structured proof environment support.
+%
+% AMSLaTeX provides a 'proof' environment.  However, we replace it with
+% the 'albProof' environment supporting Lamport's structured proofs
+% described in the paper:
+%
+%     Leslie Lamport, _How to Write a Proof_, 1993.
+%
+% This environment is implemented as a series of lists.  It does not
+% disguise the \item and \label commands.  This makes it easier to
+% utilise AUCTeX and RefTeX support.
+
+% Lengths customising the layout of the structured proofs.
+\newlength{\albProofIndent}
+\newlength{\albProofLabelWidth}
+\newlength{\albProofLabelSep}
+\setlength{\albProofIndent}{1.25em}
+\setlength{\albProofLabelWidth}{2.75em}
+\setlength{\albProofLabelSep}{0.5em}
+
+% Lengths computed from the customisation.
+\newlength{\alb@ProofLabelMargin}
+\setlength{\alb@ProofLabelMargin}{%
+  \albProofLabelWidth + \albProofLabelSep - \albProofIndent%
+}
+
+% The proof depth counter records the depth of nesting in the structured
+% proof.  It is used by the 'albAssertions' environment to keep track of
+% which counter to use, and it is used to label the assertions and
+% assumptions in the proof.
+\newcounter{albProofDepth}
+\renewcommand{\thealbProofDepth}{%
+  \ensuremath{\left\langle\arabic{albProofDepth}\right\rangle}%
+}
+
+% Counters numbering the assertions and assumptions, their
+% \the... commands, and their \label... commands.
+\newcounter{albAssertI}
+\renewcommand{\thealbAssertI}{\thealbProofDepth\arabic{albAssertI}}
+\newcommand{\albLabelAssertI}[1]{\thealbAssertI\hfill}
+\newcounter{albAssertII}
+\renewcommand{\thealbAssertII}{\thealbProofDepth\arabic{albAssertII}}
+\newcommand{\albLabelAssertII}[1]{\thealbAssertII\hfill}
+\newcounter{albAssertIII}
+\renewcommand{\thealbAssertIII}{\thealbProofDepth\arabic{albAssertIII}}
+\newcommand{\albLabelAssertIII}[1]{\thealbAssertIII\hfill}
+\newcounter{albAssertIV}
+\renewcommand{\thealbAssertIV}{\thealbProofDepth\arabic{albAssertIV}}
+\newcommand{\albLabelAssertIV}[1]{\thealbAssertIV\hfill}
+\newcounter{albAssertV}
+\renewcommand{\thealbAssertV}{\thealbProofDepth\arabic{albAssertV}}
+\newcommand{\albLabelAssertV}[1]{\thealbAssertV\hfill}
+\newcounter{albAssumeI}
+\renewcommand{\thealbAssumeI}{\thealbProofDepth\roman{albAssumeI}}
+\newcommand{\albLabelAssumeI}[1]{\thealbAssumeI\hfill}
+
+% 'albProof' environment.
+%
+% The outermost environment in a structured proof.
+\newenvironment{albProof}[1][none]{% BEGIN PART of albProof
+  \setcounter{albProofDepth}{0}%
+  \ifthenelse{\equal{#1}{none}}{% THEN
+    \noindent\textbf{Proof.}%
+  }{% ELSE
+    \noindent\textbf{Proof of #1.}%
+  }%
+}{% END PART of albProof
+  \par\vspace{0.5\baselineskip}%
+}
+
+% Command marking an assumption step.
+\newcommand{\albAssume}[1]{%
+  \textsc{Let} #1\par%
+}
+
+% Command marking a supposition step.
+\newcommand{\albSuppose}[1]{%
+  \textsc{Suppose} #1\par%
+}
+
+% Command marking a deductive proof step.
+\newcommand{\albAssert}[1]{%
+  \textsc{Assert} #1\par\penalty 150%
+}
+
+% Command marking the proof step as a base case in an inductive proof.
+\newcommand{\albAssertBase}[1]{%
+  \textsc{Assert Base} #1\par\penalty 150%
+}
+
+% Command marking the proof step as an inductive case in an inductive proof.
+\newcommand{\albAssertInduction}[1]{%
+  \textsc{Assert Induction} #1\par\penalty 150%
+}
+
+% Command marking the final proof step.
+\newcommand{\albQED}[0]{%
+  \textsc{Q.E.D.}\par%
+}
+
+% Command marking the final proof step arriving at a contradiction.
+\newcommand{\albQEDbyContradiction}[0]{%
+  \textsc{Q.E.D. by Contradiction}\par%
+}
+
+% Command marking the final proof step in an inductive proof.
+\newcommand{\albQEDbyInduction}[0]{%
+  \textsc{Q.E.D. by Mathematical Induction}\par%
+}
+
+% Environment marking the proof paragraph as a proof sketch.
+\newenvironment{albSketch}[0]{%
+  \ifthenelse{\value{albProofDepth} > 0}{% THEN
+    \vspace{0.125\baselineskip}\par%
+    \hspace{-\alb@ProofLabelMargin}%
+    \textsc{Proof Sketch:}%
+  }{}%
+}{%
+  \par\vspace{0.125\baselineskip}%
+}
+
+% 'albAssumptions' list environment.
+%
+% List environment introducing assumptions.  In terms of the proof,
+% these assumptions bind values to variables for the current proof step
+% and all its substeps.  The 'albAssumptions' environment is an
+% enumerated list.  The first paragraph of each item is the assumption.
+% It should be marked-up with an \albAssume or \albSuppose command.
+%
+% A \label command after an \item command is a reference point for the
+% assumption.  Assumptions can only be referenced by substeps in the
+% proof.  Hence the references are labelled with the depth and the
+% assumption number in roman numerals.
+\newenvironment{albAssumptions}[0]{% BEGIN PART of albAssumptions
+  \addtocounter{albProofDepth}{1}%
+  \vspace{0.125\baselineskip}\par%
+  \begin{list}{}{%
+      \renewcommand{\makelabel}{\albLabelAssumeI}%
+      \usecounter{albAssumeI}%
+      \setlength{\leftmargin}{\albProofIndent}%
+      \setlength{\labelwidth}{\albProofLabelWidth}%
+      \setlength{\labelsep}{\albProofLabelSep}%
+      \setlength{\topsep}{0pt}%
+      \setlength{\itemsep}{0.25\baselineskip}%
+      \setlength{\partopsep}{0pt}%
+      \setlength{\parsep}{0pt}%
+      \setlength{\listparindent}{0pt}%
+      \ifthenelse{\value{albProofDepth} = 1}{% THEN
+        \addtolength{\leftmargin}{\alb@ProofLabelMargin}%
+      }{}%
+    }%
+}{% END PART of albAssumptions
+  \end{list}%
+  \vspace{0.125\baselineskip}%
+  \addtocounter{albProofDepth}{-1}%
+}
+
+% 'albAssertions' list environment.
+%
+% List environment containing the numbered steps of a structured proof.
+% The 'albAssertions' environment may be nested 5 deep.  The first
+% paragraph of each item is the assertion to be proven.  It should be
+% marked-up with one of \albAssert, \albAssertBase, or
+% \albAssertInduction command.  The assertion is followed by the actual
+% proof, either: text directly supporting the assertion or another
+% 'albAssertions' environment containing a sequence of steps proving the
+% assertion.
+%
+% A \label command after an \item command is a reference point for
+% the assertion.  Assertions can only be referenced by substeps in the
+% proof.  Hence the references are labelled with the depth and the
+% assertion number in arabic numerals.
+\newenvironment{albAssertions}[0]{% BEGIN PART of albAssertions
+  \addtocounter{albProofDepth}{1}%
+  \begin{list}{}{%
+      \ifthenelse{\value{albProofDepth} = 1}{% THEN
+        \usecounter{albAssertI}%
+        \renewcommand{\makelabel}{\albLabelAssertI}%
+      }{% ELSE
+        \ifthenelse{\value{albProofDepth} = 2}{% THEN
+          \usecounter{albAssertII}%
+          \renewcommand{\makelabel}{\albLabelAssertII}%
+        }{% ELSE
+          \ifthenelse{\value{albProofDepth} = 3}{% THEN
+            \usecounter{albAssertIII}%
+            \renewcommand{\makelabel}{\albLabelAssertIII}%
+          }{% ELSE
+            \ifthenelse{\value{albProofDepth} = 4}{% THEN
+              \usecounter{albAssertIV}%
+              \renewcommand{\makelabel}{\albLabelAssertIV}%
+            }{% ELSE
+              \usecounter{albAssertV}%
+              \renewcommand{\makelabel}{\albLabelAssertV}%
+            }%
+          }%
+        }%
+      }%
+      \setlength{\leftmargin}{\albProofIndent}%
+      \setlength{\labelwidth}{\albProofLabelWidth}%
+      \setlength{\labelsep}{\albProofLabelSep}%
+      \setlength{\topsep}{0pt}%
+      \setlength{\itemsep}{0.25\baselineskip}%
+      \setlength{\partopsep}{0pt}%
+      \setlength{\parsep}{0pt}%
+      \setlength{\listparindent}{0pt}%
+      \ifthenelse{\value{albProofDepth} = 1}{% THEN
+        \addtolength{\leftmargin}{\alb@ProofLabelMargin}%
+      }{}%
+    }%
+}{% END PART of albAssertions
+  \end{list}%
+  \addtocounter{albProofDepth}{-1}%
+}
+
+
+
+\makeatother
+
+
+
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% TeX-parse-self: nil
+%%% TeX-auto-save: nil
+%%% End:

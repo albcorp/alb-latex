@@ -1,0 +1,471 @@
+%%%
+%%% AlbAlgorithms/alb-algorithms.sty
+%%%
+%%%     Copyright (C) 1999-2006 Andrew Lincoln Burrow
+%%%
+%%%     This program may be distributed and/or modified under the
+%%%     conditions of the LaTeX Project Public License, either version
+%%%     1.3 of this license or (at your option) any later version.
+%%%
+%%%     The latest version of this license is in
+%%%
+%%%         http://www.latex-project.org/lppl.txt
+%%%
+%%%     and version 1.3 or later is part of all distributions of LaTeX
+%%%     version 2005/12/01 or later.
+%%%
+%%%     This work has the LPPL maintenance status 'author-maintained'.
+%%%
+%%%     This program consists of the files 'alb-algorithms.sty' and
+%%%     'alb-algorithms-documentation.tex'.
+%%%
+%%%   - Provides environments and commands for typesetting algorithms,
+%%%     including commands to define identifiers for accessor functions
+%%%     and procedures.
+%%%
+%%%   - See: 'alb-algorithms-documentation.pdf'.
+%%%
+
+
+
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{alb-algorithms}
+
+
+
+%
+% No options recognised.
+
+\ProcessOptions
+
+
+%
+% Load required packages.
+
+% Require an \ifthenelse{}{}{} command to tailor definitions for the
+% class.
+% See: 'ifthen.dvi'.
+\RequirePackage{ifthen}
+
+% Use the 'calc' package to simplify length expressions.
+% See: 'calc.dvi'.
+\RequirePackage{calc}
+
+% Use the 'stdclsdv' package to check supported section commands.
+% See: 'stdclsdv.dvi'.
+\RequirePackage{stdclsdv}
+
+% Use the 'float' package to specify the new floats.
+% See: 'float.dvi'.
+\RequirePackage{float}
+
+% Require the base AMS-LaTeX package and extra symbols.
+% See: 'amsldoc.dvi'.
+\RequirePackage{amsmath}
+\RequirePackage{amssymb}
+
+
+
+\makeatletter
+
+
+
+%
+% 'algorithm' float environment.
+%
+% A float environment for algorithms as procedures.
+
+\floatstyle{plain}
+\floatname{algorithm}{Algorithm}
+\ifthenelse{\boolean{SCDknownclass}\AND\boolean{SCDchapter}}{% THEN
+  \newfloat{algorithm}{t}{loa}[chapter]%
+}{% ELSE
+  \newfloat{algorithm}{t}{loa}%
+}
+
+% The 'hyperref' package needs \theH* versions of \the* commands.
+% This value is appended to 'algorithm' to generate an anchor
+% name, so unique naming inside the collection of 'algorithm'
+% instances is all that is required.  It also needs a bookmark level for
+% the environment.
+\newcommand{\theHalgorithm}[0]{\thealgorithm}
+\newcommand{\toclevel@algorithm}[0]{\toclevel@figure}
+
+
+%
+% \listofalgorithms command.
+%
+% Generate a list of the algorithm float environments in the document.
+% The command is analagous to the built-in LaTeX commands \listoffigures
+% and \listoftables.
+
+% Define the title for the list.
+\newcommand{\listalgorithmname}[0]{List of Algorithms}
+
+% Wrap the definition to ensure 'twocolumn' is handled correctly.
+\newcommand{\listofalgorithms}[0]{%
+  \ifthenelse{\boolean{@twocolumn}}{%
+    \onecolumn%
+    \listof{algorithm}{\listalgorithmname}%
+    \twocolumn%
+  }{%
+    \listof{algorithm}{\listalgorithmname}%
+  }%
+}
+
+
+%
+% \albInMathIdent command.
+%
+% Typeset identifier for use in math mode.  Namely, set identifier in
+% typewriter font and ensure upright font.
+
+\newcommand{\albInMathIdent}[1]{%
+  \text{\ttfamily\upshape#1}%
+}
+
+
+%
+% \albInTextIdent command.
+%
+% Typeset identifier for use outside of math mode.  Namely, set
+% identifier in typewriter font, but allow hyphenation.
+% See: http://sourceforge.net/mailarchive/message.php?msg_id=2210651
+
+\newcommand{\albInTextIdent}[1]{%
+  {\normalfont\ttfamily\ifnum\hyphenchar\font<0\hyphenchar\font=`-\fi#1}%
+}
+
+
+%
+% \albNewAccessorIdent{ID}{CALL}{NAME}{ARGS} command.
+%
+% Create two macros to typeset an accessor function's identifier and
+% corresponding accessor function calls.  For example, the command
+%
+%     \albNewAccessorIdent{\accFeaturesId}{\accFeatures}{features}{2}
+%
+% produces the command \accFeaturesId to typeset the accessor's
+% identifer 'features' and the command \accFeatures{arg1}{arg2} to
+% typeset a call to the accessor 'features(arg1, arg2)'.
+%
+% The ID command can be used inside or outside math mode.  If it is used
+% outside of math mode, then hypenation is permitted, so that long
+% identifiers can be set in narrow columns.  In particular, NAME should
+% contain hyphens which will provide break points.  This naming
+% convention is in keeping with practice in languages like lisp.
+%
+% The CALL command should only be used in math mode, so that arguments
+% are correctly typeset.
+
+\newcommand{\albNewAccessorIdent}[4]{%
+  \newcommand{#1}[0]{%
+    \ifmmode%
+      \albInMathIdent{#3}%
+    \else%
+      \ifinner%
+        \albInMathIdent{#3}%
+      \else%
+        \albInTextIdent{#3}%
+      \fi%
+    \fi%
+  }%
+  \ifthenelse{#4 = 0}{%
+    \newcommand{#2}[#4]{%
+      #1()%
+    }%
+  }{}%
+  \ifthenelse{#4 = 1}{%
+    \newcommand{#2}[#4]{%
+      #1(##1)%
+    }%
+  }{}%
+  \ifthenelse{#4 = 2}{%
+    \newcommand{#2}[#4]{%
+      #1(##1, ##2)%
+    }%
+  }{}%
+  \ifthenelse{#4 = 3}{%
+    \newcommand{#2}[#4]{%
+      #1(##1, ##2, ##3)%
+    }%
+  }{}%
+  \ifthenelse{#4 = 4}{%
+    \newcommand{#2}[#4]{%
+      #1(##1, ##2, ##3, ##4)%
+    }%
+  }{}%
+  \ifthenelse{#4 = 5}{%
+    \newcommand{#2}[#4]{%
+      #1(##1, ##2, ##3, ##4, ##5)%
+    }%
+  }{}%
+  \ifthenelse{#4 = 6}{%
+    \newcommand{#2}[#4]{%
+      #1(##1, ##2, ##3, ##4, ##5, ##6)%
+    }%
+  }{}%
+  \ifthenelse{#4 = 7}{%
+    \newcommand{#2}[#4]{%
+      #1(##1, ##2, ##3, ##4, ##5, ##6, ##7)%
+    }%
+  }{}%
+  \ifthenelse{#4 = 8}{%
+    \newcommand{#2}[#4]{%
+      #1(##1, ##2, ##3, ##4, ##5, ##6, ##7, ##8)%
+    }%
+  }{}%
+  \ifthenelse{#4 = 9}{%
+    \newcommand{#2}[#4]{%
+      #1(##1, ##2, ##3, ##4, ##5, ##6, ##7, ##8, ##9)%
+    }%
+  }{}%
+}
+
+
+%
+% \albNewProcedureIdent{ID}{CALL}{NAME}{ARGS} command.
+%
+% Create two macros to typeset a procedural function identifier and
+% corresponding procedure function calls.  For example, the command
+%
+%      \albNewProcedureIdent{\prcExtendId}{\prcExtend}{Extend}{2}
+%
+% produces the command \prcExtendId to typeset the procedure's identifer
+% 'Extend' and the command \prcExtend{arg1}{arg2} to typeset a call to
+% the procedure 'Extend(arg1, arg2)'.
+%
+% The ID command can be used inside or outside math mode.  If it is used
+% outside of math mode, then hypenation is permitted, so that long
+% identifiers can be set in narrow columns.  In particular, NAME should
+% contain hyphens which will provide break points.  This naming
+% convention is in keeping with practice in languages like lisp.
+%
+% The CALL command should only be used in math mode, so that arguments
+% are correctly typeset.
+
+\newcommand{\albNewProcedureIdent}[4]{%
+  \newcommand{#1}[0]{%
+    \ifmmode%
+      \albInMathIdent{#3}%
+    \else%
+      \ifinner%
+        \albInMathIdent{#3}%
+      \else%
+        \albInTextIdent{#3}%
+      \fi%
+    \fi%
+  }%
+  \ifthenelse{#4 = 0}{%
+    \newcommand{#2}[#4]{%
+      #1()%
+    }%
+  }{}%
+  \ifthenelse{#4 = 1}{%
+    \newcommand{#2}[#4]{%
+      #1(##1)%
+    }%
+  }{}%
+  \ifthenelse{#4 = 2}{%
+    \newcommand{#2}[#4]{%
+      #1(##1, ##2)%
+    }%
+  }{}%
+  \ifthenelse{#4 = 3}{%
+    \newcommand{#2}[#4]{%
+      #1(##1, ##2, ##3)%
+    }%
+  }{}%
+  \ifthenelse{#4 = 4}{%
+    \newcommand{#2}[#4]{%
+      #1(##1, ##2, ##3, ##4)%
+    }%
+  }{}%
+  \ifthenelse{#4 = 5}{%
+    \newcommand{#2}[#4]{%
+      #1(##1, ##2, ##3, ##4, ##5)%
+    }%
+  }{}%
+  \ifthenelse{#4 = 6}{%
+    \newcommand{#2}[#4]{%
+      #1(##1, ##2, ##3, ##4, ##5, ##6)%
+    }%
+  }{}%
+  \ifthenelse{#4 = 7}{%
+    \newcommand{#2}[#4]{%
+      #1(##1, ##2, ##3, ##4, ##5, ##6, ##7)%
+    }%
+  }{}%
+  \ifthenelse{#4 = 8}{%
+    \newcommand{#2}[#4]{%
+      #1(##1, ##2, ##3, ##4, ##5, ##6, ##7, ##8)%
+    }%
+  }{}%
+  \ifthenelse{#4 = 9}{%
+    \newcommand{#2}[#4]{%
+      #1(##1, ##2, ##3, ##4, ##5, ##6, ##7, ##8, ##9)%
+    }%
+  }{}%
+}
+
+
+%
+% 'albAlgorithmic' and 'albAlgorithmic*' environments.
+%
+% The 'algorithmic' package provides an 'algorithmic' environment.
+% However, we replace it with the 'albAlgorithmic' environment to provide:
+%
+%   - improved line numbering for groups of procedures in an algorithm,
+%
+%   - indentation in the LaTeX source which corresponds more closely to
+%     the algorithm indentation, and
+%
+%   - effective support for cross-referencing with AUCTeX and RefTeX.
+%
+% The 'albAlgorithmic' environment is implemented as a list.  The nested
+% list environments for compound statements are virtual, i.e., they
+% simply adjust the list parameters effecting the layout of the items
+% inside their scope.  This hack makes the problem of managing the line
+% numbers trivial, and is no worse than the supplied 'algorithmic'
+% environment.
+%
+% The lists (real and virtual) do not disguise the \item and \label
+% commands.  This makes it easier to utilise AUCTeX and RefTeX support.
+
+% Lengths customising the layout of the structured algorithms.
+\newlength{\albAlgIndent}
+\newlength{\albAlgLabelWidth}
+\newlength{\albAlgLabelSep}
+\setlength{\albAlgIndent}{1.25em}
+\setlength{\albAlgLabelSep}{0.5em}
+
+% Counter numbering the procedures in a structured algorithm.
+% The counter 'algorithm' comes courtesy of \newfloat.
+\newcounter{albAlgI}[algorithm]
+\renewcommand{\thealbAlgI}{\textsc{\alph{albAlgI}}}
+
+% Counter numbering the lines in a structured algorithm.
+\newcounter{albAlgII}
+\renewcommand{\thealbAlgII}{\thealbAlgI\arabic{albAlgII}}
+\newcommand{\albLabelAlgII}[1]{%
+  \hfill\footnotesize\thealbAlgII:%
+}
+
+% 'albAlgorithmic' list environment.
+%
+% The outermost environment in in a structured algorithm, each \item is
+% a line in the algorithm.  This environment is used inside the
+% 'algorithm' environment where it adds procedure numbering to the line
+% numbering scheme, e.g., 'A1', 'A2', ..., 'B1', 'B2', ...
+\newenvironment{albAlgorithmic}[0]{%
+  \begin{list}{}{%
+      \stepcounter{albAlgI}%
+      \renewcommand{\makelabel}{\albLabelAlgII}%
+      \usecounter{albAlgII}%
+      \setlength{\itemindent}{0pt}%
+      \setlength{\leftmargin}{%
+        \widthof{\normalfont\footnotesize{}A1:} + \albAlgLabelSep * \real{2.0}%
+      }%
+      \setlength{\labelwidth}{%
+        \widthof{\normalfont\footnotesize{}A1:} + \albAlgLabelSep%
+      }%
+      \setlength{\labelsep}{\albAlgLabelSep}%
+      \setlength{\topsep}{0pt}%
+      \setlength{\itemsep}{0pt}%
+      \setlength{\partopsep}{0pt}%
+      \setlength{\parsep}{0pt}%
+      \setlength{\listparindent}{0pt}%
+    }%
+}{%
+  \end{list}%
+}
+
+% 'albAlgorithmic*' list environment.
+%
+% The outermost environment in in a structured algorithm, each \item is
+% a line in the algorithm.  This environment is used outside the
+% 'algorithm' environment because it does not implement procedure
+% numbering in the line numbering scheme.
+\newenvironment{albAlgorithmic*}[0]{%
+  \begin{list}{}{%
+      \setcounter{albAlgI}{0}%
+      \renewcommand{\makelabel}{\albLabelAlgII}%
+      \usecounter{albAlgII}%
+      \setlength{\itemindent}{0pt}%
+      \setlength{\leftmargin}{%
+        \widthof{\normalfont\footnotesize{}1:} + \albAlgLabelSep * \real{2.0}%
+      }%
+      \setlength{\labelwidth}{%
+        \widthof{\normalfont\footnotesize{}1:} + \albAlgLabelSep%
+      }%
+      \setlength{\labelsep}{\albAlgLabelSep}%
+      \setlength{\topsep}{0pt}%
+      \setlength{\itemsep}{0pt}%
+      \setlength{\partopsep}{0pt}%
+      \setlength{\parsep}{0pt}%
+      \setlength{\listparindent}{0pt}%
+    }%
+}{%
+  \end{list}%
+}
+
+% 'albBlock' environment.
+%
+% Provides indented blocks of lines for compound statements.
+\newenvironment{albBlock}[0]{%
+  \addtolength{\itemindent}{\albAlgIndent}%
+  \addtolength{\leftmargin}{\albAlgIndent}%
+  \addtolength{\labelsep}{\albAlgIndent}%
+}{%
+}
+
+% \albLet{VAR}{VAL}, \albAssign{VAR}{VAL}, and \albReturn{VAL} commands.
+%
+% Commands for simple statements inside the 'albAlgorithmic' environment.
+\newcommand{\albLet}[2]{%
+  \textbf{let} #1$\mbox{} \,\longleftarrow\, \mbox{}$#2%
+}
+\newcommand{\albAssign}[2]{%
+  #1$\mbox{} \,\longleftarrow\, \mbox{}$#2%
+}
+\newcommand{\albReturn}[1]{%
+  \textbf{return} #1%
+}
+
+% \albWhile{COND}, \albForAll{VAR}{SET}, \albForSequence{VAR}{SEQUENCE},
+% \albIf{COND}, \albElseIf{COND}, and \albElse commands.
+%
+% Commands for compound statements inside the 'albAlgorithmic'
+% environment.  Each such command should be followed by an 'albBlock'
+% environment.
+\newcommand{\albWhile}[1]{%
+  \textbf{while} #1%
+}
+\newcommand{\albForAll}[2]{%
+  \textbf{for all} #1$\mbox{} \in \mbox{}$#2%
+}
+\newcommand{\albForSequence}[2]{%
+  \textbf{for} #1 \textbf{in} #2%
+}
+\newcommand{\albIf}[1]{%
+  \textbf{if} #1%
+}
+\newcommand{\albElseIf}[1]{%
+  \textbf{else if} #1%
+}
+\newcommand{\albElse}[0]{%
+  \textbf{else}%
+}
+
+
+
+\makeatother
+
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% TeX-parse-self: nil
+%%% TeX-auto-save: nil
+%%% End:

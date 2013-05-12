@@ -1,0 +1,91 @@
+===============
+README.AlbLaTeX
+===============
+
+:Precis: /albcorp/ LaTeX packages and supporting emacs lisp written against AUCTeX
+:Authors: Andrew Lincoln Burrow
+:Contact: albcorp@gmail.com
+:Copyright: 2000-2010, 2012-2013 Andrew Lincoln Burrow
+
+--------------
+LaTeX packages
+--------------
+
+The collection of LaTeX package comprise document layouts and macros for
+formatting mathematics and computer algorithms.
+
+`alb-corp.cls`
+  LaTeX book design for a albcorp documentation
+
+  See ``alb-corp-layout-documentation.pdf`` for further information.
+
+`alb-journal.cls`
+  LaTeX book design for a research journal
+
+  See ``alb-journal-layout-documentation.pdf`` for further information.
+
+`alb-thesis.cls`
+  LaTeX book design for a thesis
+
+  See ``alb-thesis-layout-documentation.pdf`` for further information.
+
+`alb-float-tools.sty`
+  LaTeX style file for typesetting float material and captions
+
+  Provides environments and commands for typesetting float material and
+  captions.  These include: an environment to typeset float material
+  across the page including the marginpar allocation; a list environment
+  to flow subcaptioned items across the available width; and commands to
+  select the caption style according to the page on which a float falls.
+  See ``alb-float-tools-documentation.pdf`` for further information.
+
+`alb-order-theory.sty`
+  Provides a collection of macros to make set and order theoretic
+  mathematical constructs more readable and consistent in their
+  formatting.  See ``alb-order-theory-documentation.pdf`` for further
+  information.
+
+`alb-graph-theory.sty`
+  Provides a collection of macros to make graph theoretic mathematical
+  constructs more readable and consistent in their formatting.  The
+  collection is biased toward directed graphs.  See
+  ``alb-graph-theory-documentation.pdf`` for further information.
+
+`alb-theorems.sty`
+  Provides a minimal collection of theorem type environments.  See
+  ``alb-theorems-documentation.pdf`` for further information.
+
+`alb-algorithms.sty`
+  Provides environments and commands for typesetting algorithms and
+  floats containing algorithms, including commands to define identifiers
+  for accessor functions and procedures.  See
+  ``alb-algorithms-documentation.pdf`` for further information.
+
+`alb-proofs.sty`
+  Provides the `albProof` environment which implements Lamport's
+  structured proofs described in the paper:
+
+    Leslie Lamport, *How to Write a Proof*, 1993.
+
+  See ``alb-proofs-documentation.pdf`` for further information.
+
+------------------
+Emacs lisp modules
+------------------
+
+The collection of emacs lisp modules provide the following capabilities:
+
+- Generate file names from sentences
+- Manipulate local variables lists
+- Associate AUCTeX, and RefTeX with LaTeX source code
+- Extend AUCTeX and RefTeX to ease the management of large projects
+  including functions to create skeleton files from descriptive
+  sentences, improve the lookup of filenames, and automate the use of
+  labels.
+- Extend AUCTeX to parse LaTeX via a simplified yet extensible parser
+  with few additional restrictions on the form of LaTeX code.
+
+.. Local Variables:
+.. mode: rst
+.. ispell-local-dictionary: "british"
+.. End:

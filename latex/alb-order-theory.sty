@@ -1,0 +1,372 @@
+%%%
+%%% AlbOrderTheory/alb-order-theory.sty
+%%%
+%%%     Copyright (C) 1999-2006 Andrew Lincoln Burrow
+%%%
+%%%     This program may be distributed and/or modified under the
+%%%     conditions of the LaTeX Project Public License, either version
+%%%     1.3 of this license or (at your option) any later version.
+%%%
+%%%     The latest version of this license is in
+%%%
+%%%         http://www.latex-project.org/lppl.txt
+%%%
+%%%     and version 1.3 or later is part of all distributions of LaTeX
+%%%     version 2005/12/01 or later.
+%%%
+%%%     This work has the LPPL maintenance status 'author-maintained'.
+%%%
+%%%     This program consists of the file 'alb-order-theory.sty' and
+%%%     'alb-order-theory-documentation.tex'.
+%%%
+%%%   - Provide a collection of macros to make commonly used set and
+%%%     order theoretic mathematical constructs more readable and
+%%%     consistent in their formatting.
+%%%
+%%%   - See: 'alb-order-theory-documentation.pdf'.
+%%%
+
+
+
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{alb-order-theory}
+
+
+
+%
+% No options recognised.
+
+\ProcessOptions
+
+
+%
+% Load required packages.
+
+% Require the base AMS-LaTeX package, and extra symbols.
+% See: 'amsldoc.dvi'.
+\RequirePackage{amsmath}
+\RequirePackage{amssymb}
+
+
+
+\makeatletter
+
+
+
+%
+% Logical connectives.
+%
+% The logical connectives for use in formulae.  Unfortunately, these
+% clash with the order theory binary relations.  Explicitly naming the
+% connectives helps defer the actual choice of symbol until the
+% compromise is clear.
+
+% The negation.
+\newcommand{\albNot}[0]{%
+  \mathop{\mathrm{not}}%
+}
+
+% The and connective.
+\newcommand{\albAnd}[0]{%
+  \mathbin{\,\mathrm{and}\,}%
+}
+
+% The or connective.
+\newcommand{\albOr}[0]{%
+  \mathbin{\,\mathrm{or}\,}%
+}
+
+
+%
+% Set theoretic mathematical constructions.
+%
+% Commands accepting arguments and generating set theory mathematical
+% constructions.
+
+% The singleton set containing the element #1.
+\newcommand{\albSingleton}[1]{%
+  \left\{ #1 \right\}%
+}
+
+% The cardinality of the set #1.
+\newcommand{\albCardinality}[1]{%
+  \left| #1 \right|%
+}
+
+% The tuple <#1>.
+\newcommand{\albTuple}[1]{%
+  \mathalpha{\left\langle #1 \right\rangle}%
+}
+
+% The powerset of #1.
+\newcommand{\albPowerset}[1]{%
+  \mathcal{P}(#1)%
+}
+
+% The binary relation #1 over #2 x #3.
+\newcommand{\albBinaryRelation}[3]{%
+  \mathalpha{#1}\subseteq\mathalpha{#2}\times\mathalpha{#3}%
+}
+
+% The partial map #1 from #2 to #3.
+\newcommand{\albPartialMap}[3]{%
+  \mathalpha{#1}:\mathalpha{#2}\to\mathalpha{#3}%
+}
+
+% The total map #1 from #2 to #3.
+\newcommand{\albTotalMap}[3]{%
+  \mathalpha{#1}:\mathalpha{#2}\mapsto\mathalpha{#3}%
+}
+
+% The domain of map #1.
+\newcommand{\albDomain}[1]{%
+  \operatorname{domain}(#1)%
+}
+
+% The range of map #1.
+\newcommand{\albRange}[1]{%
+  \operatorname{range}(#1)%
+}
+
+% The binary operator of composition: 'f compose g'.
+\newcommand{\albCompose}[0]{%
+  \circ%
+}
+
+
+%
+% Standard sets.
+%
+% Commands without arguments representing the standard sets of arithmetic.
+
+% The set of natural numbers.
+\newcommand{\albNaturals}[0]{%
+  \mathalpha{\mathbb{N}}%
+}
+
+% The set of real numbers.
+\newcommand{\albReals}[0]{%
+  \mathalpha{\mathbb{R}}%
+}
+
+
+%
+% Order theoretic mathematical constructions.
+%
+% Commands accepting arguments and generating order theory mathematical
+% constructions.
+
+% The binary non-comparability relation: 'x and y are incomparable'.
+\newcommand{\albIncomparable}[0]{%
+  \parallel%
+}
+
+% The binary covering relation: 'x is covered by y'.
+\newcommand{\albCoveredBy}[0]{%
+  \prec%
+}
+
+% The binary covering relation: 'x covers y'.
+\newcommand{\albCovers}[0]{%
+  \succ%
+}
+
+% The equivalence class containing #1.
+\newcommand{\albEquivClass}[1]{%
+  \mathalpha{\left[#1\right]}%
+}
+
+% The dual of #1.
+\newcommand{\albDual}[1]{%
+  \mathalpha{#1}^\partial%
+}
+
+% The elements covering #2 in poset #1.
+\newcommand{\albOver}[2]{%
+  \operatorname{over}(#1, #2)%
+}
+
+% The elements covered by #2 in poset #1.
+\newcommand{\albUnder}[2]{%
+  \operatorname{under}(#1, #2)%
+}
+
+% The maximum element of the poset #1.
+\newcommand{\albMax}[1]{%
+  \operatorname{max}(#1)%
+}
+
+% The minimum element of the poset #1.
+\newcommand{\albMin}[1]{%
+  \operatorname{min}(#1)%
+}
+
+% The set containing the maximal elements of the poset #1.
+\newcommand{\albHeads}[1]{%
+  \operatorname{heads}(#1)%
+}
+
+% The set containing the minimal elements of the poset #1.
+\newcommand{\albTails}[1]{%
+  \operatorname{tails}(#1)%
+}
+
+% The width of the poset #1.
+\newcommand{\albWidth}[1]{%
+  \operatorname{width}(#1)%
+}
+
+% The height of the poset #1.
+\newcommand{\albHeight}[1]{%
+  \operatorname{height}(#1)%
+}
+
+% The binary join operator: 'x join y'.
+\newcommand{\albJoin}[0]{%
+  \vee%
+}
+
+% The join of the elements in #1.
+\newcommand{\albJoinOf}[1]{%
+  \bigvee #1%
+}
+
+% The join in the ordered set #1 of the elements in #2.
+\newcommand{\albJoinInOf}[2]{%
+  \bigvee\nolimits_{#1} #2%
+}
+
+% The binary meet operator: 'x meet y'.
+\newcommand{\albMeet}[0]{%
+  \wedge%
+}
+
+% The unary meet operator: 'meet of S'.
+\newcommand{\albMeetOf}[1]{%
+  \bigwedge #1%
+}
+
+% The meet in the ordered set #1 of the elements in #2.
+\newcommand{\albMeetInOf}[2]{%
+  \bigwedge\nolimits_{#1} #2%
+}
+
+% The order embedding #1 from #2 to #3.
+\newcommand{\albOrderEmbedding}[3]{%
+  \mathalpha{#1}:\mathalpha{#2}\hookrightarrow\mathalpha{#3}%
+}
+
+% The binary relation of order isomorphism: `P and Q are order-isomorphic.
+\newcommand{\albOrderIsomorphic}[0]{%
+  \cong%
+}
+
+% The down-closure of the elements in #1.
+\newcommand{\albDown}[1]{%
+  \mathord{\downarrow}#1%
+}
+
+% The up-closure of the elements in #1.
+\newcommand{\albUp}[1]{%
+  \mathord{\uparrow}#1%
+}
+
+% The down-closure in the ordered set #1 of the elements in #2.
+\newcommand{\albDownInOf}[2]{%
+  \mathord{\downarrow}_{#1}#2%
+}
+
+% The up-closure in the ordered set #1 of the elements in #2.
+\newcommand{\albUpInOf}[2]{%
+  \mathord{\uparrow}_{#1}#2%
+}
+
+% The lower-bounds of the set #1.
+\newcommand{\albLower}[1]{%
+  \mathord{\downdownarrows}#1%
+}
+
+% The upper-bounds of the set #1.
+\newcommand{\albUpper}[1]{%
+  \mathord{\upuparrows}#1%
+}
+
+% The lower-bounds in the ordered set #1 of the set #2.
+\newcommand{\albLowerInOf}[2]{%
+  \mathord{\downdownarrows}_{#1}#2%
+}
+
+% The upper-bounds in the ordered set #1 of the set #2.
+\newcommand{\albUpperInOf}[2]{%
+  \mathord{\upuparrows}_{#1}#2%
+}
+
+% The family of down-sets of #1.
+\newcommand{\albDownSets}[1]{%
+  \mathcal{O}(#1)%
+}
+
+% The rise of element #2 in poset #1.
+\newcommand{\albRise}[2]{%
+  \operatorname{rise}(#1, #2)%
+}
+
+% The fall of element #2 in poset #1.
+\newcommand{\albFall}[2]{%
+  \operatorname{fall}(#1, #2)%
+}
+
+% The Dedekind-MacNeille completion of #1.
+\newcommand{\albDM}[1]{%
+  \operatorname{DM}(#1)%
+}
+
+% The semilattice of consistent down-sets of #1.
+\newcommand{\albCD}[1]{%
+  \operatorname{CD}(#1)%
+}
+
+% The elements of poset #1 extending the consistent down-set #2.
+\newcommand{\albExtenders}[2]{%
+  \operatorname{extenders}(#1, #2)%
+}
+
+% The elements of poset #1 retracting the consistent down-set #2.
+\newcommand{\albRetractors}[2]{%
+  \operatorname{retractors}(#1, #2)%
+}
+
+
+%
+% Notation for the growth of functions.
+%
+% Commands accepting arguments and generating expressions for the growth
+% of functions.
+
+% Asymptotic upper bound: big Oh notation.
+\newcommand{\albBigOh}[1]{%
+  O(#1)%
+}
+
+% Asymptotic lower bound: big Omega notation.
+\newcommand{\albBigOmega}[1]{%
+  \Omega(#1)%
+}
+
+% Asymptotic tight bound: big Theta notation.
+\newcommand{\albBigTheta}[1]{%
+  \Theta(#1)%
+}
+
+
+
+\makeatother
+
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% TeX-parse-self: nil
+%%% TeX-auto-save: nil
+%%% End:

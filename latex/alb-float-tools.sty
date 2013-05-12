@@ -1,0 +1,413 @@
+%%%
+%%% AlbFloatTools/alb-float-tools.sty
+%%%
+%%%     Copyright (C) 1999-2006 Andrew Lincoln Burrow
+%%%
+%%%     This program may be distributed and/or modified under the
+%%%     conditions of the LaTeX Project Public License, either version
+%%%     1.3 of this license or (at your option) any later version.
+%%%
+%%%     The latest version of this license is in
+%%%
+%%%         http://www.latex-project.org/lppl.txt
+%%%
+%%%     and version 1.3 or later is part of all distributions of LaTeX
+%%%     version 2005/12/01 or later.
+%%%
+%%%     This work has the LPPL maintenance status 'author-maintained'.
+%%%
+%%%     This work consists of the files 'alb-float-tools.sty', and
+%%%     'alb-float-tools-documentation.tex'.
+%%%
+%%%   - Environments and commands for typesetting float material and
+%%%     captions.  These include: an environment to typeset float
+%%%     material across the page including the marginpar allocation; a
+%%%     list environment to flow subcaptioned items across the available
+%%%     width; and commands to select the caption style according to the
+%%%     page on which a float falls.
+%%%
+%%%   - See: 'alb-float-tools-documentation.pdf'.
+%%%
+
+
+
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{alb-float-tools}
+
+
+
+%
+% No options recognised.
+
+\ProcessOptions
+
+
+%
+% Load required packages.
+
+% Require an \ifthenelse{}{}{} command to tailor definitions for the
+% class.
+% See: 'ifthen.dvi'.
+\RequirePackage{ifthen}
+
+% Use the 'calc' package to simplify length expressions.
+% See: 'calc.dvi'.
+\RequirePackage{calc}
+
+% Use the 'float' package to specify the new floats.
+% See: 'float.dvi'.
+\RequirePackage{float}
+
+
+
+\makeatletter
+
+
+
+%
+% \alb@PageRef command.
+%
+% Stabilise the changes occuring from within the 'hyperref' package.
+% This cannot be resolved until all packages are loaded.
+\newcommand*{\alb@PageRef}[1]{}
+\AtBeginDocument{%
+  \@ifpackageloaded{hyperref}{% THEN ...
+    \renewcommand*{\alb@PageRef}[1]{\hypergetpageref{#1}}%
+  }{% ELSE ...
+    \renewcommand*{\alb@PageRef}[1]{\pageref{#1}}%
+  }%
+}
+
+
+%
+% 'albInflate{LABEL}' environment.
+%
+% Inflate the column to include the marginpar allocation, where the
+% marginpar location is calculated from the page reference of LABEL.
+%
+% This definition is easy in 'oneside' mode, but in 'twoside' mode we
+% must guess the final position of the float to decide which text edge
+% to cross.  The solution is to look at the page number cross reference.
+% LaTeX will converge, because only vertical size affects page layout.
+% Furthermore, it will converge in the same number of runs.
+
+\newenvironment{albInflate}[1]{% BEGIN PART of albInflate
+  \begin{list}{}{%
+      \setlength{\leftmargin}{0pt}%
+      \setlength{\rightmargin}{0pt}%
+      \setlength{\labelwidth}{0pt}%
+      \setlength{\labelsep}{0pt}%
+      \setlength{\topsep}{0pt}%
+      \ifthenelse{\lengthtest{\hsize=\textwidth}}{% THEN ... text width float
+        \ifthenelse{\boolean{@mparswitch}}{% THEN ... symmetric twoside layout
+          %
+          % Compute text edge crossing based on page number.
+          \ifthenelse{\isodd{\alb@PageRef{#1}}}{% THEN ... on a righthand page
+            \ifthenelse{\boolean{@reversemargin}}{% THEN ... reversed margins
+              \setlength{\leftmargin}{0pt - \marginparsep - \marginparwidth}%
+            }{% ELSE ... non-reversed margins
+              \setlength{\rightmargin}{0pt - \marginparsep - \marginparwidth}%
+            }%
+          }{% ELSE ... on a lefthand page
+            \ifthenelse{\boolean{@reversemargin}}{% THEN ... reversed margins
+              \setlength{\rightmargin}{0pt - \marginparsep - \marginparwidth}%
+            }{% ELSE ... non-reversed margins
+              \setlength{\leftmargin}{0pt - \marginparsep - \marginparwidth}%
+            }%
+          }
+        }{% ELSE ... oneside layout
+          %
+          % Compute text edge crossing regardless of page number.
+          \ifthenelse{\boolean{@reversemargin}}{% THEN ... reversed margins
+            \setlength{\leftmargin}{0pt - \marginparsep - \marginparwidth}%
+          }{% ELSE ... non-reversed margins
+            \setlength{\rightmargin}{0pt - \marginparsep - \marginparwidth}%
+          }%
+        }%
+      }{% ELSE ... column width float
+        %
+        % Do not inflate a float that is inside a column!
+      }%
+    }%
+  \item%
+}{% END PART of albInflate
+  \end{list}%
+}
+
+
+%
+% 'albShelve' list environment.
+%
+% List environment for collecting smaller elements within a larger
+% float.  The \item[] command marks-up the items in the list of elements
+% with an optional tag.  However, the list does not use a counter so
+% that it does not enumerate or support the \label{} command.  The list
+% displays the elements across the column with each line of elements
+% evenly spread across the space and with their edges aligned --- the
+% elements are placed on shelves.
+%
+% Internally, the list is implemented by two levels of indirection.  The
+% \alb@ShelfItem command replaces \item.  It stores any tag in
+% \alb@ShelfTagBox, and then wraps the contents of the item in an
+% 'alb@ShelfObject' environment.  The 'alb@ShelfObject' environment
+% first stores its contents in \alb@ShelfObjBox, and then composes its
+% contents and any stored tag into a vertical stack.
+%
+% Minimum spacing is achieved in the horizontal layout by inserting
+% \hspace*-\linebreak-\hspace* linkages between the items.  These have
+% the additional effect of allow the formatter to compute the line
+% breaks.  The linkages are inserted by the 'alb@ShelfObject' instances
+% acting in concert via the 'alb@ShelfIsEmpty' boolean.
+%
+% Minimum spacing is achieved in the vertical layout, by inserting
+% \vspace* at the bottom in each 'alb@ShelfObject' environment.  The extra
+% vertical space on the last line is corrected by a closing negative
+% \vspace* at the bottom of the 'albShelve' environment.
+
+% Adjustable lengths governing the minimum space between subfigures.
+\newlength{\albShelfHSep}
+\newlength{\albShelfTSep}
+\newlength{\albShelfVSep}
+\setlength{\albShelfHSep}{1em}
+\setlength{\albShelfTSep}{1ex}
+\setlength{\albShelfVSep}{3ex}
+
+% Computed widths of box components and complete box.
+\newlength{\alb@ShelfTagWidth}
+\newlength{\alb@ShelfObjWidth}
+\newlength{\alb@ShelfBoxWidth}
+
+% Temp storage for a shelves positioning.
+\newcommand{\alb@ShelfPos}[0]{b}
+
+% Temp storage for a subfigure's tag and image.
+\newsavebox{\alb@ShelfTagBox}
+\newsavebox{\alb@ShelfObjBox}
+
+% Booleans: 'Is the shelf top aligned?', and 'Is the shelf empty?'.
+\newboolean{alb@ShelfIsHung}
+\newboolean{alb@ShelfIsEmpty}
+
+% 'alb@ShelfObject' environment.
+%
+% This command is wrapped around the contents of each \item by the
+% \alb@ShelfItem[] command.  It saves the contents as an LR-box and
+% then typesets the saved contents and tag, boxing them together inside
+% a sequence of linebreaks and rubber space which achieves the layout.
+\newenvironment{alb@ShelfObject}{% BEGIN PART ...
+  % Insert glue: perforation, stretch, and minimum
+  \linebreak[0]%
+  \hspace*{\fill}\hspace*{0.5\albShelfHSep}%
+  %
+  % Package and measure object
+  \begin{lrbox}{\alb@ShelfObjBox}%
+}{% END PART ...
+  \end{lrbox}%
+  \setlength{\alb@ShelfObjWidth}{\widthof{\usebox{\alb@ShelfObjBox}}}%
+  %
+  % Determine combined width of object and tag
+  \ifthenelse{\lengthtest{\alb@ShelfTagWidth<\alb@ShelfObjWidth}}%
+  {\setlength{\alb@ShelfBoxWidth}{\alb@ShelfObjWidth}}%
+  {\setlength{\alb@ShelfBoxWidth}{\alb@ShelfTagWidth}}%
+  %
+  % Construct box for tag and object
+  \ifthenelse{\boolean{alb@ShelfIsHung}}{% THEN ... hanging object
+    \parbox[t]{\alb@ShelfBoxWidth}{%
+      \centering%
+      \ifthenelse{\lengthtest{0em<\alb@ShelfTagWidth}}%
+      {\usebox{\alb@ShelfTagBox}\\\vspace*{\albShelfTSep}}%
+      {}%
+      \usebox{\alb@ShelfObjBox}%
+      \vspace*{\albShelfVSep}%
+    }%
+  }{% ELSE ... sitting object
+    \parbox[b]{\alb@ShelfBoxWidth}{%
+      \centering%
+      \usebox{\alb@ShelfObjBox}%
+      \ifthenelse{\lengthtest{0em<\alb@ShelfTagWidth}}%
+      {\vspace*{\albShelfTSep}\\\usebox{\alb@ShelfTagBox}}%
+      {}%
+      \vspace*{\albShelfVSep}%
+    }%
+  }%
+  %
+  % Insert glue: minimum, and stretch
+  \hspace*{0.5\albShelfHSep}\hspace*{\fill}%
+}
+
+% \alb@ShelfItem[TAG] command.
+%
+% This command is substituted for \item within the 'albShelve'
+% list.  It captures the optional TAG and stores it in a savebox, and
+% wraps the contents of the item in a 'alb@ShelfObject' environment.  In
+% addition, it ensures that waste space is trimmed.
+\newcommand{\alb@ShelfItem}[1][NONE]{%
+  \unskip%
+  \ifthenelse{\boolean{alb@ShelfIsEmpty}}{% THEN ... first subfig
+    \setboolean{alb@ShelfIsEmpty}{false}%
+  }{% ELSE ... not first subfig
+    \end{alb@ShelfObject}%
+  }%
+  \ifthenelse{\equal{#1}{NONE}}{% THEN ... tag undefined
+    \setlength{\alb@ShelfTagWidth}{0em}%
+  }{% ELSE ... tag defined
+    \sbox{\alb@ShelfTagBox}{\normalfont#1}%
+    \setlength{\alb@ShelfTagWidth}{\widthof{\usebox{\alb@ShelfTagBox}}}%
+  }%
+  \begin{alb@ShelfObject}\ignorespaces%
+}
+
+% 'albShelve' list environment.
+%
+% The user visible environment is actually a fake list.
+\newenvironment{albShelve}[1][b]{% BEGIN PART of albShelve
+  \begin{sloppypar}%
+    \renewcommand{\alb@ShelfPos}[0]{#1}%
+    \ifthenelse{\equal{#1}{t}}{% THEN ... objects are hung
+      \setboolean{alb@ShelfIsHung}{true}%
+    }{% ELSE ... objects sit
+      \setboolean{alb@ShelfIsHung}{false}%
+      \ifthenelse{\equal{#1}{b}}{}{%
+        \PackageWarning{alb-float-tools}{%
+          Unrecognised alignment argument to 'albShelve' environment%
+        }%
+      }%
+    }%
+    \setboolean{alb@ShelfIsEmpty}{true}%
+    \let\item\alb@ShelfItem%
+    \noindent%
+}{% END PART of albShelve
+    \unskip%
+    \ifthenelse{\boolean{alb@ShelfIsEmpty}}{}{\end{alb@ShelfObject}}%
+  \end{sloppypar}%
+  \vspace*{-\albShelfVSep}%
+}
+
+
+%
+% \albCaptionStyleByMargin{LABEL}{LEFTSTYLE}{RIGHTSTYLE} command.
+%
+% Set the caption style to LEFTSTYLE or RIGHTSTYLE according to the
+% position of the margin on the page referred to by LABEL.  This allows
+% captions to cross into the marginpar allocation, because the layout
+% of the page can be inferred.
+%
+% This definition is easy in 'oneside' mode, but in 'twoside' mode we
+% must guess the final position of the float to decide which text edge
+% to cross.  The solution is to look at the page number cross reference.
+% LaTeX will converge, because only vertical size affects page layout.
+% Furthermore, it will converge in the same number of runs.
+
+\newcommand{\albCaptionStyleByMargin}[3]{%
+  \ifthenelse{\boolean{@mparswitch}}{% THEN ... symmetric twoside layout
+    %
+    % Compute margin position based on page number.
+    \ifthenelse{\isodd{\alb@PageRef{#1}}}{% THEN ... on a righthand page
+      \ifthenelse{\boolean{@reversemargin}}{% THEN ... reversed margins
+        \captionstyle{#2}%
+      }{% ELSE ... non-reversed margins
+        \captionstyle{#3}%
+      }%
+    }{% ELSE ... on a lefthand page
+      \ifthenelse{\boolean{@reversemargin}}{% THEN ... reversed margins
+        \captionstyle{#3}%
+      }{% ELSE ... non-reversed margins
+        \captionstyle{#2}%
+      }%
+    }
+  }{% ELSE ... oneside layout
+    %
+    % Compute margin position regardless of page number.
+    \ifthenelse{\boolean{@reversemargin}}{% THEN ... reversed margins
+      \captionstyle{#2}%
+    }{% ELSE ... non-reversed margins
+      \captionstyle{#3}%
+    }%
+  }%
+}
+
+
+%
+% \albCaptionStyleBySide{LABEL}{LEFTSTYLE}{RIGHTSTYLE} command.
+%
+% Set the caption style to LEFTSTYLE or RIGHTSTYLE according to the
+% position of the binding on the page referred to by LABEL.   In oneside
+% layout, all pages are righthand pages; in twoside layout, even pages
+% are lefthand pages and odd pages are righthand pages.  This allows
+% captions to cross into the binding allocation, because the layout
+% of the page can be inferred.
+%
+% This definition is easy in 'oneside' mode, but in 'twoside' mode we
+% must guess the final position of the float to decide which text edge
+% to cross.  The solution is to look at the page number cross reference.
+% LaTeX will converge, because only vertical size affects page layout.
+% Furthermore, it will converge in the same number of runs.
+
+\newcommand{\albCaptionStyleBySide}[3]{%
+  \ifthenelse{\boolean{@twoside}}{% THEN ... twoside layout
+    %
+    % Compute page side based on page number.
+    \ifthenelse{\isodd{\alb@PageRef{#1}}}{% THEN ... on a righthand page
+      \captionstyle{#3}%
+    }{% ELSE ... on a lefthand page
+      \captionstyle{#2}%
+    }
+  }{% ELSE ... oneside layout
+    %
+    % Always a right hand page.
+    \captionstyle{#3}%
+  }%
+}
+
+
+%
+% \listoffigures command.
+%
+% Generate a list of the figures in the document.
+% The command replaces the built-in LaTeX command \listoffigures so that
+% features of the 'float' package are available across all lists.
+
+% Wrap the definition to ensure 'twocolumn' is handled correctly.
+\renewcommand{\listoffigures}[0]{%
+  \ifthenelse{\boolean{@twocolumn}}{%
+    \onecolumn%
+    \listof{figure}{\listfigurename}%
+    \twocolumn%
+  }{%
+    \listof{figure}{\listfigurename}%
+  }%
+}
+
+
+%
+% \listoftables command.
+%
+% Generate a list of the tables in the document.
+% The command replaces the built-in LaTeX command \listoftables so that
+% features of the 'float' package are available across all lists.
+
+% Wrap the definition to ensure 'twocolumn' is handled correctly.
+\renewcommand{\listoftables}[0]{%
+  \ifthenelse{\boolean{@twocolumn}}{%
+    \onecolumn%
+    \listof{table}{\listtablename}%
+    \twocolumn%
+  }{%
+    \listof{table}{\listtablename}%
+  }%
+}
+
+
+
+\makeatother
+
+
+
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% TeX-parse-self: nil
+%%% TeX-auto-save: nil
+%%% End:

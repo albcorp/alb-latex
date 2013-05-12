@@ -1,0 +1,420 @@
+%%%
+%%% AlbProofs/alb-proofs-documentation.tex
+%%%
+%%%     See copyright notice and license in text.
+%%%
+%%%   - Documentation for the 'alb-proofs' LaTeX package.
+%%%
+
+
+
+\documentclass[11pt,a4paper,oneside,titlepage]{alb-corp}
+
+
+
+%
+% URL Typesetting
+%
+% See: 'url.sty'.
+
+\usepackage{url}
+
+
+%
+% Author Year Citations
+%
+% See: 'natbib.dvi'.
+
+\usepackage[sectionbib,round]{natbib}
+
+
+%
+% Set and order theoretic mathematical constructs.
+%
+% See: 'alb-order-theory-documentation.pdf'.
+
+\usepackage{alb-order-theory}
+
+
+%
+% The package being documented.
+
+\usepackage{alb-proofs}
+
+
+%
+% Sloppy Line Breaks
+%
+% Turn off careful line breaks and hyphenation.
+
+\sloppy
+
+
+
+\begin{document}
+
+
+%%%
+%%% TITLE
+%%%
+
+\albTitle{%
+  Typesetting Lamport's Structured Proofs Under \LaTeX{}%
+}
+
+
+\begin{albTitlePage}
+
+  \albTitlePageSection{Author}
+
+  Andrew Lincoln Burrow\\
+  \texttt{albcorp@gmail.com}
+
+
+  \albTitlePageSection{Abstract}
+
+  The \texttt{AlbProofs} package provides a single \texttt{alb-proofs}
+  \LaTeX{} package to implement Leslie Lamport's structured proofs
+  \citep{lamport93:_how_write_proof}.  While Lamport has provided his
+  own package, this package is designed to rectify certain deficiencies.
+  In particular, it provides improved type setting of labels for proof
+  resources and proof steps, markup structure which is isomorphic to the
+  proof's block structure, effective support for cross-referencing with
+  \AUCTeX{} and \RefTeX{}, and markup in the \albLogo{} name space.  The
+  package is supported by an emacs lisp file customising \AUCTeX{} and
+  \RefTeX{} which constructs labels in the file namespace.
+
+
+  \albTitlePageSection{Copyright}
+
+  This program may be distributed and/or modified under the conditions
+  of the \LaTeX{} Project Public License, either version 1.3 of this
+  license or (at your option) any later version.
+
+  \medskip{}
+
+  The latest version of this license is in
+  \begin{quote}
+    \url{http://www.latex-project.org/lppl.txt}
+  \end{quote}
+  and version 1.3 or later is part of all distributions of LaTeX version
+  2005/12/01 or later.
+
+  \medskip{}
+
+  This work has the LPPL maintenance status `author-maintained'.
+
+  \medskip{}
+
+  This work consists of the files
+  \begin{quote}
+    \begin{flushleft}
+      \url{alb-proofs.sty}, and \url{alb-proofs-documentation.tex}.
+    \end{flushleft}
+  \end{quote}
+
+
+  \albTitlePageSection{Version Information}
+
+  \verb$Revision$\\
+  \verb$Date$
+
+\end{albTitlePage}
+
+
+
+%%%
+%%% INTRODUCTION
+%%%
+
+\section{Introduction}
+\label{sec:alb-proofs-examples:intr}
+
+The \texttt{alb-proofs} \LaTeX{} package implements Leslie Lamport's
+structured proofs described in \citep{lamport93:_how_write_proof}.  A
+structured proof decomposes each argument into a sequence of steps.
+First come assumptions, then assertions, and finally a conclusion.  Each
+assumption introduces a variable or condition, and each assertion is
+itself the goal of a nested proof.  Together an assertion and its
+subproof are termed a \emph{proof step}.
+
+The purpose of the structured proof is to make all steps explicit and to
+sequester detail into the nested subproofs.  A useful approach is to
+first scan the top level assertions to take in the outline, and then to
+examine the subproofs in detail.  Ideally, the proof justifies each
+assertion by reference to a supporting mathematical proposition and a
+list of accessible assumptions and assertions.  In practice, the proof
+is resolved until each assertion can be argued succinctly in a few short
+sentences.
+
+Figure~\ref{fig:alb-proofs-documentation:example-syntax-struct-pro}
+shows a possible layout for a small proof.  It demonstrates two levels
+of nesting, where there are fresh assumptions in each nesting: the
+outer, and the nesting under $\albTuple{1}$2.
+
+It is important to understand the scope of assumptions and assertions.
+Access is determined by a rule that recurs on the nesting in the proof.
+Note that each assertion occurs in a sequence of steps with a common
+parent.  The assertion enjoys the assumptions and assertions that
+precede it in the list, and also those enjoyed by its parent.  For
+example, in
+Figure~\ref{fig:alb-proofs-documentation:example-syntax-struct-pro} the
+proof step at $\albTuple{2}$1 can make use of assumptions
+$\albTuple{1}$i, $\albTuple{1}$ii, and $\albTuple{2}$i and assertion
+$\albTuple{1}$1; it cannot use $\albTuple{1}$2 which does not precede
+it, but instead contains it; conversely, $\albTuple{1}$3 cannot use
+$\albTuple{2}$i, $\albTuple{2}$1, and $\albTuple{2}$2 but can use
+$\albTuple{1}$i, $\albTuple{1}$ii, $\albTuple{1}$1, and $\albTuple{1}$2
+because they precede it in the only sequence in which it participates.
+Note that access is determined by the structure rather than the
+labelling.
+
+The labelling of resources exploits the selectivity of the access rule.
+Since a proof step only has access to resources in one sequence per
+level of nesting, the sequence is uniquely identified by a nesting
+level.  Therefore, rather than generate labels of the form 1.2.1.1,
+labels concatenate the nesting level, written within angle brackets, and
+a further counter.  Assumptions use Roman numerals while assertions use
+Arabic numerals --- this is analogous to the page numbering in a book.
+
+The headings on assertions are extended to clarify the use of
+mathematical induction.  In this case, the top-level assertions are
+marked ``\textsc{Assert Base}'' or ``\textsc{Assert Induction}'', and
+the conclusion is marked ``\textsc{Q.E.D. by Mathematical Induction}''.
+The top-level assertions are restatements of the goal narrowed for the
+particular case.
+
+\begin{figure}
+  \begin{albProof}
+    \begin{albAssumptions}
+    \item \label{as:intr:1} %
+      \albAssume{\emph{assumption}}
+
+    \item \label{as:intr:2} %
+      \albAssume{\emph{assumption}}
+    \end{albAssumptions}
+
+    \begin{albAssertions}
+    \item \label{pf:intr:1} %
+      \albAssert{\emph{assertion}}
+
+      Proof of the assertion.
+
+    \item \label{pf:intr:2} %
+      \albAssert{\emph{assertion}}
+
+      \begin{albAssumptions}
+      \item \label{as:intr:3} %
+        \albAssume{\emph{assumption}}
+      \end{albAssumptions}
+
+      \begin{albAssertions}
+      \item \label{pf:intr:3} %
+        \albAssert{\emph{assertion}}
+
+        Proof of the assertion.
+
+      \item %
+        \albQED{}
+
+        Explanation of the conclusion.
+      \end{albAssertions}
+
+    \item %
+      \albQED{}
+
+      Explanation of the conclusion.
+    \end{albAssertions}
+  \end{albProof}
+  \caption[An example of the syntax of a structured proof]{%
+    An example of the syntax of a structured proof.}
+  \label{fig:alb-proofs-documentation:example-syntax-struct-pro}
+\end{figure}
+
+
+
+%%%
+%%% USING THE COMMANDS AND ENVIRONMENTS
+%%%
+
+\section{Using the Commands and Environments}
+\label{sec:alb-proofs-documentation:using-comm-envir}
+
+The environments of \texttt{alb-proofs} place certain syntactic
+restrictions on their use.  This section concerns these restrictions and
+the typographic meaning of the markup.
+Section~\ref{sec:alb-proofs-documentation:auctex-cust} describes how the
+\AUCTeX{} customisation eases the burden of entering syntactically
+correct \LaTeX{} code.
+
+
+
+\subsection{Structured Proof Environment}
+\label{sec:alb-proofs-documentation:struct-proof-envir}
+
+The \texttt{albProof} environment replaces the AMS\LaTeX{}
+\texttt{proof} environment to support structured proofs.  Content within
+a structured proof is recursively composed, where each level comprises
+an optional \texttt{albSketch} environment, an optional
+\texttt{albAssumptions} environment, and a mandatory
+\texttt{albAssertions} environment.  Recursion occurs because items in
+\texttt{albAssertions} environments can expand into subproofs.
+
+\begin{description}
+\item[\albLtxEnv{albProof}\albLtxOpt{name}] Compose a proof for a
+  mathematical proposition.  \albLtxPrm{name} is the name of the
+  proposition being proved.  This is typically a reference to a
+  theorem-like environment from \texttt{alb-theorems}.  The environment
+  contains an optional \texttt{albSketch} environment, an optional
+  \texttt{albAssumptions} environment, and a mandatory
+  \texttt{albAssertions} environment.
+
+\item[\albLtxEnv{albSketch}] Present a sketch of the proof.  The intent
+  is to allow comments on the proof strategy to imrpove readability.
+
+\item[\albLtxEnv{albAssumptions}] Enumerate the assumptions introduced
+  at the current proof step.  Each assumption is introduced by an
+  \texttt{item} command that may be labelled.  The assumption should be
+  marked up using either \texttt{albAssume} or \texttt{albSuppose}.
+
+\item[\albLtxCmd{albAssume}\albLtxArg{assumption}] Typeset an assumption
+  in a proof.  \albLtxPrm{assumption} is typically a mathematical
+  expression.  \texttt{albAssume} should be used inside
+  \texttt{albAssumptions} to indicate assumptions unless the proof is by
+  contradiction.  For example,
+  \begin{quote}
+\begin{verbatim}
+\albAssume{$x \in \albNaturals$}
+\end{verbatim}
+  \end{quote}
+  produces the following.
+  \begin{quote}
+    \albAssume{$x \in \albNaturals$}
+  \end{quote}
+
+\item[\albLtxCmd{albSuppose}\albLtxArg{supposition}] Typeset a
+  supposition in a proof by contradiction.  \albLtxPrm{supposition} is
+  typically a mathematical expression.  \texttt{albSuppose} should be
+  used inside \texttt{albAssumptions}.  For example,
+  \begin{quote}
+\begin{verbatim}
+\albSuppose{$x \in \albNaturals$}
+\end{verbatim}
+  \end{quote}
+  produces the following.
+  \begin{quote}
+    \albSuppose{$x \in \albNaturals$}
+  \end{quote}
+
+\item[\albLtxEnv{albAssertions}] Enumerate the sequence of assertions
+  establishing the truth of a proof step.  Each assertion is introduced
+  by an \texttt{item} command that may be labelled.  The assertion
+  should be marked up using one of the commands \texttt{albAssert},
+  \texttt{albAssertBase}, \texttt{albAssertInduction}, \texttt{albQED},
+  \texttt{albQEDbyContradiction}, or \texttt{albQEDbyInduction}.  These
+  commands correspond to the various stages in a proof by cases,
+  contradiction, or mathematical induction.
+
+  The proof of the assertion follows as either a free form description
+  or a nested proof detailed as a \texttt{albSketch},
+  \texttt{albAssumptions}, and \texttt{albAssertions} sequence.
+
+\item[\albLtxCmd{albAssert}\albLtxArg{assertion}] Typeset an assertion
+  in a proof.  \albLtxPrm{assertion} is typically a mathematical
+  expression.  \texttt{albAssert} should be used inside
+  \texttt{albAssertions}.  For example,
+  \begin{quote}
+\begin{verbatim}
+\albAssert{$F(x) \implies x \in \albNaturals$}
+\end{verbatim}
+  \end{quote}
+  produces the following.
+  \begin{quote}
+    \albAssert{$F(x) \implies x \in \albNaturals$}
+  \end{quote}
+
+\item[\albLtxCmd{albAssertBase}\albLtxArg{assertion}] Typeset the base
+  assertion in a proof by induction.  \albLtxPrm{assertion} is typically
+  a mathematical expression.  \texttt{albAssertBase} should be used
+  inside \texttt{albAssertions}.  For example,
+  \begin{quote}
+\begin{verbatim}
+\albAssertBase{$F(0) \in \albNaturals$}
+\end{verbatim}
+  \end{quote}
+  produces the following.
+  \begin{quote}
+    \albAssertBase{$F(0) \in \albNaturals$}
+  \end{quote}
+
+\item[\albLtxCmd{albAssertInduction}\albLtxArg{assertion}] Typeset the
+  assertion of induction in a proof by induction.  \albLtxPrm{assertion}
+  is typically a mathematical expression.  \texttt{albAssertInduction}
+  should be used inside \texttt{albAssertions}.  For example,
+  \begin{quote}
+\begin{verbatim}
+\albAssertInduction{$F(n) \in \albNaturals
+  \implies F(n + 1) \in \albNaturals$}
+\end{verbatim}
+  \end{quote}
+  produces the following.
+  \begin{quote}
+    \albAssertInduction{$F(n) \in \albNaturals \implies F(n + 1) \in
+      \albNaturals$}
+  \end{quote}
+
+\item[\albLtxCmd{albQED}, \albLtxCmd{albQEDbyContradiction}, and
+  \albLtxCmd{albQEDbyInduction}] Typeset the assertion that the sequence
+  of proof steps is complete.  The commands each terminate a sequence of
+  proof steps according to the form of proof.  For example,
+  \begin{quote}
+\begin{verbatim}
+\albQED{}
+\albQEDbyContradiction{}
+\albQEDbyInduction{}
+\end{verbatim}
+  \end{quote}
+  respectively produce the following.
+  \begin{quote}
+    \albQED{}
+    \albQEDbyContradiction{}
+    \albQEDbyInduction{}
+  \end{quote}
+\end{description}
+
+
+
+%%%
+%%% AUCTEX CUSTOMISATIONS
+%%%
+
+\section{\AUCTeX{} Customisations}
+\label{sec:alb-proofs-documentation:auctex-cust}
+
+Under \AUCTeX{} the file \texttt{alb-proofs.el} is automatically loaded
+whenever the \texttt{alb-proofs} package is used.  The customisation
+adds support for the commands and environments from \texttt{alb-proofs}.
+In addition, the \texttt{reftex-label} command (\texttt{C-c (})
+constructs labels for proof steps, and the \texttt{reftex-reference}
+command (\texttt{C-c )}) formats the context lines to better indicate
+the typeset output.
+
+
+
+%%%
+%%% BIBLIOGRAPHY
+%%%
+
+\bibliographystyle{plainnat}
+\bibliography{alb-bibliography}
+
+
+
+\end{document}
+
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:

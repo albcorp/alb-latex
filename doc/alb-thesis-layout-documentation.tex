@@ -1,0 +1,193 @@
+%%%
+%%% AlbThesisLayout/alb-thesis-layout-documentation.tex
+%%%
+%%%     See copyright notice and license in text.
+%%%
+%%%   - Documentation for the 'alb-thesis' LaTeX document class.
+%%%
+
+
+
+\documentclass[11pt,a4paper,oneside,titlepage]{alb-corp}
+
+
+
+%
+% URL Typesetting
+%
+% See: 'url.sty'.
+
+\usepackage{url}
+
+
+%
+% Sloppy Line Breaks
+%
+% Turn off careful line breaks and hyphenation.
+
+\sloppy
+
+
+
+\begin{document}
+
+
+
+%%%
+%%% TITLE
+%%%
+
+\albTitle{%
+  Page Layout for a PhD Thesis%
+}
+
+\begin{albTitlePage}
+
+  \albTitlePageSection{Author}
+
+  Andrew Lincoln Burrow\\
+  \url{albcorp@gmail.com}
+
+
+  \albTitlePageSection{Abstract}
+
+  The \texttt{AlbThesisLayout} package provides a single
+  \texttt{alb-thesis} \LaTeX{} document class.  The class implements a
+  book design for scholarly work in mathematical and computer science.
+  It sets up the page layout and section formatting.  It does not
+  provide additional \LaTeX{} commands or environments.
+
+
+  \albTitlePageSection{Copyright}
+
+  Copyright \copyright{} 2003--2006 Andrew Lincoln Burrow.\\
+  This program may be distributed and/or modified under the conditions
+  of the \LaTeX{} Project Public License, either version 1.3 of this
+  license or (at your option) any later version.
+
+  \medskip{}
+
+  The latest version of this license is in
+  \begin{quote}
+    \url{http://www.latex-project.org/lppl.txt}
+  \end{quote}
+  and version 1.3 or later is part of all distributions of LaTeX version
+  2005/12/01 or later.
+
+  \medskip{}
+
+  This work has the LPPL maintenance status `author-maintained'.
+
+  \medskip{}
+
+  This work consists of the files
+  \begin{quote}
+    \begin{flushleft}
+      \url{alb-thesis.cls}, \url{alb-thesis-glossary.ist},
+      \url{alb-thesis-index.ist}, and
+      \url{alb-thesis-layout-documentation.tex}.
+    \end{flushleft}
+  \end{quote}
+
+
+  \albTitlePageSection{Version Information}
+
+  \verb$Revision$\\
+  \verb$Date$
+
+\end{albTitlePage}
+
+
+
+%%%
+%%% INTRODUCTION
+%%%
+
+\section{Introduction}
+\label{sec:alb-thesis-layout-documentation:intr}
+
+The \texttt{AlbThesisLayout} package implements a book design suitable
+for a thesis or other large scholarly document.  It consists of a single
+document class \texttt{alb-thesis}.  It does not provide general purpose
+commands or environments.
+
+The page layout provides an allocation for margin notes on the outer
+edge.  Several elements exploit this space.  Chapter headings are right
+aligned against the outer edge, so that they access this space.  Large
+floats access the space via the \texttt{albInflate} environment of the
+\texttt{AlbFloatTools} package.  The page numbers of referenced
+propositions are displayed in the space, if the reference is one of the
+prefixed reference commands such as \albLtxCmd{albDRef} from the
+\texttt{AlbTheorems} package.
+
+Page numbers are placed in the running headers with the chapter and
+section information.  In twoside mode, the left header contains the page
+number, chapter title, and chapter number, while the right header
+contains the section number, section title, and page number.  In each
+case, the space for margin notes accomodates the page number.
+
+
+
+%%%
+%%% SUGGESTED DOCUMENT STRUCTURE
+%%%
+
+\section{Suggested Document Structure}
+\label{sec:alb-thesis-layout-documentation:sugg-docum-struct}
+
+The following guidelines reflect the design goals of the
+\texttt{alb-thesis} document class.  They are presented in terms of page
+layout options.  Although, all large documents should exploit the
+\albLtxCmd{include} command, this aspect of document structure is not
+discussed here.
+
+
+
+\subsection{Page Layout Options}
+\label{sec:alb-thesis-layout-documentation:page-layout-opti}
+
+The \texttt{alb-thesis} document class attempts to respect page layout
+options.  In particular, you can use of \texttt{oneside}, and
+\texttt{twoside} as global options.  It makes little sense to declare a
+large document \texttt{notitlepage}.  Furthermore, the page layout will
+not accomodate \texttt{twocolumn} or \texttt{reversemp}.  The page
+layout accomodates \texttt{a4paper} and \texttt{letterpaper} page sizes.
+
+Page layout options must be placed in the \texttt{documentclass}
+declaration, and each relevant option should be explicitly declared
+since the \texttt{AlbLaTeXDocumentTemplate} makefile parses document
+class options.  The following content is a typical example of the
+document class declaration.
+\begin{quote}
+\begin{verbatim}
+\documentclass[10pt,a4paper,twoside]{alb-thesis}
+\end{verbatim}
+\end{quote}
+
+
+
+%%%
+%%% MAKEFILE TARGETS
+%%%
+
+\section{Makefile Targets}
+\label{sec:alb-thesis-layout-documentation:makef-targ}
+
+Given documents of the \texttt{alb-thesis} class are expected to contain
+an index, it makes good sense to use the makefile from the
+\texttt{AlbLaTeXDocumentTemplate} package.  This makefile will detect
+the existence of index commands and take the appropriate steps.  The
+target \texttt{all} is a synonym for \texttt{idx}, which generates the
+final PDF document such that the index references are correct.
+
+
+
+\end{document}
+
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% ispell-local-dictionary: "british"
+%%% End:

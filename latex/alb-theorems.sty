@@ -1,0 +1,353 @@
+%%%
+%%% AlbTheorems/alb-theorems.sty
+%%%
+%%%     Copyright (C) 1999-2006 Andrew Lincoln Burrow
+%%%
+%%%     This program may be distributed and/or modified under the
+%%%     conditions of the LaTeX Project Public License, either version
+%%%     1.3 of this license or (at your option) any later version.
+%%%
+%%%     The latest version of this license is in
+%%%
+%%%         http://www.latex-project.org/lppl.txt
+%%%
+%%%     and version 1.3 or later is part of all distributions of LaTeX
+%%%     version 2005/12/01 or later.
+%%%
+%%%     This work has the LPPL maintenance status 'author-maintained'.
+%%%
+%%%     This program consists of the files 'alb-theorems.sty' and
+%%%     'alb-theorems-documentation.tex'.
+%%%
+%%%   - Provides a minimal collection of theorem type environments.
+%%%
+%%%   - See: 'alb-theorems-documentation.pdf'.
+%%%
+
+
+
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{alb-theorems}
+
+
+
+%
+% No options recognised.
+
+\ProcessOptions
+
+
+%
+% Load required packages.
+
+% Require an \ifthenelse{}{}{} command to tailor definitions for the
+% class.
+% See: 'ifthen.dvi'.
+\RequirePackage{ifthen}
+
+% Use the 'calc' package to simplify length expressions.
+% See: 'calc.dvi'.
+\RequirePackage{calc}
+
+% Use the 'stdclsdv' package to check supported section commands.
+% See: 'stdclsdv.dvi'.
+\RequirePackage{stdclsdv}
+
+% Require the extensions to the new theorem environment.
+% See: 'amsthdoc.dvi', and Section 2.23 of 'amsclass.dvi'.
+\RequirePackage{amsthm}
+
+
+
+\makeatletter
+
+
+
+%
+% \alb@Ref command.
+%
+% Stabilise the changes occuring from within the 'hyperref' package.
+% This cannot be resolved until all packages are loaded.
+
+\newcommand*{\alb@Ref}[1]{}
+\AtBeginDocument{%
+  \@ifpackageloaded{hyperref}{% THEN ...
+    \renewcommand*{\alb@Ref}[1]{\hypergetref{#1}}%
+  }{% ELSE ...
+    \renewcommand*{\alb@Ref}[1]{\ref{#1}}%
+  }%
+}
+
+
+%
+% \alb@TheoremIdFrom*Bng commands.
+%
+% Given a string of full stop separated numbers terminated by an
+% exclamation point, compute a single number and store the result in the
+% counter 'alb@TheoremId'.
+%
+%   - The TeX parser is utilised via delimited arguments, and hence
+%     there is a command for each from of string.
+%
+%   - The number is computed by summation of the number parts.  In
+%     particular, the string is treated as number in base 1000, where
+%     the places are separated by full stops.  For example:
+%
+%         3!       becomes  3
+%         2.1.!    becomes  2,001
+%
+%   - Each computed number is intended to identify a theorem object.
+%
+%   - The source of the string is intended to be a reference.
+%
+%   - The commands play a role in the \alb@RecordTheoremRef command.
+
+% Counter storing the last parsed theorem identifier.
+\newcounter{alb@TheoremId}
+
+% Exploit TeX delimited arguments to consume waste tokens.
+\def\alb@GobbleBng#1!{}
+
+% Parse the theorem identifier from a string of form: n!
+\def\alb@TheoremIdFromNumBng#1!{%
+  \afterassignment\alb@GobbleBng\c@alb@TheoremId=#1!%
+}
+
+% Parse the theorem identifier from a string of form: n.n!
+\def\alb@TheoremIdFromNumDotNumBng#1.#2!{%
+  \afterassignment\alb@GobbleBng\c@alb@TheoremId=#1!%
+  \multiply\c@alb@TheoremId by 1000%
+  \afterassignment\alb@GobbleBng\advance\c@alb@TheoremId by #2!%
+}
+
+
+%
+% \alb@RecordTheoremRef{#1}{#2}{#3} command.
+%
+% Record a reference to the theorem with label #2.
+%
+%   - An identifier is constructed for the theorem using the
+%     \alb@TheoremIdFrom*Bng command #1.
+%
+%   - The theorem reference is recorded in \alb@TheoremRefList as a
+%     macro of the form \alb@TheoremRef{#4}{#3}, where #4 is the fully
+%     expanded identifier and the expansion of #3 is deferred until the
+%     display.
+%
+%   - The theorem reference replaces a previous reference with the same
+%     identifier, and \alb@TheoremRefList is left in order according to
+%     the identifiers.%
+%
+%   - \alb@TheoremRefList is manipulated by letting \alb@TheoremRef to a
+%     macro and then evaluating \alb@TheoremRefList.  Hence,
+%     \alb@AppendPredTheoremRef, \alb@AppendSuccTheoremRef, and
+%     \alb@UnwrapTheoremRef.
+
+% Set \alb@TheoremRefList to \relax to indicate that it is not
+% expandable.
+\let\alb@TheoremRefList=\relax
+
+% \alb@AppendTheoremRef{#1}{#2}: Append \alb@TheoremRef{#1}{#2} to
+% \alb@TheoremRefList.
+\def\alb@AppendTheoremRef#1#2{%
+  \toks1=\expandafter{\alb@TheoremRefList}%
+  \toks2={{#2}}%
+  \xdef\alb@TheoremRefList{%
+    \the\toks1 %
+    \noexpand\alb@TheoremRef{#1}\the\toks2 %
+  }%
+}
+
+% \alb@AppendPredTheoremRef{#1}{#2}: Append \alb@TheoremRef{#1}{#2} to
+% \alb@TheoremRefList if #1 is less than 'alb@TheoremId'.
+\def\alb@AppendPredTheoremRef#1#2{%
+  \ifnum #1<\number\c@alb@TheoremId%
+    \alb@AppendTheoremRef{#1}{#2}%
+  \fi%
+}
+
+% \alb@AppendSuccTheoremRef{#1}{#2}: Append \alb@TheoremRef{#1}{#2} to
+% \alb@TheoremRefList if #1 is greater than 'alb@TheoremId'.
+\def\alb@AppendSuccTheoremRef#1#2{%
+  \ifnum #1>\number\c@alb@TheoremId%
+    \alb@AppendTheoremRef{#1}{#2}%
+  \fi%
+}
+
+% \alb@RecordTheoremRef{#1}{#2}{#3} command.
+\newcommand*{\alb@RecordTheoremRef}[3]{%
+  \expandafter\ifx\csname r@#2\endcsname\relax%
+    %
+  \else%
+    % Compute the identifer for the latest theorem reference.
+    \edef\alb@IdFromArgs{\noexpand#1\alb@Ref{#2}!}\alb@IdFromArgs%
+    %
+    % Store the existing list of references, and reset the list.
+    \toks0=\expandafter{\alb@TheoremRefList}%
+    \gdef\alb@TheoremRefList{}%
+    %
+    % Recreate the list of references to include the new reference.
+    {\let\alb@TheoremRef=\alb@AppendPredTheoremRef\the\toks0 }%
+    \alb@AppendTheoremRef{\number\c@alb@TheoremId}{#3}%
+    {\let\alb@TheoremRef=\alb@AppendSuccTheoremRef\the\toks0 }%
+  \fi%
+}
+
+
+%
+% \alb@ExpandTheoremRefList command.
+%
+% Set \alb@TheoremRefList to \relax to indicate that it is not
+% expandable.
+
+% \alb@UnwrapTheoremRef{#1}{#2}: Discard wrapper for final expansion.
+\def\alb@UnwrapTheoremRef#1#2{%
+  #2%
+}
+
+\newcommand*{\alb@ExpandTheoremRefList}[0]{%
+  \let\alb@TheoremRef=\alb@UnwrapTheoremRef%
+  \alb@TheoremRefList%
+}
+
+
+%
+% 'albPropositions' list environment.
+%
+% Provide an additional environment to be used within theorem-like
+% environments to enumerate propositions.  Note, that the label is
+% guaranteed to be typeset in roman rather than italic, as is the
+% mathematical convention.
+
+\newcounter{albPropI}
+\renewcommand{\thealbPropI}{%
+  (\roman{albPropI})%
+}
+\newcommand*{\alb@LabelProposition}[1]{%
+  \hfill\ensuremath{\mathrm{\thealbPropI}}%
+}
+\newenvironment{albPropositions}{%
+  \begin{list}{}{%
+      \usecounter{albPropI}%
+      \renewcommand*{\makelabel}{\alb@LabelProposition}%
+      \setlength{\leftmargin}{3em}%
+      \setlength{\labelwidth}{2.5em}%
+      \setlength{\labelsep}{0.5em}%
+      \setlength{\listparindent}{\parindent}%
+      \setlength{\parsep}{\parskip}%
+      \setlength{\itemsep}{0.25\baselineskip}%
+      \setlength{\topsep}{0.25\baselineskip}%
+      \setlength{\partopsep}{0pt}%
+    }%
+}{%
+  \end{list}%
+}
+
+
+%
+% 'albDefinition', 'albTheorem', 'albLemma', 'albRemark', 'albCorollary'
+% environments.
+%
+% Use five theorem like structures: 'albDefinition', 'albTheorem',
+% 'albLemma', 'albRemark', and 'albCorollary'.  All five structures
+% share the same numbering scheme, which is subordinate to chapter
+% numbering.  Also the corresponding AUCTeX style customises RefTeX to
+% provide labels based on the file name and a unique ID.
+
+\theoremstyle{definition}
+\ifthenelse{\boolean{SCDknownclass}\AND\boolean{SCDchapter}}{% THEN
+  \newtheorem{albDefinition}{Definition}[chapter]%
+  \let\alb@TheoremIdCmd=\alb@TheoremIdFromNumDotNumBng%
+}{% ELSE
+  \newtheorem{albDefinition}{Definition}%
+  \let\alb@TheoremIdCmd=\alb@TheoremIdFromNumBng%
+}
+\theoremstyle{plain}
+\newtheorem{albTheorem}[albDefinition]{Theorem}
+\newtheorem{albLemma}[albDefinition]{Lemma}
+\newtheorem{albRemark}[albDefinition]{Remark}
+\newtheorem{albCorollary}[albDefinition]{Corollary}
+
+% The 'hyperref' package needs \theH... versions of \the... commands.
+% The result is appended to 'definition' to generate an anchor name.
+% Therefore, the \theHalbDefinition command must generate a name which
+% is unique amongst the theorems and definitions in the document.
+\ifthenelse{\isundefined{\theHalbDefinition}}{% THEN
+  \newcommand{\theHalbDefinition}[0]{\thealbDefinition}%
+}{% ELSE
+  \renewcommand{\theHalbDefinition}[0]{\thealbDefinition}%
+}
+
+
+%
+% \albTheoremSeparator command.
+%
+% Command to separate consecutive theorem-like environments in order to
+% supresse excessive whitespace.
+
+\newcommand*{\albTheoremSeparator}[0]{%
+  \vspace{-\topsep}%
+}
+
+
+%
+% \albDRef, \albTRef, \albLRef, \albRRef, \albCRef commands
+%
+% Match theorem like structures with reference commands that prefix the
+% label with a letter representing the type of theorem structure.  The
+% starred form does not store the cross reference material.
+
+% \alb@PrefixedRef{#1}{#2}: place #1 in front of the unadorned
+% reference to #2 separated by a thin space.
+\def\alb@PrefixedRef#1#2{%
+  \textsc{#1}\nobreak\hspace{0.1em}\ref{#2}%
+}
+
+\newcommand*{\albDRef}[1]{%
+  \alb@PrefixedRef{d}{#1}%
+  \alb@RecordTheoremRef%
+    {\alb@TheoremIdCmd}%
+    {#1}%
+    {\penalty-100\alb@PrefixedRef{d}{#1}\hfill\pageref{#1}}%
+}
+\newcommand*{\albTRef}[1]{%
+  \alb@PrefixedRef{t}{#1}%
+  \alb@RecordTheoremRef%
+    {\alb@TheoremIdCmd}%
+    {#1}%
+    {\penalty-100\alb@PrefixedRef{t}{#1}\hfill\pageref{#1}}%
+}
+\newcommand*{\albLRef}[1]{%
+  \alb@PrefixedRef{l}{#1}%
+  \alb@RecordTheoremRef%
+    {\alb@TheoremIdCmd}%
+    {#1}%
+    {\penalty-100\alb@PrefixedRef{l}{#1}\hfill\pageref{#1}}%
+}
+\newcommand*{\albRRef}[1]{%
+  \alb@PrefixedRef{r}{#1}%
+  \alb@RecordTheoremRef%
+    {\alb@TheoremIdCmd}%
+    {#1}%
+    {\penalty-100\alb@PrefixedRef{r}{#1}\hfill\pageref{#1}}%
+}
+\newcommand*{\albCRef}[1]{%
+  \alb@PrefixedRef{c}{#1}%
+  \alb@RecordTheoremRef%
+    {\alb@TheoremIdCmd}%
+    {#1}%
+    {\penalty-100\alb@PrefixedRef{c}{#1}\hfill\pageref{#1}}%
+}
+
+
+
+\makeatother
+
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% TeX-parse-self: nil
+%%% TeX-auto-save: nil
+%%% End:
