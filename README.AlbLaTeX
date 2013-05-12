@@ -69,6 +69,11 @@ formatting mathematics and computer algorithms.
 
   See ``alb-proofs-documentation.pdf`` for further information.
 
+`alb-avm.sty`
+  Provides environments and commands to typeset typed feature structures
+  and inequated typed feature structures in attribute-value matrix (AVM)
+  notation.  See ``alb-avm-documentation.pdf`` for further information.
+
 ------------------
 Emacs lisp modules
 ------------------
