@@ -44,6 +44,9 @@
                                      "/style"))
   "Directory containing hand-generated AUCTeX style files for AlbLaTeX.")
 
+;; Ensure TeX-style-private is initialised for setup by scripts
+(defvar TeX-style-private nil)
+
 ;; Set label construction rules and information on environments for
 ;; \label-\ref use to buffer local.  This allows AUCTeX style
 ;; information to further customise AUCTeX on a per buffer level
