@@ -1,7 +1,7 @@
 %%%
-%%% AlbJournalLayout/alb-journal.cls
+%%% AlbLaTeX/latex/alb-journal.cls
 %%%
-%%%     Copyright (C) 2005-2008 Andrew Lincoln Burrow
+%%%     Copyright (C) 2005-2008, 2013 Andrew Lincoln Burrow
 %%%
 %%%     This program may be distributed and/or modified under the
 %%%     conditions of the LaTeX Project Public License, either version
@@ -16,15 +16,20 @@
 %%%
 %%%     This work has the LPPL maintenance status 'author-maintained'.
 %%%
-%%%     This work consists of the files 'alb-journal.cls',
-%%%     'alb-journal-glossary.ist', 'alb-journal-index.ist', and
-%%%     'alb-journal-layout-documentation.tex'.
+%%%     This work consists of the files 'alb-algorithms.sty', 'alb-avm.sty',
+%%%     'alb-corp.cls', 'alb-float-tools.sty', 'alb-graph-theory.sty',
+%%%     'alb-journal.cls', 'alb-order-theory.sty', 'alb-proofs.sty',
+%%%     'alb-theorems.sty', 'alb-thesis.cls', 'alb-algorithms.tex',
+%%%     'alb-avm.tex', 'alb-corp-layout.tex', 'alb-float-tools.tex',
+%%%     'alb-graph-theory.tex', 'alb-journal-layout.tex',
+%%%     'alb-order-theory.tex', 'alb-proofs.tex', 'alb-theorems.tex', and
+%%%     'alb-thesis-layout.tex'.
 %%%
 %%%   - Set up the page layout, and section formatting to suite a
 %%%     research journal, where each dated entry is a chapter, and each
 %%%     note is a paragraph section.
 %%%
-%%%   - See: 'alb-journal-layout-documentation.pdf'.
+%%%   - See: 'alb-journal-layout.pdf'.
 %%%
 
 
@@ -351,7 +356,7 @@
 
 \makeatother
 
-
+
 
 %%% Local Variables:
 %%% mode: latex

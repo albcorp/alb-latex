@@ -1,7 +1,7 @@
 %%%
-%%% AlbThesisLayout/alb-thesis.cls
+%%% AlbLaTeX/latex/alb-thesis.cls
 %%%
-%%%     Copyright (C) 2002-2006 Andrew Lincoln Burrow
+%%%     Copyright (C) 2002-2006, 2013 Andrew Lincoln Burrow
 %%%
 %%%     This program may be distributed and/or modified under the
 %%%     conditions of the LaTeX Project Public License, either version
@@ -16,14 +16,19 @@
 %%%
 %%%     This work has the LPPL maintenance status 'author-maintained'.
 %%%
-%%%     This work consists of the files 'alb-thesis.cls',
-%%%     'alb-thesis-glossary.ist', 'alb-thesis-index.ist', and
-%%%     'alb-thesis-layout-documentation.tex'.
+%%%     This work consists of the files 'alb-algorithms.sty', 'alb-avm.sty',
+%%%     'alb-corp.cls', 'alb-float-tools.sty', 'alb-graph-theory.sty',
+%%%     'alb-journal.cls', 'alb-order-theory.sty', 'alb-proofs.sty',
+%%%     'alb-theorems.sty', 'alb-thesis.cls', 'alb-algorithms.tex',
+%%%     'alb-avm.tex', 'alb-corp-layout.tex', 'alb-float-tools.tex',
+%%%     'alb-graph-theory.tex', 'alb-journal-layout.tex',
+%%%     'alb-order-theory.tex', 'alb-proofs.tex', 'alb-theorems.tex', and
+%%%     'alb-thesis-layout.tex'.
 %%%
 %%%   - Set up the page layout, section formatting, and front and back
 %%%     matter commands for a technical thesis.
 %%%
-%%%   - See: 'alb-thesis-layout-documentation.pdf'.
+%%%   - See: 'alb-thesis-layout.pdf'.
 %%%
 
 
@@ -369,8 +374,6 @@
 \makeatother
 
 
-
-
 
 %%% Local Variables:
 %%% mode: latex
