@@ -1,7 +1,7 @@
 ;;;
-;;; AlbAUCTeX/alb-latex-read.el
+;;; AlbLaTeX/lisp/alb-latex-read.el
 ;;;
-;;;     Copyright (C) 2000-2006 Andrew Lincoln Burrow
+;;;     Copyright (C) 2000-2006, 2013 Andrew Lincoln Burrow
 ;;;
 ;;;     This library is free software; you can redistribute it and/or
 ;;;     modify it under the terms of the GNU General Public License as
@@ -99,14 +99,14 @@ If PROMPT is non-nil, use it as the prompt.  Otherwise, use a default.
 This function customises AUCTeX, via `alb-TeX-arg-alignment-point' and
 others."
   (completing-read (TeX-argument-prompt optional prompt "Alignment point")
-		   (append (if optional '(("")) '())
-			   '(("tl") ("tr") ("tc")
-			     ("bl") ("br") ("bc")
-			     ("Bl") ("Br") ("Bc")
-			     ("cl") ("cr") ("cc")))
-		   nil
-		   t
-		   "Bl"))
+                   (append (if optional '(("")) '())
+                           '(("tl") ("tr") ("tc")
+                             ("bl") ("br") ("bc")
+                             ("Bl") ("Br") ("Bc")
+                             ("cl") ("cr") ("cc")))
+                   nil
+                   t
+                   "Bl"))
 
 
 
@@ -135,40 +135,40 @@ such value.
 
 This function customises AUCTeX, via `alb-TeX-arg-keyvalues'."
   (let* ((pre-prmpt (if prompt
-			prompt
-		      "\\includegraphics option"))
-	 (pre-kvals (if keyvalues
-			keyvalues
-		      alb-LaTeX-keyvalues-includegraphics))
-	 (key-prmpt (TeX-argument-prompt optional
-					 (concat pre-prmpt ", key")
-					 ""))
-	 (key (completing-read key-prmpt
-			       (if optional
-				   (append '(("")) pre-kvals)
-				 pre-kvals)
-			       nil t)))
+                        prompt
+                      "\\includegraphics option"))
+         (pre-kvals (if keyvalues
+                        keyvalues
+                      alb-LaTeX-keyvalues-includegraphics))
+         (key-prmpt (TeX-argument-prompt optional
+                                         (concat pre-prmpt ", key")
+                                         ""))
+         (key (completing-read key-prmpt
+                               (if optional
+                                   (append '(("")) pre-kvals)
+                                 pre-kvals)
+                               nil t)))
     (if (not (equal key ""))
-	(let* ((key-assoc (cdr (assoc key pre-kvals)))
-	       (val-prmpt (TeX-argument-prompt nil
-					       (concat pre-prmpt
-						       ", "
-						       (if (car key-assoc)
-							   (car key-assoc)
-							 "value"))
-					       ""))
-	       (val-initv (cadr key-assoc))
-	       (value (if (cddr key-assoc)
-			  ;; Select one of the supplied legal values.
-			  (completing-read val-prmpt
-					   (cddr key-assoc)
-					   nil
-					   t
-					   val-initv)
-			;; Input an arbitrary string.
-			(read-from-minibuffer val-prmpt
-					      val-initv))))
-	  (list key value)))))
+        (let* ((key-assoc (cdr (assoc key pre-kvals)))
+               (val-prmpt (TeX-argument-prompt nil
+                                               (concat pre-prmpt
+                                                       ", "
+                                                       (if (car key-assoc)
+                                                           (car key-assoc)
+                                                         "value"))
+                                               ""))
+               (val-initv (cadr key-assoc))
+               (value (if (cddr key-assoc)
+                          ;; Select one of the supplied legal values.
+                          (completing-read val-prmpt
+                                           (cddr key-assoc)
+                                           nil
+                                           t
+                                           val-initv)
+                        ;; Input an arbitrary string.
+                        (read-from-minibuffer val-prmpt
+                                              val-initv))))
+          (list key value)))))
 
 
 
@@ -197,47 +197,47 @@ unsupported.
 
 This function customises AUCTeX."
   (let* ((dname (cond
-		 ((equal t master)
-		  (file-name-directory (buffer-file-name)))
-		 ((stringp master)
-		  (cond			; String cases:
-		   ((file-exists-p master)
-		    (file-name-directory (expand-file-name master)))
-		   ((file-exists-p (concat master "." TeX-default-extension))
-		    (file-name-directory
-		     (expand-file-name
-		      (concat master "." TeX-default-extension))))
-		   (t
-		    (error "%s: TeX master file does not exist" master))))
-		 ((symbolp master)	; Symbol cases:
-		  (cond
-		   ((eq 'shared master)
-		    nil)
-		   (t
-		    (error "Unsupported TeX master value"))))
-		 ((null master)
-		  (error "Unsupported TeX master value of nil"))))
-	 (spath (reftex-access-search-path type))
-	 (head (car spath))
-	 (tail (cdr spath))
-	 (result '()))
+                 ((equal t master)
+                  (file-name-directory (buffer-file-name)))
+                 ((stringp master)
+                  (cond                 ; String cases:
+                   ((file-exists-p master)
+                    (file-name-directory (expand-file-name master)))
+                   ((file-exists-p (concat master "." TeX-default-extension))
+                    (file-name-directory
+                     (expand-file-name
+                      (concat master "." TeX-default-extension))))
+                   (t
+                    (error "%s: TeX master file does not exist" master))))
+                 ((symbolp master)      ; Symbol cases:
+                  (cond
+                   ((eq 'shared master)
+                    nil)
+                   (t
+                    (error "Unsupported TeX master value"))))
+                 ((null master)
+                  (error "Unsupported TeX master value of nil"))))
+         (spath (reftex-access-search-path type))
+         (head (car spath))
+         (tail (cdr spath))
+         (result '()))
     (if dname
-	;; Expand the filenames on the search path with DNAME, and
-	;; discard unreadable directories.
-	(while head
-	  (setq head (file-name-directory (expand-file-name head dname)))
-	  (if (file-readable-p head)
-	      (setq result (cons head result)))
-	  (setq head (car tail))
-	  (setq tail (cdr tail)))
+        ;; Expand the filenames on the search path with DNAME, and
+        ;; discard unreadable directories.
+        (while head
+          (setq head (file-name-directory (expand-file-name head dname)))
+          (if (file-readable-p head)
+              (setq result (cons head result)))
+          (setq head (car tail))
+          (setq tail (cdr tail)))
       ;; Filter out relative filenames and unreadble directories
       ;; from the search path.
       (while head
-	(if (and (not (char-equal (aref head 0) ?.))
-		 (file-readable-p head))
-	    (setq result (cons (file-name-directory head) result)))
-	(setq head (car tail))
-	(setq tail (cdr tail))))
+        (if (and (not (char-equal (aref head 0) ?.))
+                 (file-readable-p head))
+            (setq result (cons (file-name-directory head) result)))
+        (setq head (car tail))
+        (setq tail (cdr tail))))
     ;; Return the list in the initial order.
     (nreverse result)))
 
@@ -256,10 +256,10 @@ stop, e.g., \"tex\", \"bib\", or \"epsi?\".
 
 This function customises AUCTeX."
   (let* ((regxp (concat "^\\(.*\\)\\.\\(" re-extn "\\)$"))
-	 (files (apply 'append (mapcar (lambda (dir)
-					 (directory-files dir nil regxp))
-				       (alb-LaTeX-private-tex-search-path
-					type TeX-master)))))
+         (files (apply 'append (mapcar (lambda (dir)
+                                         (directory-files dir nil regxp))
+                                       (alb-LaTeX-private-tex-search-path
+                                        type TeX-master)))))
     (if strip
         ;; Return the filenames stripped of extensions and sorted.
         (sort (mapcar (lambda (fname)
@@ -284,11 +284,11 @@ If PROMPT is non-nil, use it as the prompt.  Otherwise, use a default.
 
 This function customises AUCTeX."
   (completing-read (TeX-argument-prompt optional prompt "TeX file")
-		   (mapcar 'list
-			   (alb-LaTeX-private-tex-files
+                   (mapcar 'list
+                           (alb-LaTeX-private-tex-files
                             "tex" TeX-default-extension t))
-		   nil
-		   t))
+                   nil
+                   t))
 
 
 
@@ -304,10 +304,10 @@ If PROMPT is non-nil, use it as the prompt.  Otherwise, use a default.
 This function customises AUCTeX."
   (let ((re-extn (mapconcat 'identity BibTeX-file-extensions "\\|")))
     (completing-read (TeX-argument-prompt optional prompt "BibTeX database")
-		     (mapcar 'list
-			     (alb-LaTeX-private-tex-files "bib" re-extn t))
-		     nil
-		     t)))
+                     (mapcar 'list
+                             (alb-LaTeX-private-tex-files "bib" re-extn t))
+                     nil
+                     t)))
 
 
 
@@ -323,10 +323,10 @@ If PROMPT is non-nil, use it as the prompt.  Otherwise, use a default.
 This function customises AUCTeX."
   (let ((re-extn (mapconcat 'identity alb-LaTeX-graphic-extensions "\\|")))
     (completing-read (TeX-argument-prompt optional prompt "Graphic file")
-		     (mapcar 'list
-			     (alb-LaTeX-private-tex-files "tex" re-extn nil))
-		     nil
-		     t)))
+                     (mapcar 'list
+                             (alb-LaTeX-private-tex-files "tex" re-extn nil))
+                     nil
+                     t)))
 
 
 
@@ -341,7 +341,7 @@ If PROMPT is non-nil, use it as the prompt.  Otherwise,
 
 This function customises AUCTeX."
   (TeX-argument-insert (alb-LaTeX-read-alignment-point optional prompt)
-		       optional))
+                       optional))
 
 
 
@@ -361,17 +361,17 @@ default.
 
 This function customises AUCTeX."
   (let* ((keyvalues (if (symbolp symbol) (eval symbol)))
-	 (pair (alb-LaTeX-read-keyvalue optional prompt keyvalues)))
+         (pair (alb-LaTeX-read-keyvalue optional prompt keyvalues)))
     (cond (pair
-	   (insert (if optional "[]" "{}"))
-	   (backward-char 1)
-	   (insert (car pair) "=" (cadr pair))
-	   (while (setq pair
-			(alb-LaTeX-read-keyvalue optional prompt keyvalues))
-	     (insert ", " (car pair) "=" (cadr pair)))
-	   (forward-char 1))
-	  ((and (null pair) (not optional))
-	   (insert "{}")))))
+           (insert (if optional "[]" "{}"))
+           (backward-char 1)
+           (insert (car pair) "=" (cadr pair))
+           (while (setq pair
+                        (alb-LaTeX-read-keyvalue optional prompt keyvalues))
+             (insert ", " (car pair) "=" (cadr pair)))
+           (forward-char 1))
+          ((and (null pair) (not optional))
+           (insert "{}")))))
 
 
 
@@ -385,7 +385,7 @@ If PROMPT is non-nil, use it as the prompt.  Otherwise,
 
 This function customises AUCTeX."
   (TeX-argument-insert (alb-LaTeX-read-latex-file optional prompt)
-		       optional))
+                       optional))
 
 
 
@@ -399,7 +399,7 @@ If PROMPT is non-nil, use it as the prompt.  Otherwise,
 
 This function customises AUCTeX."
   (TeX-argument-insert (alb-LaTeX-read-bibtex-file optional prompt)
-		       optional))
+                       optional))
 
 
 
@@ -413,7 +413,7 @@ If PROMPT is non-nil, use it as the prompt.  Otherwise,
 
 This function customises AUCTeX."
   (TeX-argument-insert (alb-LaTeX-read-graphic-file optional prompt)
-		       optional))
+                       optional))
 
 
 
@@ -430,8 +430,6 @@ inserting the macro name.  See documentation for `TeX-add-symbols'."
   (TeX-argument-insert (reftex-reference type t) nil))
 
 
-
-
 
 ;;; Local Variables:
 ;;; mode: emacs-lisp

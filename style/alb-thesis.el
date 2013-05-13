@@ -1,7 +1,7 @@
 ;;;
-;;; AlbThesisLayout/style/alb-thesis.el
+;;; AlbLaTeX/style/alb-thesis.el
 ;;;
-;;;     Copyright (C) 2003 Andrew Lincoln Burrow
+;;;     Copyright (C) 2003, 2013 Andrew Lincoln Burrow
 ;;;
 ;;;     This library is free software; you can redistribute it and/or
 ;;;     modify it under the terms of the GNU General Public License as
@@ -54,8 +54,6 @@
      '("printglossary")))))
 
 
-
-
 
 ;;; Local Variables:
 ;;; mode: emacs-lisp

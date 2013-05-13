@@ -1,7 +1,7 @@
 ;;;
-;;; AlbAUCTeXParser/alb-latex-parse.el
+;;; AlbLaTeX/lisp/alb-latex-parse.el
 ;;;
-;;;     Copyright (C) 2000-2005 Andrew Lincoln Burrow
+;;;     Copyright (C) 2000-2005, 2013 Andrew Lincoln Burrow
 ;;;
 ;;;     This library is free software; you can redistribute it and/or
 ;;;     modify it under the terms of the GNU General Public License as
@@ -18,37 +18,39 @@
 ;;;     Software Foundation, Inc., 59 Temple Place - Suite 330, Boston,
 ;;;     MA 02111-1307, USA.
 ;;;
-;;;   - This recursive descent parser lacks a lexical analyzer --- it relies
-;;;     on the value of point to record the state of the parser, and uses
-;;;     regular expressions to recognise tokens.  Therefore, lookahead is
-;;;     always available via the `looking-at' function, and tokens are
-;;;     consumed by advancing point according to the match data.
+;;;   - This recursive descent parser lacks a lexical analyzer --- it
+;;;     relies on the value of point to record the state of the parser,
+;;;     and uses regular expressions to recognise tokens.  Therefore,
+;;;     lookahead is always available via the `looking-at' function, and
+;;;     tokens are consumed by advancing point according to the match
+;;;     data.
 ;;;
-;;;     Since lexical analysis relies on regular expressions the parser must
-;;;     be operating with `case-fold-search' set to nil.  This is explicitly
-;;;     handled in `alb-LaTeX-parse-document-environment' and
-;;;     `alb-LaTeX-parse-inclusion'.  Other file inclusion parsers must follow
-;;;     this model, and clients using other entry points should bind
-;;;     `case-fold-search' explicitly before calling the parser.
+;;;     Since lexical analysis relies on regular expressions the parser
+;;;     must be operating with `case-fold-search' set to nil.  This is
+;;;     explicitly handled in `alb-LaTeX-parse-document-environment' and
+;;;     `alb-LaTeX-parse-inclusion'.  Other file inclusion parsers must
+;;;     follow this model, and clients using other entry points should
+;;;     bind `case-fold-search' explicitly before calling the parser.
 ;;;
 ;;;   - Regexps and functions to parse LaTeX source in an emacs buffer.
 ;;;
 ;;;   - The parser recognizes a lexically restricted version of LaTeX,
 ;;;     intended to correspond to good practice.  It is sensitive to the
 ;;;     subtleties of whitespace in LaTeX, but cannot parse unbalanced
-;;;     environments as occur in the newenvironment command.  Therefore, it is
-;;;     best restricted to the document environment.
+;;;     environments as occur in the newenvironment command.  Therefore,
+;;;     it is best restricted to the document environment.
 ;;;
-;;;   - The parser has two forms: functions named `alb-LaTeX-parse-*' parse
-;;;     LaTeX source and construct parse trees as nested association lists;
-;;;     and functions named `alb-LaTeX-collect-*' recognize balanced LaTeX
-;;;     source units and pass parse trees upwards.  Both forms return the
-;;;     first and last position matched.
+;;;   - The parser has two forms: functions named `alb-LaTeX-parse-*'
+;;;     parse LaTeX source and construct parse trees as nested
+;;;     association lists; and functions named `alb-LaTeX-collect-*'
+;;;     recognize balanced LaTeX source units and pass parse trees
+;;;     upwards.  Both forms return the first and last position matched.
 ;;;
-;;;     The parse and collect forms are related by a context argument, which
-;;;     is used to associate commands and environments with specialised parse
-;;;     functions.  Thus, the basic parser can be extended to parse particular
-;;;     commands or environments of interest.
+;;;     The parse and collect forms are related by a context argument,
+;;;     which is used to associate commands and environments with
+;;;     specialised parse functions.  Thus, the basic parser can be
+;;;     extended to parse particular commands or environments of
+;;;     interest.
 ;;;
 
 
@@ -73,11 +75,11 @@
 
 (defvar alb-LaTeX-parser-context-standard
   '((commands . (("include" . alb-LaTeX-parse-inclusion)
-		 ("input" . alb-LaTeX-parse-inclusion)
-		 ("verb" . alb-LaTeX-collect-verb)
-		 ("verb*" . alb-LaTeX-collect-verb)))
+                 ("input" . alb-LaTeX-parse-inclusion)
+                 ("verb" . alb-LaTeX-collect-verb)
+                 ("verb*" . alb-LaTeX-collect-verb)))
     (environs . (("verbatim" . alb-LaTeX-collect-verbatim)
-		 ("verbatim*" . alb-LaTeX-collect-verbatim))))
+                 ("verbatim*" . alb-LaTeX-collect-verbatim))))
   "Standard LaTeX context to handle file input and verbatim text.  Most
 collector contexts should extend this standard context.
 
@@ -197,7 +199,7 @@ NB: The last character matched is the opening brace.")
 
 (defconst alb-LaTeX-re-arg-filename
   (concat "{" alb-LaTeX-re-whitespace-hidden
-	  alb-LaTeX-re-type-filename alb-LaTeX-re-whitespace-hidden "}" )
+          alb-LaTeX-re-type-filename alb-LaTeX-re-whitespace-hidden "}" )
   "Regexp matching a LaTeX command argument containing a filename.  Note
 that only hidden whitespace is allowed.
 
@@ -234,10 +236,10 @@ NB: The parser expects the identifier to be the 1st subexpression!")
 
 (defconst alb-LaTeX-re-opening-command
   (concat "\\\\\\("
-	  "\\\\[*]?"
-	  "\\|" "[ !\"#$%&'+,./:;<=>@^_`{}|~-]"
-	  "\\|" alb-LaTeX-re-type-identifier
-	  "\\)")
+          "\\\\[*]?"
+          "\\|" "[ !\"#$%&'+,./:;<=>@^_`{}|~-]"
+          "\\|" alb-LaTeX-re-type-identifier
+          "\\)")
   "Regexp matching a command, but not its arguments.
 
 NB: The parser expects the command name to be the 1st subexpression!")
@@ -291,10 +293,10 @@ NB: The parser expects to consume 0 subexpressions!")
 
 (defconst alb-LaTeX-re-opening-command-spacing
   (concat "\\\\\\("
-	  ",\\|thinspace\\|:\\|medspace\\|;\\|thickspace\\|quad\\|qquad"
-	  "\\|!\\|negthinspace\\|negmedspace\\|negthickspace"
-	  "\\|enspace"
-	  "\\)")
+          ",\\|thinspace\\|:\\|medspace\\|;\\|thickspace\\|quad\\|qquad"
+          "\\|!\\|negthinspace\\|negmedspace\\|negthickspace"
+          "\\|enspace"
+          "\\)")
   "Regexp matching a spacing adjustment command without arguments.
 
 NB: The parser expects to consume 1 subexpression!")
@@ -302,8 +304,8 @@ NB: The parser expects to consume 1 subexpression!")
 
 (defconst alb-LaTeX-re-opening-command-bracing
   (concat "\\\\\\("
-	  "left\\|right"
-	  "\\)")
+          "left\\|right"
+          "\\)")
   "Regexp matching a brace sizing command without arguments.
 
 NB: The parser expects to consume 1 subexpression!")
@@ -311,11 +313,11 @@ NB: The parser expects to consume 1 subexpression!")
 
 (defconst alb-LaTeX-re-command-math-layout
   (concat "\\\\\\("
-	  "\\(begin\\|end\\){split}"
-	  "\\|begin{\\(aligned\\|gathered\\)}\\(\\[[tb]\\]\\)?"
-	  "\\|end{\\(aligned\\|gathered\\)}"
-	  "\\)"
-	  "\\|" alb-LaTeX-re-opening-command-end-of-line "\\|&")
+          "\\(begin\\|end\\){split}"
+          "\\|begin{\\(aligned\\|gathered\\)}\\(\\[[tb]\\]\\)?"
+          "\\|end{\\(aligned\\|gathered\\)}"
+          "\\)"
+          "\\|" alb-LaTeX-re-opening-command-end-of-line "\\|&")
   "Regexp matching commands including opening and closing of
 environments where the command or environment affects only the layout of
 math.")
@@ -323,8 +325,8 @@ math.")
 
 (defconst alb-LaTeX-re-command-crossref
   (concat "\\\\\\("
-	  "label\\|index\\|glossary"
-	  "\\)")
+          "label\\|index\\|glossary"
+          "\\)")
   "Regexp matching commands for inserting cross references that do not
 form part of the text.")
 
@@ -364,41 +366,41 @@ documentation strings for parser functions in CONTEXT.
 It is an error to call this function when point is not at a left brace."
   (if (looking-at alb-LaTeX-re-opening-brace)
       (let ((begin (match-beginning 0))
-	    (results nil))
-	;; Step over the opening brace.
-	(goto-char (match-end 0))
+            (results nil))
+        ;; Step over the opening brace.
+        (goto-char (match-end 0))
 
-	;; Iterate until the closing brace is next.
-	(while (and (looking-at alb-LaTeX-re-matter-inside-structure)
-		    (goto-char (match-end 0))
-		    (not (looking-at alb-LaTeX-re-closing-brace)))
-	  (cond
-	   ((looking-at alb-LaTeX-re-opening-brace)
-	    (setq results
-		  (nconc results
-			 (alb-LaTeX-collect-balanced-braces context))))
-	   ((looking-at alb-LaTeX-re-opening-math)
-	    (setq results
-		  (nconc results
-			 (alb-LaTeX-collect-balanced-math context))))
-	   ((looking-at alb-LaTeX-re-opening-environment)
-	    (setq results
-		  (nconc results
-			 (alb-LaTeX-collect-balanced-environment context))))
-	   ((looking-at alb-LaTeX-re-opening-command)
-	    (setq results
-		  (nconc results
-			 (alb-LaTeX-collect-command context))))
-	   (t
-	    (error "%s: %d: %d: Unbalanced brace"
-		   (buffer-name) begin (point)))))
+        ;; Iterate until the closing brace is next.
+        (while (and (looking-at alb-LaTeX-re-matter-inside-structure)
+                    (goto-char (match-end 0))
+                    (not (looking-at alb-LaTeX-re-closing-brace)))
+          (cond
+           ((looking-at alb-LaTeX-re-opening-brace)
+            (setq results
+                  (nconc results
+                         (alb-LaTeX-collect-balanced-braces context))))
+           ((looking-at alb-LaTeX-re-opening-math)
+            (setq results
+                  (nconc results
+                         (alb-LaTeX-collect-balanced-math context))))
+           ((looking-at alb-LaTeX-re-opening-environment)
+            (setq results
+                  (nconc results
+                         (alb-LaTeX-collect-balanced-environment context))))
+           ((looking-at alb-LaTeX-re-opening-command)
+            (setq results
+                  (nconc results
+                         (alb-LaTeX-collect-command context))))
+           (t
+            (error "%s: %d: %d: Unbalanced brace"
+                   (buffer-name) begin (point)))))
 
-	;; Consume the closing brace.
-	(looking-at alb-LaTeX-re-closing-brace)
-	(goto-char (match-end 0))
+        ;; Consume the closing brace.
+        (looking-at alb-LaTeX-re-closing-brace)
+        (goto-char (match-end 0))
 
-	;; Return the accumulated results.
-	results)
+        ;; Return the accumulated results.
+        results)
     (error "%s: %d: Not at brace" (buffer-name) (point))))
 
 
@@ -414,41 +416,41 @@ It is an error to call this function when point is not at a left
 bracket."
   (if (looking-at alb-LaTeX-re-opening-bracket)
       (let ((begin (match-beginning 0))
-	    (results nil))
-	;; Step over the opening brace.
-	(goto-char (match-end 0))
+            (results nil))
+        ;; Step over the opening brace.
+        (goto-char (match-end 0))
 
-	;; Iterate until the closing bracket is next.
-	(while (and (looking-at alb-LaTeX-re-matter-inside-brackets)
-		    (goto-char (match-end 0))
-		    (not (looking-at alb-LaTeX-re-closing-bracket)))
-	  (cond
-	   ((looking-at alb-LaTeX-re-opening-brace)
-	    (setq results
-		  (nconc results
-			 (alb-LaTeX-collect-balanced-braces context))))
-	   ((looking-at alb-LaTeX-re-opening-math)
-	    (setq results
-		  (nconc results
-			 (alb-LaTeX-collect-balanced-math context))))
-	   ((looking-at alb-LaTeX-re-opening-environment)
-	    (setq results
-		  (nconc results
-			 (alb-LaTeX-collect-balanced-environment context))))
-	   ((looking-at alb-LaTeX-re-opening-command)
-	    (setq results
-		  (nconc results
-			 (alb-LaTeX-collect-command context))))
-	   (t
-	    (error "%s: %d: %d: Unbalanced bracket"
-		   (buffer-name) begin (point)))))
+        ;; Iterate until the closing bracket is next.
+        (while (and (looking-at alb-LaTeX-re-matter-inside-brackets)
+                    (goto-char (match-end 0))
+                    (not (looking-at alb-LaTeX-re-closing-bracket)))
+          (cond
+           ((looking-at alb-LaTeX-re-opening-brace)
+            (setq results
+                  (nconc results
+                         (alb-LaTeX-collect-balanced-braces context))))
+           ((looking-at alb-LaTeX-re-opening-math)
+            (setq results
+                  (nconc results
+                         (alb-LaTeX-collect-balanced-math context))))
+           ((looking-at alb-LaTeX-re-opening-environment)
+            (setq results
+                  (nconc results
+                         (alb-LaTeX-collect-balanced-environment context))))
+           ((looking-at alb-LaTeX-re-opening-command)
+            (setq results
+                  (nconc results
+                         (alb-LaTeX-collect-command context))))
+           (t
+            (error "%s: %d: %d: Unbalanced bracket"
+                   (buffer-name) begin (point)))))
 
-	;; Consume the closing bracket.
-	(looking-at alb-LaTeX-re-closing-bracket)
-	(goto-char (match-end 0))
+        ;; Consume the closing bracket.
+        (looking-at alb-LaTeX-re-closing-bracket)
+        (goto-char (match-end 0))
 
-	;; Return the accumulated results.
-	results)
+        ;; Return the accumulated results.
+        results)
     (error "%s: %d: Not at bracket" (buffer-name) (point))))
 
 
@@ -465,45 +467,45 @@ It is an error to call this function when point is not at a math opening
 symbol."
   (if (looking-at alb-LaTeX-re-opening-math)
       (let ((begin (match-beginning 0))
-	    (results nil))
-	;; Step over the opening brace.
-	(goto-char (match-end 0))
+            (results nil))
+        ;; Step over the opening brace.
+        (goto-char (match-end 0))
 
-	;; Iterate until the closing math command is next.
-	(while (and (looking-at alb-LaTeX-re-matter-inside-structure)
-		    (goto-char (match-end 0))
-		    (not (looking-at alb-LaTeX-re-closing-math)))
-	  (cond
-	   ((looking-at alb-LaTeX-re-opening-brace)
-	    (setq results
-		  (nconc results
-			 (alb-LaTeX-collect-balanced-braces context))))
-	   ((looking-at alb-LaTeX-re-opening-environment)
-	    (setq results
-		  (nconc results
-			 (alb-LaTeX-collect-balanced-environment context))))
-	   ((looking-at alb-LaTeX-re-opening-command)
-	    (setq results
-		  (nconc results
-			 (alb-LaTeX-collect-command context))))
-	   (t
-	    (error "%s: %d: %d: Unbalanced math mode"
-		   (buffer-name) begin (point)))))
+        ;; Iterate until the closing math command is next.
+        (while (and (looking-at alb-LaTeX-re-matter-inside-structure)
+                    (goto-char (match-end 0))
+                    (not (looking-at alb-LaTeX-re-closing-math)))
+          (cond
+           ((looking-at alb-LaTeX-re-opening-brace)
+            (setq results
+                  (nconc results
+                         (alb-LaTeX-collect-balanced-braces context))))
+           ((looking-at alb-LaTeX-re-opening-environment)
+            (setq results
+                  (nconc results
+                         (alb-LaTeX-collect-balanced-environment context))))
+           ((looking-at alb-LaTeX-re-opening-command)
+            (setq results
+                  (nconc results
+                         (alb-LaTeX-collect-command context))))
+           (t
+            (error "%s: %d: %d: Unbalanced math mode"
+                   (buffer-name) begin (point)))))
 
-	;; Ensure the math closing command matches the opening, then consume.
-	(looking-at alb-LaTeX-re-closing-math)
-	(if (or (and (char-equal ?$ (char-after begin))
-		     (char-equal ?$ (char-after (point))))
-		(and (char-equal ?\[ (char-after (+ begin 1)))
-		     (char-equal ?\] (char-after (+ (point) 1))))
-		(and (char-equal ?\( (char-after (+ begin 1)))
-		     (char-equal ?\) (char-after (+ (point) 1)))))
-	    (goto-char (match-end 0))
-	  (error "%s: %d: %d: Unbalanced math mode"
-		 (buffer-name) begin (point)))
+        ;; Ensure the math closing command matches the opening, then consume.
+        (looking-at alb-LaTeX-re-closing-math)
+        (if (or (and (char-equal ?$ (char-after begin))
+                     (char-equal ?$ (char-after (point))))
+                (and (char-equal ?\[ (char-after (+ begin 1)))
+                     (char-equal ?\] (char-after (+ (point) 1))))
+                (and (char-equal ?\( (char-after (+ begin 1)))
+                     (char-equal ?\) (char-after (+ (point) 1)))))
+            (goto-char (match-end 0))
+          (error "%s: %d: %d: Unbalanced math mode"
+                 (buffer-name) begin (point)))
 
-	;; Return the accumulated results.
-	results)
+        ;; Return the accumulated results.
+        results)
     (error "%s: %d: Not at math mode opening" (buffer-name) (point))))
 
 
@@ -520,52 +522,52 @@ It is an error to call this function when point is not at a begin
 command."
   (if (looking-at alb-LaTeX-re-opening-environment)
       (let* ((begin (match-beginning 0))
-	     (start (match-end 0))
-	     (ename (match-string-no-properties 1))
-	     (envfn (cdr (assoc ename (cdr (assq 'environs context))))))
-	(if envfn
-	    (progn (goto-char begin)
-		   (apply envfn (list context)))
-	  (progn (goto-char start)
-		 (let (results)
-		   ;; Iterate until the closing environment command is next.
-		   (while (and (looking-at
-				alb-LaTeX-re-matter-inside-structure)
-			       (goto-char (match-end 0))
-			       (not
-				(looking-at alb-LaTeX-re-closing-environment)))
-		     (cond
-		      ((looking-at alb-LaTeX-re-opening-brace)
-		       (setq results
-			     (nconc results
-				    (alb-LaTeX-collect-balanced-braces
-				     context))))
-		      ((looking-at alb-LaTeX-re-opening-math)
-		       (setq results
-			     (nconc results
-				    (alb-LaTeX-collect-balanced-math
-				     context))))
-		      ((looking-at alb-LaTeX-re-opening-environment)
-		       (setq results
-			     (nconc results
-				    (alb-LaTeX-collect-balanced-environment
-				     context))))
-		      ((looking-at alb-LaTeX-re-opening-command)
-		       (setq results
-			     (nconc results
-				    (alb-LaTeX-collect-command context))))
-		      (t
-		       (error "%s: %d: %d: Unbalanced environment"
-			      (buffer-name) begin (point)))))
+             (start (match-end 0))
+             (ename (match-string-no-properties 1))
+             (envfn (cdr (assoc ename (cdr (assq 'environs context))))))
+        (if envfn
+            (progn (goto-char begin)
+                   (apply envfn (list context)))
+          (progn (goto-char start)
+                 (let (results)
+                   ;; Iterate until the closing environment command is next.
+                   (while (and (looking-at
+                                alb-LaTeX-re-matter-inside-structure)
+                               (goto-char (match-end 0))
+                               (not
+                                (looking-at alb-LaTeX-re-closing-environment)))
+                     (cond
+                      ((looking-at alb-LaTeX-re-opening-brace)
+                       (setq results
+                             (nconc results
+                                    (alb-LaTeX-collect-balanced-braces
+                                     context))))
+                      ((looking-at alb-LaTeX-re-opening-math)
+                       (setq results
+                             (nconc results
+                                    (alb-LaTeX-collect-balanced-math
+                                     context))))
+                      ((looking-at alb-LaTeX-re-opening-environment)
+                       (setq results
+                             (nconc results
+                                    (alb-LaTeX-collect-balanced-environment
+                                     context))))
+                      ((looking-at alb-LaTeX-re-opening-command)
+                       (setq results
+                             (nconc results
+                                    (alb-LaTeX-collect-command context))))
+                      (t
+                       (error "%s: %d: %d: Unbalanced environment"
+                              (buffer-name) begin (point)))))
 
-		   ;; Ensure the \end command matches the environment,
-		   ;; then consume.
-		   (looking-at alb-LaTeX-re-closing-environment)
-		   (if (string-equal ename (match-string-no-properties 1))
-		       (progn (goto-char (match-end 0))
-			      results)
-		     (error "%s: %d: %d: Unbalanced environment"
-			    (buffer-name) begin (point)))))))
+                   ;; Ensure the \end command matches the environment,
+                   ;; then consume.
+                   (looking-at alb-LaTeX-re-closing-environment)
+                   (if (string-equal ename (match-string-no-properties 1))
+                       (progn (goto-char (match-end 0))
+                              results)
+                     (error "%s: %d: %d: Unbalanced environment"
+                            (buffer-name) begin (point)))))))
     (error "%s: %d: Not at environment opening" (buffer-name) (point))))
 
 
@@ -580,32 +582,32 @@ description of the return value and argument.
 It is an error to call this function when point is not at a command."
   (if (looking-at alb-LaTeX-re-opening-command)
       (let* ((begin (match-beginning 0))
-	     (cname (match-string-no-properties 1))
-	     (cmdfn (cdr (assoc cname (cdr (assq 'commands context))))))
-	(if cmdfn
-	    (progn (goto-char begin)
-		   (apply cmdfn (list context)))
-	  (progn (goto-char (match-end 0))
-		 (let (results)
-		   ;; Iterate until there are no further arguments.
-		   (while (cond
-			   ((looking-at alb-LaTeX-re-next-opt)
-			    (goto-char (- (match-end 0) 1))
-			    (setq results
-				  (nconc results
-					 (alb-LaTeX-collect-balanced-brackets
-					  context)))
-			    t)
-			   ((looking-at alb-LaTeX-re-next-arg)
-			    (goto-char (- (match-end 0) 1))
-			    (setq results
-				  (nconc results
-					 (alb-LaTeX-collect-balanced-braces
-					  context)))
-			    t)))
+             (cname (match-string-no-properties 1))
+             (cmdfn (cdr (assoc cname (cdr (assq 'commands context))))))
+        (if cmdfn
+            (progn (goto-char begin)
+                   (apply cmdfn (list context)))
+          (progn (goto-char (match-end 0))
+                 (let (results)
+                   ;; Iterate until there are no further arguments.
+                   (while (cond
+                           ((looking-at alb-LaTeX-re-next-opt)
+                            (goto-char (- (match-end 0) 1))
+                            (setq results
+                                  (nconc results
+                                         (alb-LaTeX-collect-balanced-brackets
+                                          context)))
+                            t)
+                           ((looking-at alb-LaTeX-re-next-arg)
+                            (goto-char (- (match-end 0) 1))
+                            (setq results
+                                  (nconc results
+                                         (alb-LaTeX-collect-balanced-braces
+                                          context)))
+                            t)))
 
-		   ;; Return the accumulated results.
-		   results))))
+                   ;; Return the accumulated results.
+                   results))))
     (error "%s: %d: Not at command" (buffer-name) (point))))
 
 
@@ -619,12 +621,12 @@ value and argument.
 It is an error to call this function when point is not at a command."
   (if (looking-at alb-LaTeX-re-opening-command)
       (let* ((begin (match-beginning 0))
-	     (start (+ (match-end 0) 1))
-	     (quote (buffer-substring-no-properties (- start 1) start)))
-	(goto-char start)
-	(if (re-search-forward (regexp-quote quote) (line-end-position) t)
-	    '()
-	  (error "%s: %d: Unbalanced verb command" (buffer-name) begin)))
+             (start (+ (match-end 0) 1))
+             (quote (buffer-substring-no-properties (- start 1) start)))
+        (goto-char start)
+        (if (re-search-forward (regexp-quote quote) (line-end-position) t)
+            '()
+          (error "%s: %d: Unbalanced verb command" (buffer-name) begin)))
     (error "%s: %d: Not at verb command" (buffer-name) (point))))
 
 
@@ -636,15 +638,15 @@ See `alb-LaTeX-collect-balanced-braces' for a description of the return
 value and argument."
   (if (looking-at alb-LaTeX-re-opening-environment)
       (let* ((begin (match-beginning 0))
-	     (start (match-end 0))
-	     (quote (concat "\\end{" (match-string-no-properties 1) "}")))
-	(goto-char start)
-	(if (re-search-forward (regexp-quote quote) nil t)
-	    '()
-	  (error "%s: %d: Unbalanced verbatim environment"
-		 (buffer-name) begin)))
+             (start (match-end 0))
+             (quote (concat "\\end{" (match-string-no-properties 1) "}")))
+        (goto-char start)
+        (if (re-search-forward (regexp-quote quote) nil t)
+            '()
+          (error "%s: %d: Unbalanced verbatim environment"
+                 (buffer-name) begin)))
     (error "%s: %d: Not at verbatim environment opening"
-	   (buffer-name) (point))))
+           (buffer-name) (point))))
 
 
 
@@ -657,27 +659,27 @@ value and argument."
   (let (results)
     ;; Iterate until the end of file is met.
     (while (and (looking-at alb-LaTeX-re-matter-inside-structure)
-		(goto-char (match-end 0))
-		(not (equal (point) (point-max))))
+                (goto-char (match-end 0))
+                (not (equal (point) (point-max))))
       (cond
        ((looking-at alb-LaTeX-re-opening-brace)
-	(setq results
-	      (nconc results
-		     (alb-LaTeX-collect-balanced-braces context))))
+        (setq results
+              (nconc results
+                     (alb-LaTeX-collect-balanced-braces context))))
        ((looking-at alb-LaTeX-re-opening-math)
-	(setq results
-	      (nconc results
-		     (alb-LaTeX-collect-balanced-math context))))
+        (setq results
+              (nconc results
+                     (alb-LaTeX-collect-balanced-math context))))
        ((looking-at alb-LaTeX-re-opening-environment)
-	(setq results
-	      (nconc results
-		     (alb-LaTeX-collect-balanced-environment context))))
+        (setq results
+              (nconc results
+                     (alb-LaTeX-collect-balanced-environment context))))
        ((looking-at alb-LaTeX-re-opening-command)
-	(setq results
-	      (nconc results
-		     (alb-LaTeX-collect-command context))))
+        (setq results
+              (nconc results
+                     (alb-LaTeX-collect-command context))))
        (t
-	(error "%s: %d: Confused by source" (buffer-name) (point)))))
+        (error "%s: %d: Confused by source" (buffer-name) (point)))))
 
     ;; Return the accumulated results.
     results))
@@ -706,31 +708,31 @@ It is an error to call this function when point is not at a command
 followed by a file argument."
   (if (looking-at alb-LaTeX-re-opening-command)
       (let* ((begin (match-beginning 0))
-	     (cname (match-string-no-properties 1)))
-	(if (and (goto-char (match-end 0))
-		 (looking-at alb-LaTeX-re-next-arg)
-		 (goto-char (- (match-end 0) 1))
-		 (looking-at alb-LaTeX-re-arg-filename))
-	    (let* ((after (match-end 0))
-		   (fname (reftex-locate-file
-			   (match-string-no-properties 2)
-			   TeX-default-extension
-			   (TeX-master-directory) t))
-		   (fbuff (find-file-noselect fname)))
-	      (goto-char after)
-	      (save-excursion
-		(set-buffer fbuff)
-		(let ((case-fold-search nil))
-		  (save-excursion
-		    (goto-char (point-min))
-		    (list (cons (symbol-name 'alb-LaTeX-parse-inclusion)
-				(list (cons "command" cname)
-				      (cons "at" begin)
-				      (cons "enter" fname)
-				      (cons "result"
-					    (alb-LaTeX-collect-file
-					     context)))))))))
-	  (error "%s: %d: Missing inclusion argument" (buffer-name) (point))))
+             (cname (match-string-no-properties 1)))
+        (if (and (goto-char (match-end 0))
+                 (looking-at alb-LaTeX-re-next-arg)
+                 (goto-char (- (match-end 0) 1))
+                 (looking-at alb-LaTeX-re-arg-filename))
+            (let* ((after (match-end 0))
+                   (fname (reftex-locate-file
+                           (match-string-no-properties 2)
+                           TeX-default-extension
+                           (TeX-master-directory) t))
+                   (fbuff (find-file-noselect fname)))
+              (goto-char after)
+              (save-excursion
+                (set-buffer fbuff)
+                (let ((case-fold-search nil))
+                  (save-excursion
+                    (goto-char (point-min))
+                    (list (cons (symbol-name 'alb-LaTeX-parse-inclusion)
+                                (list (cons "command" cname)
+                                      (cons "at" begin)
+                                      (cons "enter" fname)
+                                      (cons "result"
+                                            (alb-LaTeX-collect-file
+                                             context)))))))))
+          (error "%s: %d: Missing inclusion argument" (buffer-name) (point))))
     (error "%s: %d: Not at inclusion command" (buffer-name) (point))))
 
 
@@ -756,26 +758,24 @@ Within the parse alist:
 See `alb-LaTeX-collect-balanced-braces' for a description of the return
 value and argument."
   (let* ((mname (file-truename (TeX-master-file TeX-default-extension)))
-	 (mbuff (find-file-noselect mname)))
+         (mbuff (find-file-noselect mname)))
     (save-excursion
       (set-buffer mbuff)
       (let ((case-fold-search nil))
-	(save-excursion
-	  (goto-char (point-min))
-	  (if (re-search-forward alb-LaTeX-re-opening-document nil t)
-	      (let* ((begin (match-beginning 0)))
-		(goto-char (match-beginning 0))
-		(list (cons (symbol-name 'alb-LaTeX-parse-document-environment)
-			    (list (cons "master" mname)
-				  (cons "at" begin)
-				  (cons "result"
-					(alb-LaTeX-collect-balanced-environment
-					 context))))))
-	    (error "%s: No document environment in master file" mname)))))))
+        (save-excursion
+          (goto-char (point-min))
+          (if (re-search-forward alb-LaTeX-re-opening-document nil t)
+              (let* ((begin (match-beginning 0)))
+                (goto-char (match-beginning 0))
+                (list (cons (symbol-name 'alb-LaTeX-parse-document-environment)
+                            (list (cons "master" mname)
+                                  (cons "at" begin)
+                                  (cons "result"
+                                        (alb-LaTeX-collect-balanced-environment
+                                         context))))))
+            (error "%s: No document environment in master file" mname)))))))
 
 
-
-
 
 ;;; Local Variables:
 ;;; mode: emacs-lisp

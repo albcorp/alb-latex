@@ -1,7 +1,7 @@
 ;;;
-;;; AlbAVM/style/alb-avm.el
+;;; AlbLaTeX/style/alb-avm.el
 ;;;
-;;;     Copyright (C) 1999-2003 Andrew Lincoln Burrow
+;;;     Copyright (C) 1999-2003, 2013 Andrew Lincoln Burrow
 ;;;
 ;;;     This library is free software; you can redistribute it and/or
 ;;;     modify it under the terms of the GNU General Public License as
@@ -62,14 +62,14 @@ This function customises AUCTeX."
   (LaTeX-insert-environment environment)
   (let ((tags (alb-LaTeX-sym-avm-body "" '())))
     (if (not (equal tags '()))
-	(let ((first-lhs (read-from-minibuffer "First LHS tag: "
-					       nil nil nil 'tags))
-	      (first-rhs (read-from-minibuffer "First RHS tag: "
-					       nil nil nil 'tags)))
-	  (if (and (not (string-equal first-lhs ""))
-		   (not (string-equal first-rhs "")))
-	      (progn (insert "\\albAvmIneqtn{" first-lhs "}{" first-rhs "}")
-		     (alb-LaTeX-sym-avmIneqtn tags)))))))
+        (let ((first-lhs (read-from-minibuffer "First LHS tag: "
+                                               nil nil nil 'tags))
+              (first-rhs (read-from-minibuffer "First RHS tag: "
+                                               nil nil nil 'tags)))
+          (if (and (not (string-equal first-lhs ""))
+                   (not (string-equal first-rhs "")))
+              (progn (insert "\\albAvmIneqtn{" first-lhs "}{" first-rhs "}")
+                     (alb-LaTeX-sym-avmIneqtn tags)))))))
 
 
 
@@ -87,9 +87,9 @@ is initially called by `alb-LaTeX-env-avm' through an AUCTeX
 customisation."
   (let ((tag (read-from-minibuffer (concat path "tag: "))))
     (if (not (string-equal tag ""))
-	(if (member tag tags)
-	    (alb-LaTeX-sym-avmRef tag tags)
-	  (alb-LaTeX-sym-avmTag path tag tags))
+        (if (member tag tags)
+            (alb-LaTeX-sym-avmRef tag tags)
+          (alb-LaTeX-sym-avmTag path tag tags))
       (alb-LaTeX-sym-avmType path tags))))
 
 
@@ -130,7 +130,7 @@ through an AUCTeX customisation."
    (alb-LaTeX-sym-avmType
     path
     (alb-LaTeX-sym-avm-enter (and (null (insert "\\albAvmTag{" tag "}{}"))
-				 (cons tag tags))))))
+                                 (cons tag tags))))))
 
 
 
@@ -154,14 +154,14 @@ This function recursively calls `alb-LaTeX-sym-avmFeat' to construct the
 list of feature value pairs.  It is indirectly called by
 `alb-LaTeX-env-avm' through an AUCTeX customisation."
   (let ((type (read-from-minibuffer (concat path "type: ")
-				    nil nil nil 'alb-LaTeX-avmType-history)))
+                                    nil nil nil 'alb-LaTeX-avmType-history)))
     (if (not (string-equal type ""))
-	(progn (insert "\\albAvmType{" type "}")
-	       (newline-and-indent)
-	       (alb-LaTeX-sym-avmFeat path tags))
+        (progn (insert "\\albAvmType{" type "}")
+               (newline-and-indent)
+               (alb-LaTeX-sym-avmFeat path tags))
       (progn (insert "\\albAvmType{universal}")
-	     (newline-and-indent)
-	     (eval tags)))))
+             (newline-and-indent)
+             (eval tags)))))
 
 
 
@@ -175,16 +175,16 @@ the feature's value, and then `alb-LaTeX-sym-avmFeat' to construct the
 rest of the feature value pairs.  It is indirectly called by
 `alb-LaTeX-env-avm' through an AUCTeX customisation."
   (let ((feat (read-from-minibuffer (concat path "feat: ")
-				    nil nil nil 'alb-LaTeX-avmFeat-history)))
+                                    nil nil nil 'alb-LaTeX-avmFeat-history)))
     (if (not (string-equal feat ""))
-	(progn (alb-LaTeX-sym-avmFeat
-		path
-		(alb-LaTeX-sym-avm-leave
-		 (alb-LaTeX-sym-avm-body
-		  (concat path feat " ")
-		  (alb-LaTeX-sym-avm-enter
-		   (and (null (insert "\\albAvmFeat{" feat "}{}"))
-			(eval tags)))))))
+        (progn (alb-LaTeX-sym-avmFeat
+                path
+                (alb-LaTeX-sym-avm-leave
+                 (alb-LaTeX-sym-avm-body
+                  (concat path feat " ")
+                  (alb-LaTeX-sym-avm-enter
+                   (and (null (insert "\\albAvmFeat{" feat "}{}"))
+                        (eval tags)))))))
       (eval tags))))
 
 
@@ -197,13 +197,13 @@ list of tagged substructures.  It is used as a history list.
 This function is directly called by `alb-LaTeX-env-avm' through an
 AUCTeX customisation."
   (let ((next-lhs (read-from-minibuffer "Next LHS tag: "
-					nil nil nil 'tags))
-	(next-rhs (read-from-minibuffer "Next RHS tag: "
-					nil nil nil 'tags)))
+                                        nil nil nil 'tags))
+        (next-rhs (read-from-minibuffer "Next RHS tag: "
+                                        nil nil nil 'tags)))
     (if (and (not (string-equal next-lhs ""))
-	     (not (string-equal next-rhs "")))
-	(progn (insert ", \\albAvmIneqtn{" next-lhs "}{" next-rhs "}")
-	       (alb-LaTeX-sym-avmIneqtn tags))
+             (not (string-equal next-rhs "")))
+        (progn (insert ", \\albAvmIneqtn{" next-lhs "}{" next-rhs "}")
+               (alb-LaTeX-sym-avmIneqtn tags))
       (progn (newline-and-indent)))))
 
 
@@ -222,8 +222,6 @@ AUCTeX customisation."
      '("albAvm" alb-LaTeX-env-avm)))))
 
 
-
-
 
 ;;; Local Variables:
 ;;; mode: emacs-lisp

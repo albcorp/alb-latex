@@ -1,7 +1,7 @@
 ;;;
-;;; AlbJournalLayout/style/alb-journal.el
+;;; AlbLaTeX/style/alb-journal.el
 ;;;
-;;;     Copyright (C) 2005-2008 Andrew Lincoln Burrow
+;;;     Copyright (C) 2005-2008, 2013 Andrew Lincoln Burrow
 ;;;
 ;;;     This library is free software; you can redistribute it and/or
 ;;;     modify it under the terms of the GNU General Public License as
@@ -63,8 +63,6 @@ This function customises AUCTeX."
      '("albResearchNote" alb-LaTeX-env-research-note)))))
 
 
-
-
 
 ;;; Local Variables:
 ;;; mode: emacs-lisp

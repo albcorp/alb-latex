@@ -1,7 +1,7 @@
 ;;;
-;;; AlbTheorems/style/alb-theorems.el
+;;; AlbLaTeX/style/alb-theorems.el
 ;;;
-;;;     Copyright (C) 2000-2003 Andrew Lincoln Burrow
+;;;     Copyright (C) 2000-2003, 2013 Andrew Lincoln Burrow
 ;;;
 ;;;     This library is free software; you can redistribute it and/or
 ;;;     modify it under the terms of the GNU General Public License as
@@ -56,12 +56,12 @@ to the environment.
 
 This function customises AUCTeX."
   (let* ((theorem-type (if (string-equal "alb" (substring environment 0 3))
-			   (capitalize (substring environment 3))
-			 (capitalize environment)))
-	 (theorem-name (read-from-minibuffer
-			(concat theorem-type " name: "))))
+                           (capitalize (substring environment 3))
+                         (capitalize environment)))
+         (theorem-name (read-from-minibuffer
+                        (concat theorem-type " name: "))))
     (if (string-equal "" theorem-name)
-	(LaTeX-insert-environment environment)
+        (LaTeX-insert-environment environment)
       (LaTeX-insert-environment environment (concat "[" theorem-name "]")))
     (LaTeX-label environment)
     (newline-and-indent)))
@@ -169,48 +169,46 @@ This function customises RefTeX."
      '("albCorollary" alb-LaTeX-env-theorem)
      '("albPropositions" LaTeX-env-item))
     (if (featurep 'reftex)
-	(progn
-	  (add-hook 'local-write-file-hooks
-		    (function
-		     (lambda ()
-		       (if (< 0 alb-LaTeX-theorem-counter)
-			   (alb-update-file-local-variable
-			    'alb-LaTeX-theorem-counter
-			    alb-LaTeX-theorem-counter)))))
-	  (TeX-add-symbols
-	   '("albDRef" (alb-TeX-arg-ref "d") ignore)
-	   '("albTRef" (alb-TeX-arg-ref "u") ignore)
-	   '("albLRef" (alb-TeX-arg-ref "v") ignore)
-	   '("albRRef" (alb-TeX-arg-ref "w") ignore)
-	   '("albCRef" (alb-TeX-arg-ref "x") ignore))
-	  (reftex-add-label-environments
-	   '(("albDefinition"      ?d "def:%f:" "~\\ref{%s}"
-	      (alb-reftex-context-fn-theorem-display
+        (progn
+          (add-hook 'local-write-file-hooks
+                    (function
+                     (lambda ()
+                       (if (< 0 alb-LaTeX-theorem-counter)
+                           (alb-update-file-local-variable
+                            'alb-LaTeX-theorem-counter
+                            alb-LaTeX-theorem-counter)))))
+          (TeX-add-symbols
+           '("albDRef" (alb-TeX-arg-ref "d") ignore)
+           '("albTRef" (alb-TeX-arg-ref "u") ignore)
+           '("albLRef" (alb-TeX-arg-ref "v") ignore)
+           '("albRRef" (alb-TeX-arg-ref "w") ignore)
+           '("albCRef" (alb-TeX-arg-ref "x") ignore))
+          (reftex-add-label-environments
+           '(("albDefinition"      ?d "def:%f:" "~\\ref{%s}"
+              (alb-reftex-context-fn-theorem-display
                . alb-reftex-context-fn-theorem-label)
-	      (regexp "Definition[s]?"))
-	     ("albTheorem"          ?u "thm:%f:" "~\\ref{%s}"
-	      (alb-reftex-context-fn-theorem-display
+              (regexp "Definition[s]?"))
+             ("albTheorem"          ?u "thm:%f:" "~\\ref{%s}"
+              (alb-reftex-context-fn-theorem-display
                . alb-reftex-context-fn-theorem-label)
-	      (regexp "Theorem[s]?"))
-	     ("albLemma"            ?v "lem:%f:" "~\\ref{%s}"
-	      (alb-reftex-context-fn-theorem-display
+              (regexp "Theorem[s]?"))
+             ("albLemma"            ?v "lem:%f:" "~\\ref{%s}"
+              (alb-reftex-context-fn-theorem-display
                . alb-reftex-context-fn-theorem-label)
-	      (regexp "Lemma\\(ta\\)?"))
-	     ("albRemark"           ?w "rem:%f:" "~\\ref{%s}"
-	      (alb-reftex-context-fn-theorem-display
+              (regexp "Lemma\\(ta\\)?"))
+             ("albRemark"           ?w "rem:%f:" "~\\ref{%s}"
+              (alb-reftex-context-fn-theorem-display
                . alb-reftex-context-fn-theorem-label)
-	      (regexp "Remark[s]?"))
-	     ("albCorollary"        ?x "cor:%f:" "~\\ref{%s}"
-	      (alb-reftex-context-fn-theorem-display
+              (regexp "Remark[s]?"))
+             ("albCorollary"        ?x "cor:%f:" "~\\ref{%s}"
+              (alb-reftex-context-fn-theorem-display
                . alb-reftex-context-fn-theorem-label)
-	      (regexp "Corollar\\(y\\|ies\\)"))))
-	  (setq reftex-insert-label-flags
-		(cons (concat (car reftex-insert-label-flags) "duvwx")
-		      (cdr reftex-insert-label-flags))))))))
+              (regexp "Corollar\\(y\\|ies\\)"))))
+          (setq reftex-insert-label-flags
+                (cons (concat (car reftex-insert-label-flags) "duvwx")
+                      (cdr reftex-insert-label-flags))))))))
 
 
-
-
 
 ;;; Local Variables:
 ;;; mode: emacs-lisp

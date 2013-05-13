@@ -1,7 +1,7 @@
 ;;;
-;;; AlbAlgorithms/style/alb-algorithms.el
+;;; AlbLaTeX/style/alb-algorithms.el
 ;;;
-;;;     Copyright (C) 1999-2006 Andrew Lincoln Burrow
+;;;     Copyright (C) 1999-2006, 2013 Andrew Lincoln Burrow
 ;;;
 ;;;     This library is free software; you can redistribute it and/or
 ;;;     modify it under the terms of the GNU General Public License as
@@ -49,26 +49,26 @@ consumes 1 subexpression!")
 
 
 (defconst alb-TeX-re-newIdent
-  (list (concat			; Sub expressions:	Count	Total
-	 alb-TeX-re-newIdent-list			;  1	 1
-	 alb-LaTeX-re-whitespace-horizontal		;  2	 3
-	 "{" alb-LaTeX-re-whitespace-hidden		;  1	 4
-	 "\\\\\\([a-zA-Z]+\\)"				;  1	 5
-	 alb-LaTeX-re-whitespace-hidden "}"		;  1	 6
-	 alb-LaTeX-re-whitespace-horizontal		;  2	 8
-	 "{" alb-LaTeX-re-whitespace-hidden		;  1	 9
-	 "\\\\\\([a-zA-Z]+\\)"				;  1	10
-	 alb-LaTeX-re-whitespace-hidden "}"		;  1	11
-	 alb-LaTeX-re-whitespace-horizontal		;  2	13
-	 "{" alb-LaTeX-re-whitespace-hidden		;  1	14
-	 "\\([a-zA-Z-]\\|\\\\_\\)+"			;  1	15
-	 alb-LaTeX-re-whitespace-hidden "}"		;  1	16
-	 alb-LaTeX-re-whitespace-horizontal		;  2	18
-	 "{" alb-LaTeX-re-whitespace-hidden		;  1	19
-	 "\\([0-9]+\\)"					;  1	20
-	 alb-LaTeX-re-whitespace-hidden "}")		;  1	21
-	(list 5 10 20)
-	'alb-TeX-auto-newIdent-temp)
+  (list (concat                 ; Sub expressions:      Count   Total
+         alb-TeX-re-newIdent-list                       ;  1     1
+         alb-LaTeX-re-whitespace-horizontal             ;  2     3
+         "{" alb-LaTeX-re-whitespace-hidden             ;  1     4
+         "\\\\\\([a-zA-Z]+\\)"                          ;  1     5
+         alb-LaTeX-re-whitespace-hidden "}"             ;  1     6
+         alb-LaTeX-re-whitespace-horizontal             ;  2     8
+         "{" alb-LaTeX-re-whitespace-hidden             ;  1     9
+         "\\\\\\([a-zA-Z]+\\)"                          ;  1    10
+         alb-LaTeX-re-whitespace-hidden "}"             ;  1    11
+         alb-LaTeX-re-whitespace-horizontal             ;  2    13
+         "{" alb-LaTeX-re-whitespace-hidden             ;  1    14
+         "\\([a-zA-Z-]\\|\\\\_\\)+"                     ;  1    15
+         alb-LaTeX-re-whitespace-hidden "}"             ;  1    16
+         alb-LaTeX-re-whitespace-horizontal             ;  2    18
+         "{" alb-LaTeX-re-whitespace-hidden             ;  1    19
+         "\\([0-9]+\\)"                                 ;  1    20
+         alb-LaTeX-re-whitespace-hidden "}")            ;  1    21
+        (list 5 10 20)
+        'alb-TeX-auto-newIdent-temp)
   "Regular expression to extract macros defined by \\albNewAccessorIdent
 and \\albNewProcedureIdent commands.  It is appended to
 `TeX-auto-regexp-list' during customisation.  The list of numbers refer
@@ -89,10 +89,10 @@ This variable is used in AUCTeX file parsing.")
 
 (defconst alb-LaTeX-re-accessor-call
   (concat "\\\\acc\\("
-	  "[A-Z]\\|"
-	  "[A-Z][A-Za-z]\\|"
-	  "[A-Z][A-Za-z]*\\([A-HJ-Za-z][A-Za-z]\\|I[A-Za-ce-z]\\)"
-	  "\\)\\>")
+          "[A-Z]\\|"
+          "[A-Z][A-Za-z]\\|"
+          "[A-Z][A-Za-z]*\\([A-HJ-Za-z][A-Za-z]\\|I[A-Za-ce-z]\\)"
+          "\\)\\>")
   "Regexp matching typeset procedure calls in LaTeX source.  The LaTeX
 commands are recognised by the lexical conventions resulting from
 `alb-TeX-arg-define-ident' with OP-PREFIX \"acc\".  The complexity
@@ -104,10 +104,10 @@ NB: Standardised to match command sans arguments, and command name sans
 
 (defconst alb-LaTeX-re-procedure-call
   (concat "\\\\prc\\("
-	  "[A-Z]\\|"
-	  "[A-Z][A-Za-z]\\|"
-	  "[A-Z][A-Za-z]*\\([A-HJ-Za-z][A-Za-z]\\|I[A-Za-ce-z]\\)"
-	  "\\)\\>")
+          "[A-Z]\\|"
+          "[A-Z][A-Za-z]\\|"
+          "[A-Z][A-Za-z]*\\([A-HJ-Za-z][A-Za-z]\\|I[A-Za-ce-z]\\)"
+          "\\)\\>")
   "Regexp matching typeset procedure calls in LaTeX source.  The LaTeX
 commands are recognised by the lexical conventions resulting from
 `alb-TeX-arg-define-ident' with OP-PREFIX \"prc\".  The complexity
@@ -121,7 +121,7 @@ NB: Standardised to match command sans arguments, and command-name sans
   (concat "\\\\\\("
           "albLet\\|albAssign\\|albReturn\\|albWhile\\|albForAll"
           "\\|albForSequence\\|albIf\\|albElseIf\\|\\albElse"
-	  "\\)")
+          "\\)")
   "Regexp matching a command that formats a statement in the
 \"albAlgorithmic\" environment, but not its arguments.  Namely one of
 \\albLet, \\albAssign, \\albReturn, \\albWhile, \\albForAll,
@@ -142,7 +142,7 @@ make stale references hard to detect.")
 
 
 (defun alb-TeX-arg-define-ident (optional op-prefix op-type op-mangler
-					  &optional given-phrase)
+                                          &optional given-phrase)
   "Prompt for and insert arguments to a call to a command to construct
 an identifier and call macro for a given type of operation.  Generally
 called immediately following an \\albNew*Ident command.
@@ -162,31 +162,31 @@ user is prompted.
 This function customises AUCTeX.  It is called immediately after
 inserting the macro name.  See documentation for `TeX-add-symbols'."
   (let* ((phrase (if (stringp given-phrase)
-		     given-phrase
-		   (read-from-minibuffer
-		    (format "Phrase describing %s: " op-type))))
-	 (hyname (alb-hyphenate-string-at-caps-and-gaps phrase))
-	 (funcn-idnt (apply op-mangler (list hyname)))
-	 (macro-base (apply 'concat (split-string (capitalize hyname) "-")))
-	 (macro-idnt (concat op-prefix macro-base "Id"))
-	 (macro-call (concat op-prefix macro-base)))
+                     given-phrase
+                   (read-from-minibuffer
+                    (format "Phrase describing %s: " op-type))))
+         (hyname (alb-hyphenate-string-at-caps-and-gaps phrase))
+         (funcn-idnt (apply op-mangler (list hyname)))
+         (macro-base (apply 'concat (split-string (capitalize hyname) "-")))
+         (macro-idnt (concat op-prefix macro-base "Id"))
+         (macro-call (concat op-prefix macro-base)))
     (if (or (assoc macro-idnt TeX-symbol-list)
-	    (assoc macro-call TeX-symbol-list))
-	(error "\\%s or \\%s already exists" macro-idnt macro-call)
+            (assoc macro-call TeX-symbol-list))
+        (error "\\%s or \\%s already exists" macro-idnt macro-call)
       (let ((ident (read-from-minibuffer
-		    (format "Identifier for %s: " op-type)
-		    funcn-idnt))
-	    (arity (read-from-minibuffer
-		    (format "Arity of %s: " op-type)
-		    "")))
-	(if (not (wholenump (string-to-number arity)))
-	    (error "Arity \"%s\" is not a whole number" arity)
-	  (progn
-	    (TeX-add-symbols
-	     (list macro-idnt 0)
-	     (list macro-call (string-to-number arity)))
-	    (insert (format "{\\%s}{\\%s}{%s}{%s}"
-			    macro-idnt macro-call ident arity))))))))
+                    (format "Identifier for %s: " op-type)
+                    funcn-idnt))
+            (arity (read-from-minibuffer
+                    (format "Arity of %s: " op-type)
+                    "")))
+        (if (not (wholenump (string-to-number arity)))
+            (error "Arity \"%s\" is not a whole number" arity)
+          (progn
+            (TeX-add-symbols
+             (list macro-idnt 0)
+             (list macro-call (string-to-number arity)))
+            (insert (format "{\\%s}{\\%s}{%s}{%s}"
+                            macro-idnt macro-call ident arity))))))))
 
 
 
@@ -205,10 +205,10 @@ This function customises AUCTeX.  It is called immediately after
 inserting the macro name.  See documentation for `TeX-add-symbols'."
   (while (car st-parm)
     (insert (concat "{"
-		    (read-from-minibuffer
-		     (format "%s statement %s: "
-			     (capitalize st-type) (car st-parm)))
-		    "}"))
+                    (read-from-minibuffer
+                     (format "%s statement %s: "
+                             (capitalize st-type) (car st-parm)))
+                    "}"))
     (setq st-parm (cdr st-parm)))
   (LaTeX-env-item "albBlock"))
 
@@ -231,12 +231,12 @@ SYMBOL-ID, SYMBOL-CALL, NARG.
 
 This function customises AUCTeX."
   (mapcar (function
-	   (lambda (entry)
-	     (set 'TeX-auto-symbol
-		  (cons (list (nth 1 entry) (string-to-int (nth 2 entry)))
-			(cons (list (nth 0 entry) nil)
-			      TeX-auto-symbol)))))
-	  alb-TeX-auto-newIdent-temp))
+           (lambda (entry)
+             (set 'TeX-auto-symbol
+                  (cons (list (nth 1 entry) (string-to-int (nth 2 entry)))
+                        (cons (list (nth 0 entry) nil)
+                              TeX-auto-symbol)))))
+          alb-TeX-auto-newIdent-temp))
 
 
 
@@ -248,13 +248,13 @@ label.
 
 This function customises AUCTeX."
   (let* ((float   (read-from-minibuffer
-		   "(optional) Float to: " LaTeX-float))
-	 (macro   (completing-read
-		   "Procedure call macro: \\" (TeX-symbol-list) nil t))
-	 (abrieve (read-from-minibuffer
-		   "(optional) Abbreviated caption: "))
-	 (caption (read-from-minibuffer
-		   "Caption: " abrieve)))
+                   "(optional) Float to: " LaTeX-float))
+         (macro   (completing-read
+                   "Procedure call macro: \\" (TeX-symbol-list) nil t))
+         (abrieve (read-from-minibuffer
+                   "(optional) Abbreviated caption: "))
+         (caption (read-from-minibuffer
+                   "Caption: " abrieve)))
     (LaTeX-insert-environment
      environment
      (if (not (string-equal "" float)) (concat "[" float "]")))
@@ -266,12 +266,12 @@ This function customises AUCTeX."
     (save-excursion
       (newline-and-indent)
       (if (string-equal "" abrieve)
-	  (progn (insert (concat "\\caption{" caption "}"))
-		 (newline-and-indent))
-	(progn (insert (concat "\\caption[" abrieve "]{%"))
-	       (newline-and-indent)
-	       (insert (concat caption "}"))
-	       (newline-and-indent)))
+          (progn (insert (concat "\\caption{" caption "}"))
+                 (newline-and-indent))
+        (progn (insert (concat "\\caption[" abrieve "]{%"))
+               (newline-and-indent)
+               (insert (concat caption "}"))
+               (newline-and-indent)))
       (LaTeX-label environment))
     (LaTeX-env-item "albAlgorithmic")))
 
@@ -286,12 +286,12 @@ macro defined by \\albNewProcedureIdent.
 This function customises RefTeX."
   (save-excursion
     (if (and (search-backward (concat "\\begin{" environment "}") nil t)
-	     (goto-char (match-end 0))
-	     (re-search-forward
-	      alb-LaTeX-re-procedure-call (+ (point) 400) t))
-	;; Environment contains a procedure call.
-	(alb-hyphenate-string-at-caps-and-gaps
-	 (match-string-no-properties 1))
+             (goto-char (match-end 0))
+             (re-search-forward
+              alb-LaTeX-re-procedure-call (+ (point) 400) t))
+        ;; Environment contains a procedure call.
+        (alb-hyphenate-string-at-caps-and-gaps
+         (match-string-no-properties 1))
       ;; No procedure call found in the environment.
       "")))
 
@@ -398,13 +398,13 @@ This function customises RefTeX."
       ;; Purge display of spacing adjustments, bracing adjustments,
       ;; layout structures, and comments.
       (while (string-match alb-LaTeX-re-opening-command-spacing display)
-	(setq display (replace-match " " nil t display)))
+        (setq display (replace-match " " nil t display)))
       (while (string-match alb-LaTeX-re-opening-command-bracing display)
-	(setq display (replace-match " " nil t display)))
+        (setq display (replace-match " " nil t display)))
       (while (string-match alb-LaTeX-re-command-math-layout display)
-	(setq display (replace-match " " nil t display)))
+        (setq display (replace-match " " nil t display)))
       (while (string-match alb-LaTeX-re-whitespace-removed display)
-	(setq display (replace-match "" nil t display)))
+        (setq display (replace-match "" nil t display)))
       ;; Return the purged text.
       display)))
 
@@ -442,8 +442,8 @@ This function customises RefTeX."
                 (number-to-string (set 'alb-LaTeX-line-counter
                                        (+ alb-LaTeX-line-counter 1)))))
        (t
-	;; The algorithm is unnamed.
-	(number-to-string (set 'alb-LaTeX-line-counter
+        ;; The algorithm is unnamed.
+        (number-to-string (set 'alb-LaTeX-line-counter
                                (+ alb-LaTeX-line-counter 1))))))))
 
 
@@ -487,30 +487,30 @@ This function customises RefTeX."
     (TeX-auto-add-regexp
      alb-TeX-re-newIdent)
     (if (featurep 'reftex)
-	(progn
-	  (add-hook 'local-write-file-hooks
-		    (function
-		     (lambda ()
-		       (if (< 0 alb-LaTeX-line-counter)
-			   (alb-update-file-local-variable
-			    'alb-LaTeX-line-counter
-			    alb-LaTeX-line-counter)))))
-	  (reftex-add-label-environments
-	   '(("algorithm"          ?a "alg:%f:" "~\\ref{%s}"
-	      ("\\\\caption[[{]" . alb-reftex-context-fn-algorithm)
-	      (regexp "Algorithm[s]?"))
-	     ("algorithm*"         ?a nil       nil
-	      ("\\\\caption[[{]" . alb-reftex-context-fn-algorithm))
-	     ("albAlgorithmic"     ?j "ln:%f:"  "~\\ref{%s}"
-	      (alb-reftex-context-fn-albAlgorithmic-display
+        (progn
+          (add-hook 'local-write-file-hooks
+                    (function
+                     (lambda ()
+                       (if (< 0 alb-LaTeX-line-counter)
+                           (alb-update-file-local-variable
+                            'alb-LaTeX-line-counter
+                            alb-LaTeX-line-counter)))))
+          (reftex-add-label-environments
+           '(("algorithm"          ?a "alg:%f:" "~\\ref{%s}"
+              ("\\\\caption[[{]" . alb-reftex-context-fn-algorithm)
+              (regexp "Algorithm[s]?"))
+             ("algorithm*"         ?a nil       nil
+              ("\\\\caption[[{]" . alb-reftex-context-fn-algorithm))
+             ("albAlgorithmic"     ?j "ln:%f:"  "~\\ref{%s}"
+              (alb-reftex-context-fn-albAlgorithmic-display
                . alb-reftex-context-fn-albAlgorithmic-label)
-	      (regexp "Line[s]?"))
-	     ("albAlgorithmic*"    ?j "ln:%f:"  "~\\ref{%s}"
-	      (alb-reftex-context-fn-albAlgorithmic-display
+              (regexp "Line[s]?"))
+             ("albAlgorithmic*"    ?j "ln:%f:"  "~\\ref{%s}"
+              (alb-reftex-context-fn-albAlgorithmic-display
                . alb-reftex-context-fn-albAlgorithmic-label))))
-	  (setq reftex-insert-label-flags
-		(cons (concat (car reftex-insert-label-flags) "aj")
-		      (cdr reftex-insert-label-flags))))))))
+          (setq reftex-insert-label-flags
+                (cons (concat (car reftex-insert-label-flags) "aj")
+                      (cdr reftex-insert-label-flags))))))))
 
 
 
@@ -526,8 +526,6 @@ This function customises RefTeX."
 (add-hook 'TeX-auto-cleanup-hook 'alb-TeX-auto-newIdent-cleanup)
 
 
-
-
 
 ;;; Local Variables:
 ;;; mode: emacs-lisp

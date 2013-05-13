@@ -1,7 +1,7 @@
 ;;;
-;;; AlbGraphTheory/style/alb-graph-theory.el
+;;; AlbLaTeX/style/alb-graph-theory.el
 ;;;
-;;;     Copyright (C) 2004 Andrew Lincoln Burrow
+;;;     Copyright (C) 2004, 2013 Andrew Lincoln Burrow
 ;;;
 ;;;     This library is free software; you can redistribute it and/or
 ;;;     modify it under the terms of the GNU General Public License as
@@ -55,8 +55,6 @@
      '("albDistanceIn" "Graph" "First vertex" "Second vertex")))))
 
 
-
-
 
 ;;; Local Variables:
 ;;; mode: emacs-lisp

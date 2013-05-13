@@ -1,7 +1,7 @@
 ;;;
-;;; AlbProofs/style/alb-proofs.el
+;;; AlbLaTeX/style/alb-proofs.el
 ;;;
-;;;     Copyright (C) 2000-2005 Andrew Lincoln Burrow
+;;;     Copyright (C) 2000-2005, 2013 Andrew Lincoln Burrow
 ;;;
 ;;;     This library is free software; you can redistribute it and/or
 ;;;     modify it under the terms of the GNU General Public License as
@@ -55,7 +55,7 @@ stale references hard to detect.")
 (defconst alb-LaTeX-re-opening-command-assumption
   (concat "\\\\\\("
           "albAssume\\|albSuppose"
-	  "\\)\\>")
+          "\\)\\>")
   "Regexp matching a command that formats a statement in the
 \"albAssumptions\" or \"albSuppositions\" environment, but not its
 arguments.  Namely \\albAssume or \\albSuppose.
@@ -67,7 +67,7 @@ NB: The parser expects the command name to be the 1st subexpression!")
   (concat "\\\\\\("
           "albAssert\\|albAssertBase\\|albAssertInduction"
           "\\|albQED\\|albQEDbyContradiction\\|albQEDbyInduction"
-	  "\\)\\>")
+          "\\)\\>")
   "Regexp matching a command that formats a statement in the
 \"albAssertions\" environment, but not its arguments.  Namely one of
 \\albAssert, \\albAssertBase, \\albAssertInduction, \\albQED,
@@ -211,13 +211,13 @@ This function customises RefTeX."
       ;; Purge display of spacing adjustments, bracing adjustments,
       ;; layout structures, and comments.
       (while (string-match alb-LaTeX-re-opening-command-spacing display)
-	(setq display (replace-match " " nil t display)))
+        (setq display (replace-match " " nil t display)))
       (while (string-match alb-LaTeX-re-opening-command-bracing display)
-	(setq display (replace-match " " nil t display)))
+        (setq display (replace-match " " nil t display)))
       (while (string-match alb-LaTeX-re-command-math-layout display)
-	(setq display (replace-match " " nil t display)))
+        (setq display (replace-match " " nil t display)))
       (while (string-match alb-LaTeX-re-whitespace-removed display)
-	(setq display (replace-match "" nil t display)))
+        (setq display (replace-match "" nil t display)))
       ;; Return the purged text.
       display)))
 
@@ -271,13 +271,13 @@ This function customises RefTeX."
       ;; Purge display of spacing adjustments, bracing adjustments,
       ;; layout structures, and comments.
       (while (string-match alb-LaTeX-re-opening-command-spacing display)
-	(setq display (replace-match " " nil t display)))
+        (setq display (replace-match " " nil t display)))
       (while (string-match alb-LaTeX-re-opening-command-bracing display)
-	(setq display (replace-match " " nil t display)))
+        (setq display (replace-match " " nil t display)))
       (while (string-match alb-LaTeX-re-command-math-layout display)
-	(setq display (replace-match " " nil t display)))
+        (setq display (replace-match " " nil t display)))
       (while (string-match alb-LaTeX-re-whitespace-removed display)
-	(setq display (replace-match "" nil t display)))
+        (setq display (replace-match "" nil t display)))
       ;; Return the purged text.
       display)))
 
@@ -288,7 +288,7 @@ This function customises RefTeX."
 
 This function customises RefTeX."
   (number-to-string (set 'alb-LaTeX-assertion-counter
-			 (+ alb-LaTeX-assertion-counter 1))))
+                         (+ alb-LaTeX-assertion-counter 1))))
 
 
 
@@ -297,7 +297,7 @@ This function customises RefTeX."
 
 This function customises RefTeX."
   (number-to-string (set 'alb-LaTeX-assumption-counter
-			 (+ alb-LaTeX-assumption-counter 1))))
+                         (+ alb-LaTeX-assumption-counter 1))))
 
 
 
@@ -333,32 +333,30 @@ This function customises RefTeX."
      '("albAssumptions" LaTeX-env-item)
      '("albAssertions" LaTeX-env-item))
     (if (featurep 'reftex)
-	(progn
-	  (add-hook 'local-write-file-hooks
-		    (function
-		     (lambda ()
-		       (if (< 0 alb-LaTeX-assertion-counter)
-			   (alb-update-file-local-variable
-			    'alb-LaTeX-assertion-counter
-			    alb-LaTeX-assertion-counter))
-		       (if (< 0 alb-LaTeX-assumption-counter)
-			   (alb-update-file-local-variable
-			    'alb-LaTeX-assumption-counter
-			    alb-LaTeX-assumption-counter)))))
-	  (reftex-add-label-environments
-	   '(("albAssumptions"      ?l "as:%f:"  "~\\ref{%s}"
-	      (alb-reftex-context-fn-assumption-display
+        (progn
+          (add-hook 'local-write-file-hooks
+                    (function
+                     (lambda ()
+                       (if (< 0 alb-LaTeX-assertion-counter)
+                           (alb-update-file-local-variable
+                            'alb-LaTeX-assertion-counter
+                            alb-LaTeX-assertion-counter))
+                       (if (< 0 alb-LaTeX-assumption-counter)
+                           (alb-update-file-local-variable
+                            'alb-LaTeX-assumption-counter
+                            alb-LaTeX-assumption-counter)))))
+          (reftex-add-label-environments
+           '(("albAssumptions"      ?l "as:%f:"  "~\\ref{%s}"
+              (alb-reftex-context-fn-assumption-display
                . alb-reftex-context-fn-assumption-label))
-	     ("albAssertions"       ?m "pf:%f:"  "~\\ref{%s}"
-	      (alb-reftex-context-fn-assertion-display
+             ("albAssertions"       ?m "pf:%f:"  "~\\ref{%s}"
+              (alb-reftex-context-fn-assertion-display
                . alb-reftex-context-fn-assertion-label))))
-	  (setq reftex-insert-label-flags
-		(cons (concat (car reftex-insert-label-flags) "lm")
-		      (cdr reftex-insert-label-flags))))))))
+          (setq reftex-insert-label-flags
+                (cons (concat (car reftex-insert-label-flags) "lm")
+                      (cdr reftex-insert-label-flags))))))))
 
 
-
-
 
 ;;; Local Variables:
 ;;; mode: emacs-lisp

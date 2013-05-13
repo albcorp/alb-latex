@@ -1,7 +1,7 @@
 ;;;
-;;; AlbAUCTeX/alb-latex-find-file.el
+;;; AlbLaTeX/lisp/alb-latex-find-file.el
 ;;;
-;;;     Copyright (C) 2003-2008 Andrew Lincoln Burrow
+;;;     Copyright (C) 2003-2008, 2013 Andrew Lincoln Burrow
 ;;;
 ;;;     This library is free software; you can redistribute it and/or
 ;;;     modify it under the terms of the GNU General Public License as
@@ -49,40 +49,32 @@
 Then open the file with a .TeX extension."
   (interactive "sTitle: ")
   (let* ((bname (alb-construct-basename string))
-	 (fname (concat default-directory bname ".tex"))
-	 (uname (if (string-match alb-re-filename-at-home fname)
-		    (concat "~" (match-string 1 fname))
-		  fname)))
+         (fname (concat default-directory bname ".tex"))
+         (uname (if (string-match alb-re-filename-at-home fname)
+                    (concat "~" (match-string 1 fname))
+                  fname)))
     (if (file-exists-p fname)
-	;; File already exists --- let find-file report errors opening.
-	(find-file fname)
+        ;; File already exists --- let find-file report errors opening.
+        (find-file fname)
       (progn
-	;; New file -- load and build a rudimentary header.
-	(find-file fname)
-	(insert "%%% ")
-	(newline)
-	(insert (concat "%%% :Precis: " string))
-	(newline)
-	(insert (concat "%%% :Copyright: " (format-time-string "%Y")
+        ;; New file -- load and build a rudimentary header.
+        (find-file fname)
+        (insert "%%% ")
+        (newline)
+        (insert (concat "%%% :Precis: " string))
+        (newline)
+        (insert (concat "%%% :Copyright: " (format-time-string "%Y")
                         " " user-full-name))
-	(newline)
-	(insert (concat "%%% :Authors: " user-full-name))
-	(newline)
-	(insert (concat "%%% :Contact: " user-mail-address))
-	(newline)
-	(insert "%%% :Source: $URL$")
-	(newline)
-	(insert "%%% :Revision: $Revision$")
-	(newline)
-	(insert "%%% :Date: $Date$")
-	(newline)
-	(insert "%%% ")
-	(newline 6)
-	(forward-line -3)))))
+        (newline)
+        (insert (concat "%%% :Authors: " user-full-name))
+        (newline)
+        (insert (concat "%%% :Contact: " user-mail-address))
+        (newline)
+        (insert "%%% ")
+        (newline 6)
+        (forward-line -3)))))
 
 
-
-
 
 ;;; Local Variables:
 ;;; mode: emacs-lisp

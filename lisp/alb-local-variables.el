@@ -1,7 +1,7 @@
 ;;;
-;;; AlbElisp/alb-local-variables.el
+;;; AlbLaTeX/lisp/alb-local-variables.el
 ;;;
-;;;     Copyright (C) 2000-2005 Andrew Lincoln Burrow
+;;;     Copyright (C) 2000-2005, 2013 Andrew Lincoln Burrow
 ;;;
 ;;;     This library is free software; you can redistribute it and/or
 ;;;     modify it under the terms of the GNU General Public License as
@@ -42,8 +42,8 @@
 
 (defconst alb-re-local-variables
   (concat "^\\(.+\\)Local Variables:[ \t]*\n"
-	  "\\(\\(\\1[0-9A-Za-z_-]+:[ \t]+.*\n\\)*\\)"
-	  "\\1End:[ \t]*\n")
+          "\\(\\(\\1[0-9A-Za-z_-]+:[ \t]+.*\n\\)*\\)"
+          "\\1End:[ \t]*\n")
   "Regexp matching the file local variables.  The first subexpression
 matches the prefix used for the rest of the entries.  The second
 subexpression matches the lines containing file local variables.  The
@@ -61,33 +61,31 @@ If VARIABLE is present, then Set VARIABLE to VALUE.  Otherwise, insert
 VARIABLE in the list with VALUE."
   (if (and (buffer-file-name) (not buffer-read-only))
       (save-excursion
-	(goto-char (point-max))
-	(if (re-search-backward alb-re-local-variables (- (point) 3000) t)
-	    (let* ((case-fold-search nil)
-		   (prefix (match-string-no-properties 1))
-		   (begin (match-beginning 2))
-		   (end (match-end 2))
-		   (varline (and (goto-char begin)
-				 (re-search-forward
-				  (concat "^" (regexp-quote prefix)
-					  "\\(" (symbol-name variable) "\\):"
-					  "[ \t]+.*")
-				  end t)
-				 (list (match-beginning 0) (match-end 0)))))
-	      (if varline
-		  ;; Delete existing entry and leave point at start of line.
-		  (progn (delete-region (nth 0 varline) (nth 1 varline))
-			 (goto-char (nth 0 varline)))
-		;; Newline before end marker and leave point at start of line.
-		(progn (goto-char end)
-		       (end-of-line 0)
-		       (newline)))
-	      (insert prefix (symbol-name variable) ": "
-		      (prin1-to-string value)))))))
+        (goto-char (point-max))
+        (if (re-search-backward alb-re-local-variables (- (point) 3000) t)
+            (let* ((case-fold-search nil)
+                   (prefix (match-string-no-properties 1))
+                   (begin (match-beginning 2))
+                   (end (match-end 2))
+                   (varline (and (goto-char begin)
+                                 (re-search-forward
+                                  (concat "^" (regexp-quote prefix)
+                                          "\\(" (symbol-name variable) "\\):"
+                                          "[ \t]+.*")
+                                  end t)
+                                 (list (match-beginning 0) (match-end 0)))))
+              (if varline
+                  ;; Delete existing entry and leave point at start of line.
+                  (progn (delete-region (nth 0 varline) (nth 1 varline))
+                         (goto-char (nth 0 varline)))
+                ;; Newline before end marker and leave point at start of line.
+                (progn (goto-char end)
+                       (end-of-line 0)
+                       (newline)))
+              (insert prefix (symbol-name variable) ": "
+                      (prin1-to-string value)))))))
 
 
-
-
 
 ;;; Local Variables:
 ;;; mode: emacs-lisp

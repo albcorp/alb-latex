@@ -1,7 +1,7 @@
 ;;;
-;;; AlbCorpLayout/style/alb-corp.el
+;;; AlbLaTeX/style/alb-corp.el
 ;;;
-;;;     Copyright (C) 2000-2005 Andrew Lincoln Burrow
+;;;     Copyright (C) 2000-2005, 2013 Andrew Lincoln Burrow
 ;;;
 ;;;     This library is free software; you can redistribute it and/or
 ;;;     modify it under the terms of the GNU General Public License as
@@ -64,8 +64,6 @@
      '("albTitlePage")))))
 
 
-
-
 
 ;;; Local Variables:
 ;;; mode: emacs-lisp

@@ -1,7 +1,7 @@
 ;;;
-;;; AlbOrderTheory/style/alb-order-theory.el
+;;; AlbLaTeX/style/alb-order-theory.el
 ;;;
-;;;     Copyright (C) 2000-2005 Andrew Lincoln Burrow
+;;;     Copyright (C) 2000-2005, 2013 Andrew Lincoln Burrow
 ;;;
 ;;;     This library is free software; you can redistribute it and/or
 ;;;     modify it under the terms of the GNU General Public License as
@@ -56,32 +56,32 @@ the environment.
 See `alb-LaTeX-collect-balanced-braces' for a description of the return
 value and argument."
   (let ((start (point))
-	(results))
+        (results))
     ;; Iterate until a '\\' command or closing environment is next.
     (while (and (looking-at alb-LaTeX-re-matter-inside-structure)
-		(goto-char (match-end 0))
-		(not (looking-at alb-LaTeX-re-opening-command-end-of-line))
-		(not (looking-at alb-LaTeX-re-closing-environment)))
+                (goto-char (match-end 0))
+                (not (looking-at alb-LaTeX-re-opening-command-end-of-line))
+                (not (looking-at alb-LaTeX-re-closing-environment)))
       (cond
        ((looking-at alb-LaTeX-re-opening-brace)
-	(setq results
-	      (nconc results
-		     (alb-LaTeX-collect-balanced-braces context))))
+        (setq results
+              (nconc results
+                     (alb-LaTeX-collect-balanced-braces context))))
        ((looking-at alb-LaTeX-re-opening-math)
-	(setq results
-	      (nconc results
-		     (alb-LaTeX-collect-balanced-math context))))
+        (setq results
+              (nconc results
+                     (alb-LaTeX-collect-balanced-math context))))
        ((looking-at alb-LaTeX-re-opening-environment)
-	(setq results
-	      (nconc results
-		     (alb-LaTeX-collect-balanced-environment context))))
+        (setq results
+              (nconc results
+                     (alb-LaTeX-collect-balanced-environment context))))
        ((looking-at alb-LaTeX-re-opening-command)
-	(setq results
-	      (nconc results
-		     (alb-LaTeX-collect-command context))))
+        (setq results
+              (nconc results
+                     (alb-LaTeX-collect-command context))))
        (t
-	(error "%s: %d: %d: Unexpected parse error when collecting equation"
-	       (buffer-name) begin (point)))))
+        (error "%s: %d: %d: Unexpected parse error when collecting equation"
+               (buffer-name) begin (point)))))
 
     ;; Return the collected results.
     results))
@@ -94,20 +94,20 @@ is to be used in the RefTeX table of contents buffer.
 This function customises RefTeX."
   (save-excursion
     (let* ((start (point))
-	   (finish (progn (alb-LaTeX-collect-equation
-			   alb-LaTeX-parser-context-standard)
-			  (point)))
-	   (text (buffer-substring-no-properties start finish)))
+           (finish (progn (alb-LaTeX-collect-equation
+                           alb-LaTeX-parser-context-standard)
+                          (point)))
+           (text (buffer-substring-no-properties start finish)))
       ;; Purge 'source' of spacing adjustments, bracing adjustments,
       ;; layout structures, and comments.
       (while (string-match alb-LaTeX-re-opening-command-spacing text)
-	(setq text (replace-match " " nil t text)))
+        (setq text (replace-match " " nil t text)))
       (while (string-match alb-LaTeX-re-opening-command-bracing text)
-	(setq text (replace-match " " nil t text)))
+        (setq text (replace-match " " nil t text)))
       (while (string-match alb-LaTeX-re-command-math-layout text)
-	(setq text (replace-match " " nil t text)))
+        (setq text (replace-match " " nil t text)))
       (while (string-match alb-LaTeX-re-whitespace-removed text)
-	(setq text (replace-match "" nil t text)))
+        (setq text (replace-match "" nil t text)))
       ;; Return the purged text.
       text)))
 
@@ -118,7 +118,7 @@ is to be used in the construction of the label.
 
 This function customises RefTeX."
   (number-to-string (set 'alb-LaTeX-equation-counter
-			 (+ alb-LaTeX-equation-counter 1))))
+                         (+ alb-LaTeX-equation-counter 1))))
 
 
 
@@ -192,44 +192,42 @@ This function customises RefTeX."
      '("albBigOmega" "Asymptote function")
      '("albBigTheta" "Asymptote function"))
     (if (featurep 'reftex)
-	(progn
-	  (add-hook 'local-write-file-hooks
-		    (function
-		     (lambda ()
-		       (if (< 0 alb-LaTeX-equation-counter)
-			   (alb-update-file-local-variable
-			    'alb-LaTeX-equation-counter
-			    alb-LaTeX-equation-counter)))))
-	  (setq reftex-label-alist
-		(append reftex-label-alist
-			'(("align"              ?e nil       nil
-			   (alb-reftex-context-fn-equation-display
-			    . alb-reftex-context-fn-equation-label))
-			  ("gather"             ?e nil       nil
-			   (alb-reftex-context-fn-equation-display
-			    . alb-reftex-context-fn-equation-label))
-			  ("multline"           ?e nil       nil
-			   (alb-reftex-context-fn-equation-display
-			    . alb-reftex-context-fn-equation-label))
-			  ("flalign"            ?e nil       nil
-			   (alb-reftex-context-fn-equation-display
-			    . alb-reftex-context-fn-equation-label))
-			  ("alignat"            ?e nil       nil
-			   (alb-reftex-context-fn-equation-display
-			    . alb-reftex-context-fn-equation-label))
-			  ("xalignat"           ?e nil       nil
-			   (alb-reftex-context-fn-equation-display
-			    . alb-reftex-context-fn-equation-label))
-			  ("xxalignat"          ?e nil       nil
-			   (alb-reftex-context-fn-equation-display
-			    . alb-reftex-context-fn-equation-label))
-			  ("subequations"       ?e nil       nil
-			   (alb-reftex-context-fn-equation-display
-			    . alb-reftex-context-fn-equation-label))))))))))
+        (progn
+          (add-hook 'local-write-file-hooks
+                    (function
+                     (lambda ()
+                       (if (< 0 alb-LaTeX-equation-counter)
+                           (alb-update-file-local-variable
+                            'alb-LaTeX-equation-counter
+                            alb-LaTeX-equation-counter)))))
+          (setq reftex-label-alist
+                (append reftex-label-alist
+                        '(("align"              ?e nil       nil
+                           (alb-reftex-context-fn-equation-display
+                            . alb-reftex-context-fn-equation-label))
+                          ("gather"             ?e nil       nil
+                           (alb-reftex-context-fn-equation-display
+                            . alb-reftex-context-fn-equation-label))
+                          ("multline"           ?e nil       nil
+                           (alb-reftex-context-fn-equation-display
+                            . alb-reftex-context-fn-equation-label))
+                          ("flalign"            ?e nil       nil
+                           (alb-reftex-context-fn-equation-display
+                            . alb-reftex-context-fn-equation-label))
+                          ("alignat"            ?e nil       nil
+                           (alb-reftex-context-fn-equation-display
+                            . alb-reftex-context-fn-equation-label))
+                          ("xalignat"           ?e nil       nil
+                           (alb-reftex-context-fn-equation-display
+                            . alb-reftex-context-fn-equation-label))
+                          ("xxalignat"          ?e nil       nil
+                           (alb-reftex-context-fn-equation-display
+                            . alb-reftex-context-fn-equation-label))
+                          ("subequations"       ?e nil       nil
+                           (alb-reftex-context-fn-equation-display
+                            . alb-reftex-context-fn-equation-label))))))))))
 
 
-
-
 
 ;;; Local Variables:
 ;;; mode: emacs-lisp

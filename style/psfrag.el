@@ -1,7 +1,7 @@
 ;;;
-;;; AlbFloatTools/style/psfrag.el
+;;; AlbLaTeX/style/psfrag.el
 ;;;
-;;;     Copyright (C) 2001-2003 Andrew Lincoln Burrow
+;;;     Copyright (C) 2001-2003, 2013 Andrew Lincoln Burrow
 ;;;
 ;;;     This library is free software; you can redistribute it and/or
 ;;;     modify it under the terms of the GNU General Public License as
@@ -73,9 +73,9 @@ This function customises AUCTeX.  See: `alb-TeX-arg-psfrag'."
   (LaTeX-insert-environment environment)
   (let (tag)
     (while (and (setq tag
-		      (read-from-minibuffer
-		       (TeX-argument-prompt t nil "PSfrag tag")))
-		(not (equal "" tag)))
+                      (read-from-minibuffer
+                       (TeX-argument-prompt t nil "PSfrag tag")))
+                (not (equal "" tag)))
       (insert "\\psfrag")
       (alb-TeX-arg-psfrag nil tag)
       (insert "%")
@@ -97,8 +97,6 @@ This function customises AUCTeX.  See: `alb-TeX-arg-psfrag'."
      '("psfrags" alb-TeX-env-psfrags)))))
 
 
-
-
 
 ;;; Local Variables:
 ;;; mode: emacs-lisp

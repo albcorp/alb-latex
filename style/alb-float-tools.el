@@ -1,7 +1,7 @@
 ;;;
-;;; AlbFloatTools/style/alb-figures.el
+;;; AlbLaTeX/style/alb-figures.el
 ;;;
-;;;     Copyright (C) 2001-2005 Andrew Lincoln Burrow
+;;;     Copyright (C) 2001-2005, 2013 Andrew Lincoln Burrow
 ;;;
 ;;;     This library is free software; you can redistribute it and/or
 ;;;     modify it under the terms of the GNU General Public License as
@@ -38,12 +38,12 @@
 
 
 (defconst alb-LaTeX-re-label
-  (concat			   ; Sub expressions:	Count	Total
-   "\\\\label"						;  0	 0
-   alb-LaTeX-re-whitespace-horizontal			;  2	 2
-   "{" alb-LaTeX-re-whitespace-hidden			;  1	 3
-   "\\([0-9A-Za-z:_-]+\\)"				;  1	 4
-   alb-LaTeX-re-whitespace-hidden "}")			;  1	 5
+  (concat                          ; Sub expressions:   Count   Total
+   "\\\\label"                                          ;  0     0
+   alb-LaTeX-re-whitespace-horizontal                   ;  2     2
+   "{" alb-LaTeX-re-whitespace-hidden                   ;  1     3
+   "\\([0-9A-Za-z:_-]+\\)"                              ;  1     4
+   alb-LaTeX-re-whitespace-hidden "}")                  ;  1     5
   "Regular expression to extract label defined by \\label command.
 
 This variable is used in AUCTeX file parsing.")
@@ -60,11 +60,11 @@ the environment.
 
 This function customises AUCTeX."
   (let* ((case-fold-search nil)
-	 (float-label (save-excursion
-			(and (re-search-backward "\\\\begin\\>" nil t)
-			     (goto-char (match-end 0))
-			     (re-search-forward alb-LaTeX-re-label nil t)
-			     (match-string-no-properties 4)))))
+         (float-label (save-excursion
+                        (and (re-search-backward "\\\\begin\\>" nil t)
+                             (goto-char (match-end 0))
+                             (re-search-forward alb-LaTeX-re-label nil t)
+                             (match-string-no-properties 4)))))
     (LaTeX-insert-environment environment (concat "{" float-label "}"))))
 
 
@@ -76,13 +76,13 @@ optional argument to the environment.
 
 This function customises AUCTeX."
   (let* ((alignment-chr (completing-read (TeX-argument-prompt
-					  t nil "Alignment of shelved items")
-					 '(("t") ("b") (""))
-					 nil
-					 t
-					 ""))
-	 (alignment-arg (if (not (string-equal "" alignment-chr))
-			    (concat "[" alignment-chr "]"))))
+                                          t nil "Alignment of shelved items")
+                                         '(("t") ("b") (""))
+                                         nil
+                                         t
+                                         ""))
+         (alignment-arg (if (not (string-equal "" alignment-chr))
+                            (concat "[" alignment-chr "]"))))
     (LaTeX-insert-environment environment alignment-arg)
     (end-of-line 0)
     (delete-char 1)
@@ -110,8 +110,6 @@ This function customises AUCTeX."
      '("albShelve" alb-LaTeX-env-shelve)))))
 
 
-
-
 
 ;;; Local Variables:
 ;;; mode: emacs-lisp

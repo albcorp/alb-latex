@@ -1,7 +1,7 @@
 ;;;
-;;; AlbFloatTools/style/graphicx.el
+;;; AlbLaTeX/style/graphicx.el
 ;;;
-;;;     Copyright (C) 2001-2003 Andrew Lincoln Burrow
+;;;     Copyright (C) 2001-2003, 2013 Andrew Lincoln Burrow
 ;;;
 ;;;     This library is free software; you can redistribute it and/or
 ;;;     modify it under the terms of the GNU General Public License as
@@ -54,13 +54,11 @@
     (TeX-add-symbols
      '("includegraphics"
        [alb-TeX-arg-keyvalues
-	"\\includegraphics option"
-	alb-LaTeX-keyvalues-includegraphics]
+        "\\includegraphics option"
+        alb-LaTeX-keyvalues-includegraphics]
        alb-TeX-arg-graphic-file)))))
 
 
-
-
 
 ;;; Local Variables:
 ;;; mode: emacs-lisp

@@ -1,7 +1,7 @@
 ;;;
-;;; AlbAUCTeX/alb-latex-env.el
+;;; AlbLaTeX/lisp//alb-latex-env.el
 ;;;
-;;;     Copyright (C) 2000-2003 Andrew Lincoln Burrow
+;;;     Copyright (C) 2000-2003, 2013 Andrew Lincoln Burrow
 ;;;
 ;;;     This library is free software; you can redistribute it and/or
 ;;;     modify it under the terms of the GNU General Public License as
@@ -44,7 +44,6 @@
 ;;; *** FUNCTION DEFINITIONS **************************************************
 
 
-
 (defun alb-LaTeX-env-float (environment &rest junk)
   "Insert a float ENVIRONMENT with prompting.  Insert the \\caption with
 an optional abbreviated form, and generate a \\label.
@@ -55,22 +54,22 @@ hook could cause problems.
 
 This function customises AUCTeX."
   (let* ((float   (read-from-minibuffer
-		   "(optional) Float to: " LaTeX-float))
-	 (abrieve (read-from-minibuffer
-		   "(optional) Abbreviated caption: "))
-	 (caption (read-from-minibuffer
-		   "Caption: " abrieve)))
+                   "(optional) Float to: " LaTeX-float))
+         (abrieve (read-from-minibuffer
+                   "(optional) Abbreviated caption: "))
+         (caption (read-from-minibuffer
+                   "Caption: " abrieve)))
     (LaTeX-insert-environment
      environment
      (if (not (string-equal "" float)) (concat "[" float "]")))
     (save-excursion
       (if (string-equal "" abrieve)
-	  (progn (insert (concat "\\caption{" caption "}"))
-		 (newline-and-indent))
-	(progn (insert (concat "\\caption[" abrieve "]{%"))
-	       (newline-and-indent)
-	       (insert (concat caption "}"))
-	       (newline-and-indent)))
+          (progn (insert (concat "\\caption{" caption "}"))
+                 (newline-and-indent))
+        (progn (insert (concat "\\caption[" abrieve "]{%"))
+               (newline-and-indent)
+               (insert (concat caption "}"))
+               (newline-and-indent)))
       (LaTeX-label environment))))
 
 
@@ -86,8 +85,6 @@ This function customises AUCTeX."
   (LaTeX-environment-menu "tabular"))
 
 
-
-
 
 ;;; Local Variables:
 ;;; mode: emacs-lisp
