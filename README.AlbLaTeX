@@ -18,17 +18,17 @@ macros for formatting mathematics and computer algorithms.
 `alb-corp.cls`
   Document layout documentation of the /albcorp/ LaTeX packages
 
-  See ``alb-corp-layout.pdf`` for further information.
+  See ``alb-corp.pdf`` for further information.
 
 `alb-journal.cls`
   LaTeX book design for a research journal
 
-  See ``alb-journal-layout.pdf`` for further information.
+  See ``alb-journal.pdf`` for further information.
 
 `alb-thesis.cls`
   LaTeX book design for a thesis
 
-  See ``alb-thesis-layout.pdf`` for further information.
+  See ``alb-thesis.pdf`` for further information.
 
 `alb-float-tools.sty`
   LaTeX style file for typesetting float material and captions

@@ -1,7 +1,7 @@
 %%%
-%%% AlbThesisLayout/alb-thesis-index.ist
+%%% AlbLaTex/latex/alb-thesis-index.ist
 %%%
-%%%     Copyright (C) 2002-2006 Andrew Lincoln Burrow
+%%%     Copyright (C) 2002-2006, 2013 Andrew Lincoln Burrow
 %%%
 %%%     This program may be distributed and/or modified under the
 %%%     conditions of the LaTeX Project Public License, either version
@@ -16,14 +16,21 @@
 %%%
 %%%     This work has the LPPL maintenance status 'author-maintained'.
 %%%
-%%%     This work consists of the files 'alb-thesis.cls',
-%%%     'alb-thesis-glossary.ist', 'alb-thesis-index.ist', and
-%%%     'alb-thesis-layout-documentation.tex'.
+%%%     This work consists of the files 'alb-algorithms.sty',
+%%%     'alb-avm.sty', 'alb-corp.cls', 'alb-float-tools.sty',
+%%%     'alb-graph-theory.sty', 'alb-journal.cls',
+%%%     'alb-order-theory.sty', 'alb-proofs.sty', 'alb-theorems.sty',
+%%%     'alb-thesis.cls', 'alb-algorithms.tex', 'alb-avm.tex',
+%%%     'alb-corp.tex', 'alb-float-tools.tex', 'alb-graph-theory.tex',
+%%%     'alb-journal.tex', 'alb-order-theory.tex', 'alb-proofs.tex',
+%%%     'alb-theorems.tex', 'alb-thesis.tex',
+%%%     'alb-journal-glossary.ist', 'alb-journal-index.ist',
+%%%     'alb-thesis-glossary.ist', and 'alb-thesis-index.ist'.
 %%%
 %%%   - makeindex(1) style file for processing a general index in the
 %%%     form of index entries.
 %%%
-%%%   - See: 'alb-journal-layout-documentation.pdf'.
+%%%   - See: 'alb-thesis.pdf'.
 %%%
 keyword   "\\indexentry"
 preamble  "\n \\begin{theindex}\n"

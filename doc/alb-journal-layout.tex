@@ -1,5 +1,5 @@
 %%%
-%%% AlbLaTeX/doc/alb-journal-layout.tex
+%%% AlbLaTeX/doc/alb-journal.tex
 %%%
 %%%     See copyright notice and license in text.
 %%%
@@ -98,10 +98,12 @@
       \url{alb-journal.cls}, \url{alb-order-theory.sty},
       \url{alb-proofs.sty}, \url{alb-theorems.sty},
       \url{alb-thesis.cls}, \url{alb-algorithms.tex}, \url{alb-avm.tex},
-      \url{alb-corp-layout.tex}, \url{alb-float-tools.tex},
-      \url{alb-graph-theory.tex}, \url{alb-journal-layout.tex},
+      \url{alb-corp.tex}, \url{alb-float-tools.tex},
+      \url{alb-graph-theory.tex}, \url{alb-journal.tex},
       \url{alb-order-theory.tex}, \url{alb-proofs.tex},
-      \url{alb-theorems.tex}, and \url{alb-thesis-layout.tex}.
+      \url{alb-theorems.tex}, \url{alb-thesis.tex}.
+      \url{alb-journal-glossary.ist}, \url{alb-journal-index.ist},
+      \url{alb-thesis-glossary.ist}, and \url{alb-thesis-index.ist}.
     \end{flushleft}
   \end{quote}
 
@@ -120,7 +122,7 @@
 %%%
 
 \section{Introduction}
-\label{sec:alb-journal-layout-documentation:intr}
+\label{sec:alb-journal:intr}
 
 The \texttt{AlbJournalLayout} package is designed to assist in the
 keeping of research journals.  It consists of a single document class
@@ -150,7 +152,7 @@ note.
 %%%
 
 \section{Suggested Document Structure}
-\label{sec:alb-journal-layout-documentation:sugg-docum-struct}
+\label{sec:alb-journal:sugg-docum-struct}
 
 To enjoy the benefits of the \texttt{alb-journal} document class, the
 document structure must conform to certain rules.  Additional steps,
@@ -161,7 +163,7 @@ document structure.
 
 
 \subsection{Page Layout Options}
-\label{sec:alb-journal-layout-documentation:page-layout-opti}
+\label{sec:alb-journal:page-layout-opti}
 
 The \texttt{alb-journal} document class attempts to respect page layout
 options.  In particular, you can use \texttt{oneside}, and
@@ -184,7 +186,7 @@ document class declaration.
 
 
 \subsection{Indexing Commands}
-\label{sec:alb-journal-layout-documentation:index-comm}
+\label{sec:alb-journal:index-comm}
 
 The excellent \texttt{natbib} and \texttt{chapterbib} \LaTeX{} packages
 are recommended, along with the setup of the keyword and citation
@@ -219,7 +221,7 @@ an index entry and the author of the cited work.
 
 
 \subsection{Document Structure}
-\label{sec:alb-journal-layout-documentation:docum-struct}
+\label{sec:alb-journal:docum-struct}
 
 In order to generate a bibliography for each journal entry, it is
 necessary to divide each journal entry into its own file and chapter.
@@ -272,7 +274,7 @@ document.  It begins with a chapter heading indicating the date, and
 concludes with commands to generate a biblography in the chapter.
 Research notes are marked up via the \texttt{albResearchNote}
 environment described in
-Section~\ref{sec:alb-journal-layout-documentation:using-comm-envir}.
+Section~\ref{sec:alb-journal:using-comm-envir}.
 
 The following content is a minimal example of a chapter.  The use of
 \texttt{chapter} to markup the date is mandatory, but the choice of
@@ -305,7 +307,7 @@ Papers collected in the preparation of the grant application.
 %%%
 
 \section{Using the Commands and Environments}
-\label{sec:alb-journal-layout-documentation:using-comm-envir}
+\label{sec:alb-journal:using-comm-envir}
 
 
 The single \texttt{albResearchNote} list environment of the
@@ -337,7 +339,7 @@ The single \texttt{albResearchNote} list environment of the
 %%%
 
 \section{Makefile Targets}
-\label{sec:alb-journal-layout-documentation:makef-targ}
+\label{sec:alb-journal:makef-targ}
 
 Given documents of the \texttt{alb-journal} class are expected to
 contain an index, it makes good sense to use the makefile from the

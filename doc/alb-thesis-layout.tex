@@ -1,5 +1,5 @@
 %%%
-%%% AlbLaTeX/doc/alb-thesis-layout.tex
+%%% AlbLaTeX/doc/alb-thesis.tex
 %%%
 %%%     See copyright notice and license in text.
 %%%
@@ -88,10 +88,12 @@
       \url{alb-journal.cls}, \url{alb-order-theory.sty},
       \url{alb-proofs.sty}, \url{alb-theorems.sty},
       \url{alb-thesis.cls}, \url{alb-algorithms.tex}, \url{alb-avm.tex},
-      \url{alb-corp-layout.tex}, \url{alb-float-tools.tex},
-      \url{alb-graph-theory.tex}, \url{alb-journal-layout.tex},
+      \url{alb-corp.tex}, \url{alb-float-tools.tex},
+      \url{alb-graph-theory.tex}, \url{alb-journal.tex},
       \url{alb-order-theory.tex}, \url{alb-proofs.tex},
-      \url{alb-theorems.tex}, and \url{alb-thesis-layout.tex}.
+      \url{alb-theorems.tex}, \url{alb-thesis.tex}.
+      \url{alb-journal-glossary.ist}, \url{alb-journal-index.ist},
+      \url{alb-thesis-glossary.ist}, and \url{alb-thesis-index.ist}.
     \end{flushleft}
   \end{quote}
 
@@ -110,7 +112,7 @@
 %%%
 
 \section{Introduction}
-\label{sec:alb-thesis-layout-documentation:intr}
+\label{sec:alb-thesis:intr}
 
 The \texttt{AlbThesisLayout} package implements a book design suitable
 for a thesis or other large scholarly document.  It consists of a single
@@ -139,7 +141,7 @@ case, the space for margin notes accomodates the page number.
 %%%
 
 \section{Suggested Document Structure}
-\label{sec:alb-thesis-layout-documentation:sugg-docum-struct}
+\label{sec:alb-thesis:sugg-docum-struct}
 
 The following guidelines reflect the design goals of the
 \texttt{alb-thesis} document class.  They are presented in terms of page
@@ -150,7 +152,7 @@ discussed here.
 
 
 \subsection{Page Layout Options}
-\label{sec:alb-thesis-layout-documentation:page-layout-opti}
+\label{sec:alb-thesis:page-layout-opti}
 
 The \texttt{alb-thesis} document class attempts to respect page layout
 options.  In particular, you can use of \texttt{oneside}, and
@@ -177,7 +179,7 @@ document class declaration.
 %%%
 
 \section{Makefile Targets}
-\label{sec:alb-thesis-layout-documentation:makef-targ}
+\label{sec:alb-thesis:makef-targ}
 
 Given documents of the \texttt{alb-thesis} class are expected to contain
 an index, it makes good sense to use the makefile from the

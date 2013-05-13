@@ -16,20 +16,22 @@
 %%%
 %%%     This work has the LPPL maintenance status 'author-maintained'.
 %%%
-%%%     This work consists of the files 'alb-algorithms.sty', 'alb-avm.sty',
-%%%     'alb-corp.cls', 'alb-float-tools.sty', 'alb-graph-theory.sty',
-%%%     'alb-journal.cls', 'alb-order-theory.sty', 'alb-proofs.sty',
-%%%     'alb-theorems.sty', 'alb-thesis.cls', 'alb-algorithms.tex',
-%%%     'alb-avm.tex', 'alb-corp-layout.tex', 'alb-float-tools.tex',
-%%%     'alb-graph-theory.tex', 'alb-journal-layout.tex',
-%%%     'alb-order-theory.tex', 'alb-proofs.tex', 'alb-theorems.tex', and
-%%%     'alb-thesis-layout.tex'.
+%%%     This work consists of the files 'alb-algorithms.sty',
+%%%     'alb-avm.sty', 'alb-corp.cls', 'alb-float-tools.sty',
+%%%     'alb-graph-theory.sty', 'alb-journal.cls',
+%%%     'alb-order-theory.sty', 'alb-proofs.sty', 'alb-theorems.sty',
+%%%     'alb-thesis.cls', 'alb-algorithms.tex', 'alb-avm.tex',
+%%%     'alb-corp.tex', 'alb-float-tools.tex', 'alb-graph-theory.tex',
+%%%     'alb-journal.tex', 'alb-order-theory.tex', 'alb-proofs.tex',
+%%%     'alb-theorems.tex', 'alb-thesis.tex',
+%%%     'alb-journal-glossary.ist', 'alb-journal-index.ist',
+%%%     'alb-thesis-glossary.ist', and 'alb-thesis-index.ist'.
 %%%
 %%%   - Set up the page layout, and section formatting to suite a
 %%%     research journal, where each dated entry is a chapter, and each
 %%%     note is a paragraph section.
 %%%
-%%%   - See: 'alb-journal-layout.pdf'.
+%%%   - See: 'alb-journal.pdf'.
 %%%
 
 

@@ -1,5 +1,5 @@
 %%%
-%%% AlbLaTeX/doc/alb-corp-layout.tex
+%%% AlbLaTeX/doc/alb-corp.tex
 %%%
 %%%     See copyright notice and license in text.
 %%%
@@ -92,10 +92,12 @@
       \url{alb-journal.cls}, \url{alb-order-theory.sty},
       \url{alb-proofs.sty}, \url{alb-theorems.sty},
       \url{alb-thesis.cls}, \url{alb-algorithms.tex}, \url{alb-avm.tex},
-      \url{alb-corp-layout.tex}, \url{alb-float-tools.tex},
-      \url{alb-graph-theory.tex}, \url{alb-journal-layout.tex},
+      \url{alb-corp.tex}, \url{alb-float-tools.tex},
+      \url{alb-graph-theory.tex}, \url{alb-journal.tex},
       \url{alb-order-theory.tex}, \url{alb-proofs.tex},
-      \url{alb-theorems.tex}, and \url{alb-thesis-layout.tex}.
+      \url{alb-theorems.tex}, \url{alb-thesis.tex}.
+      \url{alb-journal-glossary.ist}, \url{alb-journal-index.ist},
+      \url{alb-thesis-glossary.ist}, and \url{alb-thesis-index.ist}.
     \end{flushleft}
   \end{quote}
 
@@ -114,7 +116,7 @@
 %%%
 
 \section{Introduction}
-\label{sec:alb-corp-layout-examples:intr}
+\label{sec:alb-corp:intr}
 
 The \texttt{AlbCorpLayout} package is designed to assist in the
 documentation of \LaTeX{} packages.  It consists of the document class
@@ -150,7 +152,7 @@ and environments.
 %%%
 
 \section{Suggested Document Structure}
-\label{sec:alb-corp-layout-documentation:sugg-docum-struct}
+\label{sec:alb-corp:sugg-docum-struct}
 
 The \texttt{alb-corp} document class places few restrictions on the
 document structure.  It is primarily intended for articles.  Documents
@@ -160,7 +162,7 @@ information is used in the header.
 
 
 \subsection{Page Layout Options}
-\label{sec:alb-corp-layout-documentation:page-layout-opti}
+\label{sec:alb-corp:page-layout-opti}
 
 The \texttt{alb-corp} document class attempts to respect page layout
 options.  In particular, you can use \texttt{oneside}, \texttt{twoside},
@@ -187,7 +189,7 @@ document class declaration.
 %%%
 
 \section{Using the Commands and Environments}
-\label{sec:alb-corp-layout-documentation:using-comm-envir}
+\label{sec:alb-corp:using-comm-envir}
 
 The commands and environments of the \texttt{alb-corp} class are divided
 into three groups.  The first concerns the title page and title
@@ -199,7 +201,7 @@ to be referred to whilst documenting \LaTeX{} packages.
 
 
 \subsection{Title Material}
-\label{sec:alb-corp-layout-documentation:title-mater}
+\label{sec:alb-corp:title-mater}
 
 Documents of the \texttt{alb-corp} class should begin with an
 \texttt{albTitle} command.  This command accepts a single argument,
@@ -235,7 +237,7 @@ For example, a document might begin with the following \LaTeX{} code.
 
 
 \subsection{Command Typesetting Commands}
-\label{sec:alb-corp-layout-documentation:comm-types-comm}
+\label{sec:alb-corp:comm-types-comm}
 
 The next group of commands provided by the \texttt{alb-corp} class
 typeset \LaTeX{} commands.  In particular, they provide a simple markup
@@ -292,7 +294,7 @@ that it can be documented.
 
 
 \subsection{Logo Commands}
-\label{sec:alb-corp-layout-documentation:logo-comm}
+\label{sec:alb-corp:logo-comm}
 
 The remainder of the commands provided by the \texttt{alb-corp} class
 typeset logos.
@@ -314,7 +316,7 @@ typeset logos.
 %%%
 
 \section{\AUCTeX{} Customisations}
-\label{sec:alb-corp-layout-documentation:auctex-cust}
+\label{sec:alb-corp:auctex-cust}
 
 Under \AUCTeX{} the file \texttt{alb-corp.el} is automatically loaded
 whenever the \texttt{alb-corp} class is used.  The customisation adds
