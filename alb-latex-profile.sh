@@ -12,4 +12,4 @@ export TEXINPUTS="${TEXINPUTS%:}:$(dirname ${BASH_SOURCE})/latex:"
 
 # Extend INDEXSTYLE search path to include this package.
 
-export INDEXSTYLE="${INDEXSTYLE%:}:$(dirname ${BASH_SOURCE})/bibtex:"
+export INDEXSTYLE="${INDEXSTYLE%:}:$(dirname ${BASH_SOURCE})/latex:"
