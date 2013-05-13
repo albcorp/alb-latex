@@ -1,15 +1,15 @@
 #
 # AlbLaTeX/alb-latex-profile.sh
 #
-#   - Profile script to enable alb LaTeX packages in LaTeX
+#   - Profile script to enable the alb LaTeX packages
 #
 
 
 # Extend the TEXINPUTS search path to include this package
 
-export TEXINPUTS="${TEXINPUTS%:}:${HOME}/Config/AlbLaTeX/latex:"
+export TEXINPUTS="${TEXINPUTS%:}:$(dirname ${BASH_SOURCE})/latex:"
 
 
 # Extend INDEXSTYLE search path to include this package.
 
-export INDEXSTYLE="${INDEXSTYLE%:}:${HOME}/Config/AlbLaTeX/bibtex:"
+export INDEXSTYLE="${INDEXSTYLE%:}:$(dirname ${BASH_SOURCE})/bibtex:"
