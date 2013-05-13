@@ -2,7 +2,7 @@
 README.AlbLaTeX
 ===============
 
-:Precis: /albcorp/ LaTeX packages and supporting emacs lisp written against AUCTeX
+:Precis: /albcorp/ LaTeX packages with supporting AUCTeX extensions
 :Authors: Andrew Lincoln Burrow
 :Contact: albcorp@gmail.com
 :Copyright: 2000-2010, 2012-2013 Andrew Lincoln Burrow
@@ -11,23 +11,24 @@ README.AlbLaTeX
 LaTeX packages
 --------------
 
-The collection of LaTeX package comprise document layouts and macros for
-formatting mathematics and computer algorithms.
+The collection of LaTeX style files and classes comprise a small set of
+document layouts for technical writing.  These are supplemented by
+macros for formatting mathematics and computer algorithms.
 
 `alb-corp.cls`
-  LaTeX book design for a albcorp documentation
+  Document layout documentation of the /albcorp/ LaTeX packages
 
-  See ``alb-corp-layout-documentation.pdf`` for further information.
+  See ``alb-corp-layout.pdf`` for further information.
 
 `alb-journal.cls`
   LaTeX book design for a research journal
 
-  See ``alb-journal-layout-documentation.pdf`` for further information.
+  See ``alb-journal-layout.pdf`` for further information.
 
 `alb-thesis.cls`
   LaTeX book design for a thesis
 
-  See ``alb-thesis-layout-documentation.pdf`` for further information.
+  See ``alb-thesis-layout.pdf`` for further information.
 
 `alb-float-tools.sty`
   LaTeX style file for typesetting float material and captions
@@ -37,29 +38,29 @@ formatting mathematics and computer algorithms.
   across the page including the marginpar allocation; a list environment
   to flow subcaptioned items across the available width; and commands to
   select the caption style according to the page on which a float falls.
-  See ``alb-float-tools-documentation.pdf`` for further information.
+  See ``alb-float-tools.pdf`` for further information.
 
 `alb-order-theory.sty`
   Provides a collection of macros to make set and order theoretic
   mathematical constructs more readable and consistent in their
-  formatting.  See ``alb-order-theory-documentation.pdf`` for further
+  formatting.  See ``alb-order-theory.pdf`` for further
   information.
 
 `alb-graph-theory.sty`
   Provides a collection of macros to make graph theoretic mathematical
   constructs more readable and consistent in their formatting.  The
   collection is biased toward directed graphs.  See
-  ``alb-graph-theory-documentation.pdf`` for further information.
+  ``alb-graph-theory.pdf`` for further information.
 
 `alb-theorems.sty`
   Provides a minimal collection of theorem type environments.  See
-  ``alb-theorems-documentation.pdf`` for further information.
+  ``alb-theorems.pdf`` for further information.
 
 `alb-algorithms.sty`
   Provides environments and commands for typesetting algorithms and
   floats containing algorithms, including commands to define identifiers
   for accessor functions and procedures.  See
-  ``alb-algorithms-documentation.pdf`` for further information.
+  ``alb-algorithms.pdf`` for further information.
 
 `alb-proofs.sty`
   Provides the `albProof` environment which implements Lamport's
@@ -67,18 +68,20 @@ formatting mathematics and computer algorithms.
 
     Leslie Lamport, *How to Write a Proof*, 1993.
 
-  See ``alb-proofs-documentation.pdf`` for further information.
+  See ``alb-proofs.pdf`` for further information.
 
 `alb-avm.sty`
   Provides environments and commands to typeset typed feature structures
   and inequated typed feature structures in attribute-value matrix (AVM)
-  notation.  See ``alb-avm-documentation.pdf`` for further information.
+  notation.  See ``alb-avm.pdf`` for further information.
 
 ------------------
 Emacs lisp modules
 ------------------
 
-The collection of emacs lisp modules provide the following capabilities:
+The collection of emacs lisp modules support the LaTeX style files and
+classes by exenting AUCTeX and providing the following additional
+capabilities.
 
 - Generate file names from sentences
 - Manipulate local variables lists

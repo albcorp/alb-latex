@@ -1,7 +1,7 @@
 %%%
-%%% AlbCorpLayout/alb-corp.cls
+%%% AlbLaTeX/latex/alb-corp.cls
 %%%
-%%%     Copyright (C) 2002-2006 Andrew Lincoln Burrow
+%%%     Copyright (C) 2002-2006, 2013 Andrew Lincoln Burrow
 %%%
 %%%     This program may be distributed and/or modified under the
 %%%     conditions of the LaTeX Project Public License, either version
@@ -16,15 +16,21 @@
 %%%
 %%%     This work has the LPPL maintenance status 'author-maintained'.
 %%%
-%%%     This work consists of the files 'alb-corp.cls' and
-%%%     'alb-corp-layout-documentation.tex'.
+%%%     This work consists of the files 'alb-algorithms.sty', 'alb-avm.sty',
+%%%     'alb-corp.cls', 'alb-float-tools.sty', 'alb-graph-theory.sty',
+%%%     'alb-journal.cls', 'alb-order-theory.sty', 'alb-proofs.sty',
+%%%     'alb-theorems.sty', 'alb-thesis.cls', 'alb-algorithms.tex',
+%%%     'alb-avm.tex', 'alb-corp-layout.tex', 'alb-float-tools.tex',
+%%%     'alb-graph-theory.tex', 'alb-journal-layout.tex',
+%%%     'alb-order-theory.tex', 'alb-proofs.tex', 'alb-theorems.tex', and
+%%%     'alb-thesis-layout.tex'.
 %%%
 %%%   - Set up the page layout, section formatting, and title page for
 %%%     consistency across albcorp documents.  Provide a titlepage
 %%%     environment with markup  command, commands for typesetting LaTeX
 %%%     commands, and a collection of logo commands.
 %%%
-%%%   - See: 'alb-corp-layout-documentation.pdf'.
+%%%   - See: 'alb-corp-layout.pdf'.
 %%%
 
 
@@ -317,7 +323,7 @@
 
 \makeatother
 
-
+
 
 %%% Local Variables:
 %%% mode: latex
