@@ -6,7 +6,7 @@ README.AlbLaTeX
 :Authors: Andrew Lincoln Burrow
 :Contact: albcorp@gmail.com
 :Copyright: 2000-2010, 2012-2013 Andrew Lincoln Burrow
-:Version: 0.9
+:Version: 0.9.1
 
 --------
 Overview
@@ -220,12 +220,12 @@ documents.  Both makefiles use detailed dependency information gathered
 by parsing source files.  They are parameterised by a single variable
 specifying the master LaTeX files.
 
-`make\monograph\Makefile`
+``make\monograph\Makefile``
   A makefile parameterised by the make variable ``TEX_MASTER`` to accept
   a single document.  The directory also contains example LaTeX source
   code to demonstrate the features.
 
-`make\serial\Makefile`
+``make\serial\Makefile``
   A makefile parameterised by the make variable ``TEX_MASTERS`` to
   accept a series of documents.  The directory also contains example
   LaTeX source code to demonstrate the features.
