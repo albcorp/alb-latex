@@ -170,6 +170,15 @@ This function customises RefTeX."
      '("albPropositions" LaTeX-env-item))
     (if (featurep 'reftex)
         (progn
+          ;; Override TeX symbol bindings to use RefTeX features
+          (TeX-add-symbols
+           '("albDRef" (alb-TeX-arg-ref "d") ignore)
+           '("albTRef" (alb-TeX-arg-ref "u") ignore)
+           '("albLRef" (alb-TeX-arg-ref "v") ignore)
+           '("albRRef" (alb-TeX-arg-ref "w") ignore)
+           '("albCRef" (alb-TeX-arg-ref "x") ignore))
+
+          ;; Maintain counter for unique theorems labels
           (add-hook 'local-write-file-hooks
                     (function
                      (lambda ()
@@ -177,12 +186,8 @@ This function customises RefTeX."
                            (alb-update-file-local-variable
                             'alb-LaTeX-theorem-counter
                             alb-LaTeX-theorem-counter)))))
-          (TeX-add-symbols
-           '("albDRef" (alb-TeX-arg-ref "d") ignore)
-           '("albTRef" (alb-TeX-arg-ref "u") ignore)
-           '("albLRef" (alb-TeX-arg-ref "v") ignore)
-           '("albRRef" (alb-TeX-arg-ref "w") ignore)
-           '("albCRef" (alb-TeX-arg-ref "x") ignore))
+
+          ;; Specify new label types for theorem environments
           (reftex-add-label-environments
            '(("albDefinition"      ?d "def:%f:" "~\\ref{%s}"
               (alb-reftex-context-fn-theorem-display
@@ -204,9 +209,11 @@ This function customises RefTeX."
               (alb-reftex-context-fn-theorem-display
                . alb-reftex-context-fn-theorem-label)
               (regexp "Corollar\\(y\\|ies\\)"))))
-          (setq reftex-insert-label-flags
-                (cons (concat (car reftex-insert-label-flags) "duvwx")
-                      (cdr reftex-insert-label-flags))))))))
+
+          ;; Auto generate labels for theorem environments
+          (set (make-local-variable 'reftex-insert-label-flags)
+               (cons (concat (car reftex-insert-label-flags) "duvwx")
+                     (cdr reftex-insert-label-flags))))))))
 
 
 

@@ -1,0 +1,433 @@
+%%%
+%%% AlbLaTeX/doc/user/alb-theorems.tex
+%%%
+%%%     See copyright notice and license in text.
+%%%
+%%%   - Documentation for the 'alb-theorems' LaTeX package.
+%%%
+
+
+
+\documentclass[11pt,a4paper,oneside,titlepage]{alb-latex}
+
+
+
+%
+% URL Typesetting
+%
+% See: 'url.sty'.
+
+\usepackage{url}
+
+
+%
+% The package being documented.
+
+\usepackage{alb-theorems}
+
+
+%
+% Sloppy Line Breaks
+%
+% Turn off careful line breaks and hyphenation.
+
+\sloppy
+
+
+
+\begin{document}
+
+
+
+%%%
+%%% TITLE
+%%%
+
+\albTitle{%
+  Typesetting Theorems Under \LaTeX{}%
+}
+
+\begin{albTitlePage}
+
+  \albTitlePageSection{Author}
+
+  Andrew Lincoln Burrow\\
+  \texttt{albcorp@gmail.com}
+
+
+  \albTitlePageSection{Abstract}
+
+  The \texttt{AlbTheorems} package provides a single
+  \texttt{alb-theorems} \LaTeX{} package to provide markup for a minimal
+  collection of theorem like environments.  It provides abbreviated
+  cross referencing commands that construct margin notes with page
+  numbers, and places the markup in the \albLogo{} namespace.
+  Therefore, the package provides a small collection of environments.
+  The package is supported by an emacs lisp file customising \AUCTeX{}
+  and \RefTeX{}, which provides environment name completion and argument
+  prompting, and constructs labels in the file namespace.
+
+
+  \albTitlePageSection{Copyright}
+
+  Copyright \copyright{} 2001--2006, 2013 Andrew Lincoln Burrow.\\
+  This program may be distributed and/or modified under the conditions
+  of the \LaTeX{} Project Public License, either version 1.3 of this
+  license or (at your option) any later version.
+
+  \medskip{}
+
+  The latest version of this license is in
+  \begin{quote}
+    \url{http://www.latex-project.org/lppl.txt}
+  \end{quote}
+  and version 1.3 or later is part of all distributions of LaTeX version
+  2005/12/01 or later.
+
+  \medskip{}
+
+  This work has the LPPL maintenance status `author-maintained'.
+
+  \medskip{}
+
+  This work consists of the files
+  \begin{quote}
+    \begin{flushleft}
+      \url{alb-algorithms.sty}, \url{alb-avm.sty}, \url{alb-latex.cls},
+      \url{alb-float-tools.sty}, \url{alb-graph-theory.sty},
+      \url{alb-journal.cls}, \url{alb-order-theory.sty},
+      \url{alb-proofs.sty}, \url{alb-theorems.sty},
+      \url{alb-thesis.cls}, \url{alb-algorithms.tex}, \url{alb-avm.tex},
+      \url{alb-latex.tex}, \url{alb-float-tools.tex},
+      \url{alb-graph-theory.tex}, \url{alb-journal.tex},
+      \url{alb-order-theory.tex}, \url{alb-proofs.tex},
+      \url{alb-theorems.tex}, \url{alb-thesis.tex}.
+      \url{alb-journal-glossary.ist}, \url{alb-journal-index.ist},
+      \url{alb-thesis-glossary.ist}, and \url{alb-thesis-index.ist}.
+    \end{flushleft}
+  \end{quote}
+
+
+  \albTitlePageSection{Version Information}
+
+  \verb$Revision$\\
+  \verb$Date$
+
+\end{albTitlePage}
+
+
+
+%%%
+%%% INTRODUCTION
+%%%
+
+\section{Introduction}
+\label{sec:alb-theorems-documentation:intr}
+
+The \texttt{alb-theorems} \LaTeX{} package provides a group of theorem
+like environments for typesetting mathematical propositions.  It also
+provides a system to construct cross reference material that can be
+typeset in the margin.  The package is less likely to be useful to
+others, because it encodes decisions about the theorem numbering scheme
+and the types of proposition used.
+
+This package aso includes \AUCTeX{} code to override the built-in label
+generation rules for the theorem environments.  The system ensures dirty
+labels are not reissued.
+
+
+
+%%%
+%%% USING THE COMMANDS AND ENVIRONMENTS
+%%%
+
+\section{Using the Commands and Environments}
+\label{sec:alb-theorems-documentation:using-comm-envir}
+
+The environments of \texttt{alb-theorems} are simple.  Therefore, we can
+list them with little need for analysis.  All the theorem like
+environments share the same counter which is a subcounter to the chapter
+counter.
+
+\begin{description}
+\item[\albLtxEnv{albDefinition}\albLtxOpt{name}] Create a definition
+  environment with an optional name.
+
+  For example,
+  \begin{quote}
+\begin{verbatim}
+\begin{albDefinition}[Example Definition]
+  \label{def:alb-theorems-documentation:example-defin}
+  This is an example.  $f(x) = x^ 2$.
+\end{albDefinition}
+\end{verbatim}
+  \end{quote}
+  produces the following definition.
+
+  \begin{albDefinition}[Example Definition]
+    \label{def:alb-theorems-documentation:example-defin}
+    This is an example.  $f(x) = x^ 2$.
+  \end{albDefinition}
+
+\item[\albLtxEnv{albTheorem}\albLtxOpt{name}] Create a theorem
+  environment with an optional name.
+
+  For example,
+  \begin{quote}
+\begin{verbatim}
+\begin{albTheorem}[Theorem of Everything]
+  \label{thm:alb-theorems-documentation:theorem-everyth}
+  Every thing is something.  Consider the following.
+  $f(x) = 3x^2 - 2x + 12$.
+\end{verbatim}
+  \end{quote}
+  produces the following theorem.
+
+  \begin{albTheorem}[Theorem of Everything]
+    \label{thm:alb-theorems-documentation:theorem-everyth}
+    Every thing is something.  Consider the following.  $f(x) = 3x^2 -
+    2x + 12$.
+  \end{albTheorem}
+
+\item[\albLtxEnv{albLemma}\albLtxOpt{name}] Create a lemma environment
+  with an optional name.
+
+  For example,
+  \begin{quote}
+\begin{verbatim}
+\begin{albLemma}
+  \label{lem:alb-theorems-documentation:1}
+  Let $n$ be a number such that $n$ does not occur on the
+  hand written bill for a hamburger with the lot.  Then $n$
+  is unlikely to be the number $7.50$.
+\end{albLemma}
+\end{verbatim}
+  \end{quote}
+  produces the following lemma.
+
+  \begin{albLemma}
+    \label{lem:alb-theorems-documentation:1}
+    Let $n$ be a number such that $n$ does not occur on the hand written
+    bill for a hamburger with the lot.  Then $n$ is unlikely to be the
+    number $7.50$.
+  \end{albLemma}
+
+\item[\albLtxEnv{albRemark}\albLtxOpt{name}] Create a remark environment
+  with an optional name.
+
+  For example,
+  \begin{quote}
+\begin{verbatim}
+\begin{albRemark}
+  \label{rem:alb-theorems-documentation:2}
+  Let $x$ be the price of minimum chips at a fish and chip
+  shop in rural Victoria.  Then $2x$ chips at the same shop
+  is likely to be too many.
+\end{albRemark}
+\end{verbatim}
+  \end{quote}
+  produces the following remark.
+
+  \begin{albRemark}
+    \label{rem:alb-theorems-documentation:2}
+    Let $x$ be the price of minimum chips at a fish and chip shop in
+    rural Victoria.  Then $2x$ chips at the same shop is likely to be
+    too many.
+  \end{albRemark}
+
+\item[\albLtxEnv{albCorollary}\albLtxOpt{name}] Create corollary
+  environment with an optional name.
+
+  For example,
+  \begin{quote}
+\begin{verbatim}
+  \begin{albCorollary}
+  \label{cor:alb-theorems-documentation:3}
+  It is a bad idea to order $2x$ worth of chips unless you
+  are accompanied by another hungry person.
+\end{albCorollary}
+\end{verbatim}
+  \end{quote}
+  produces the following corollary.
+
+  \begin{albCorollary}
+    \label{cor:alb-theorems-documentation:3}
+    It is a bad idea to order $2x$ worth of chips unless you are
+    accompanied by another hungry person.
+  \end{albCorollary}
+\end{description}
+
+There is an additional list environment for making proposition lists
+inside a theorem like environment.  It does not support
+cros-referencing.  Use equation numbers instead.
+
+\begin{description}
+\item[\albLtxEnv{albPropositions}] Enumerate the propositions within a
+  theorem-like environment.  The label is guaranteed to be typeset in
+  roman rather than italic, as is the mathematical convention.
+\end{description}
+
+In addition to the standard cross references generated by the
+\albLtxCmd{ref} command, abbreviated cross reference commands are also
+provided.  An command for an abbreviated reference exists for each
+theorem like environment.
+
+\begin{description}
+\item[\albLtxCmd{albDRef}\albLtxArg{label}] Typeset an abbreviated
+  reference to the \albLtxPrm{label} definition and record the cross
+  reference for the page.  The reference is prefixed by the letter D.
+
+  For example,
+  \begin{quote}
+\begin{verbatim}
+\albDRef{def:alb-theorems-documentation:example-defin}
+\end{verbatim}
+  \end{quote}
+  produces \albDRef{def:alb-theorems-documentation:example-defin}.
+
+\item[\albLtxCmd{albTRef}\albLtxArg{label}] Typeset an abbreviated
+  reference to the \albLtxPrm{label} theorem and record the cross
+  reference for the page.  The reference is prefixed by the letter T.
+
+  For example,
+  \begin{quote}
+\begin{verbatim}
+\albTRef{thm:alb-theorems-documentation:theorem-everyth}
+\end{verbatim}
+  \end{quote}
+  produces \albTRef{thm:alb-theorems-documentation:theorem-everyth}.
+
+\item[\albLtxCmd{albLRef}\albLtxArg{label}] Typeset an abbreviated
+  reference to the \albLtxPrm{label} lemma and record the cross
+  reference for the page.  The reference is prefixed by the letter L.
+
+  For example,
+  \begin{quote}
+\begin{verbatim}
+\albLRef{lem:alb-theorems-documentation:1}
+\end{verbatim}
+  \end{quote}
+  produces \albLRef{lem:alb-theorems-documentation:1}.
+
+\item[\albLtxCmd{albRRef}\albLtxArg{label}] Typeset an abbreviated
+  reference to the \albLtxPrm{label} remark and record the cross
+  reference for the page.  The reference is prefixed by the letter R.
+
+  For example,
+  \begin{quote}
+\begin{verbatim}
+\albRRef{lem:alb-theorems-documentation:2}
+\end{verbatim}
+  \end{quote}
+  produces \albRRef{rem:alb-theorems-documentation:2}.
+
+\item[\albLtxCmd{albCRef}\albLtxArg{label}] Typeset an abbreviated
+  reference to the \albLtxPrm{label} corollary and record the cross
+  reference for the page.  The reference is prefixed by the letter C.
+
+  For example,
+  \begin{quote}
+\begin{verbatim}
+\albCRef{cor:alb-theorems-documentation:3}
+\end{verbatim}
+  \end{quote}
+  produces \albCRef{cor:alb-theorems-documentation:3}.
+\end{description}
+
+
+
+%%%
+%%% THEOREM REFERENCE LISTS
+%%%
+
+\section{Theorem Reference Lists}
+\label{sec:alb-theorems-documentation:theorem-refer-lists}
+
+As noted above, the abbreviated reference commands have a second effect
+of accumulating the list of issued references.  This list can be used in
+page layouts, such as \texttt{alb-thesis}, to display the most recently
+referenced theorems and their page numbers.  These internal commands are
+briefly described here.
+
+\begin{description}
+\item[\albLtxCmd{alb@ExpandTheoremRefList}] Expands the theorem
+  reference list into an index for the references.
+
+  For example,
+  \begin{quote}
+\begin{verbatim}
+\begin{quote}
+  \makeatletter
+  \alb@ExpandTheoremRefList
+  \makeatother
+\end{quote}
+\end{verbatim}
+  \end{quote}
+  produces
+  \begin{quote}
+    \makeatletter%
+    \alb@ExpandTheoremRefList%
+    \makeatother%
+  \end{quote}
+
+  If this list is generated per page, then care must be taken to reset
+  the list on each page with the following code.
+  \begin{quote}
+\begin{verbatim}
+\makeatletter
+\let\alb@TheoremRefList=\relax
+\makeatother
+\end{verbatim}
+  \end{quote}
+\end{description}
+
+
+
+%%%
+%%% AUCTEX CUSTOMISATIONS
+%%%
+
+\section{\AUCTeX\ Customisations}
+\label{sec:alb-theorems-documentation:auctex-cust}
+
+Under \AUCTeX{} the file \texttt{alb-theorems.el} is automatically
+loaded whenever the \texttt{alb-theorems} package is used.  The
+customisation adds the theorem environmens to \AUCTeX{}.  This provides
+the simple prompting for all the supplied environments.
+
+In addition, \texttt{alb-theorems.el} causes a special theorem numbering
+counter to be stored as a local variable.
+\texttt{alb-LaTeX-theorem-counter} counts numbers assigned to theorem
+environments.  This ensures dirty numbers are not reissued, as reissuing
+a number could make stale references hard to detect.
+
+
+
+%%%
+%%% MAKEFILE TARGETS
+%%%
+
+\section{Makefile Targets}
+\label{sec:alb-theorems-documentation:makef-targ}
+
+The \texttt{AlbLaTeXDocumentTemplate} makefile provides a target to
+relabel the theorem-like environments of this package.  The
+\texttt{alb-relabel-thm} target edits the \LaTeX{} source in an attempt
+to match theorem labels to theorem numbers.  Labels of the form
+\albLtxPrm{type}\texttt{:}\albLtxPrm{identifier}\texttt{:}\albLtxPrm{number}
+are processed, where \albLtxPrm{type} is one of \texttt{thm},
+\texttt{lem}, \texttt{rem}, or \texttt{cor}. \albLtxPrm{number} is
+rewritten to the last part of the theorem number.  This is helpful in
+proof reading.
+
+
+
+\end{document}
+
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% alb-LaTeX-theorem-counter: 3
+%%% End:

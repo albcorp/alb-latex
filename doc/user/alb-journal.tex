@@ -1,0 +1,370 @@
+%%%
+%%% AlbLaTeX/doc/user/alb-journal.tex
+%%%
+%%%     See copyright notice and license in text.
+%%%
+%%%   - Documentation for the 'alb-journal' LaTeX document class.
+%%%
+
+
+
+\documentclass[11pt,a4paper,oneside,titlepage]{alb-latex}
+
+
+
+%
+% URL Typesetting
+%
+% See: 'url.sty'.
+
+\usepackage{url}
+
+
+%
+% Author Year Citations
+%
+% See: 'natbib.dvi'.
+
+\usepackage[sectionbib,round]{natbib}
+
+
+%
+% Sloppy Line Breaks
+%
+% Turn off careful line breaks and hyphenation.
+
+\sloppy
+
+
+
+\begin{document}
+
+
+%%%
+%%% TITLE
+%%%
+
+\albTitle{%
+  Page Layout for Research Journals%
+}
+
+
+\begin{albTitlePage}
+
+  \albTitlePageSection{Author}
+
+  Andrew Lincoln Burrow\\
+  \url{albcorp@gmail.com}
+
+
+  \albTitlePageSection{Abstract}
+
+  The \texttt{AlbJournalLayout} package provides a single
+  \texttt{alb-journal} \LaTeX{} document class.  The class implements a
+  book design for research journals that is designed to allow the
+  collection of citations and notes, where each journal entry is
+  recorded under a date.  It sets up the page layout and section
+  formatting.  It also provides a single additional \LaTeX{} environment
+  to markup a research note.
+
+
+  \albTitlePageSection{Copyright}
+
+  Copyright \copyright{} 2005--2008, 2013 Andrew Lincoln Burrow.\\
+  This program may be distributed and/or modified under the conditions
+  of the \LaTeX{} Project Public License, either version 1.3 of this
+  license or (at your option) any later version.
+
+  \medskip{}
+
+  The latest version of this license is in
+  \begin{quote}
+    \url{http://www.latex-project.org/lppl.txt}
+  \end{quote}
+  and version 1.3 or later is part of all distributions of LaTeX version
+  2005/12/01 or later.
+
+  \medskip{}
+
+  This work has the LPPL maintenance status `author-maintained'.
+
+  \medskip{}
+
+  This work consists of the files
+  \begin{quote}
+    \begin{flushleft}
+      \url{alb-algorithms.sty}, \url{alb-avm.sty}, \url{alb-latex.cls},
+      \url{alb-float-tools.sty}, \url{alb-graph-theory.sty},
+      \url{alb-journal.cls}, \url{alb-order-theory.sty},
+      \url{alb-proofs.sty}, \url{alb-theorems.sty},
+      \url{alb-thesis.cls}, \url{alb-algorithms.tex}, \url{alb-avm.tex},
+      \url{alb-latex.tex}, \url{alb-float-tools.tex},
+      \url{alb-graph-theory.tex}, \url{alb-journal.tex},
+      \url{alb-order-theory.tex}, \url{alb-proofs.tex},
+      \url{alb-theorems.tex}, \url{alb-thesis.tex}.
+      \url{alb-journal-glossary.ist}, \url{alb-journal-index.ist},
+      \url{alb-thesis-glossary.ist}, and \url{alb-thesis-index.ist}.
+    \end{flushleft}
+  \end{quote}
+
+
+  \albTitlePageSection{Version Information}
+
+  \verb$Revision$\\
+  \verb$Date$
+
+\end{albTitlePage}
+
+
+
+%%%
+%%% INTRODUCTION
+%%%
+
+\section{Introduction}
+\label{sec:alb-journal:intr}
+
+The \texttt{AlbJournalLayout} package is designed to assist in the
+keeping of research journals.  It consists of a single document class
+\texttt{alb-journal}.  In particular, it designed to achieve consistency
+and to provide guidance when writing research journals.
+
+The document class sets the document appearance, so that sectioning
+commands and citations produce a well designed reference that is easy to
+browse.  This is achieved through the \texttt{natbib} and
+\texttt{chapterbib} \LaTeX{} packages, and by assuming that the chapter
+titles are dates.  The page layout provides a wide external margin.
+Into this margin is set the current chapter title.  Hence, if each
+chapter title is a date of the form \emph{01 MAR 2005}, it is a simple
+matter to browse the dates in the bound document.  The page number is
+placed directly under the outer edge of the text, and appears on all
+pages including the first page in each chapter.  Finally, it is easy to
+arrange the bibliography at the end of each chapter with the \LaTeX{}
+package \texttt{chapterbib}, to produce an index of citations by name at
+the end of the document with the \LaTeX{} package \texttt{natbib}, and
+to use the glossary command to add indexed keywords to each research
+note.
+
+
+
+%%%
+%%% SUGGESTED DOCUMENT STRUCTURE
+%%%
+
+\section{Suggested Document Structure}
+\label{sec:alb-journal:sugg-docum-struct}
+
+To enjoy the benefits of the \texttt{alb-journal} document class, the
+document structure must conform to certain rules.  Additional steps,
+suggested here, will make the system easy to use.  These guidelines are
+presented here in terms of page layout options, preamble commands, and
+document structure.
+
+
+
+\subsection{Page Layout Options}
+\label{sec:alb-journal:page-layout-opti}
+
+The \texttt{alb-journal} document class attempts to respect page layout
+options.  In particular, you can use \texttt{oneside}, and
+\texttt{twoside}.  It makes little sense to declare a large document
+\texttt{notitlepage}.  Furthermore, the page layout will not accomodate
+\texttt{twocolumn} or \texttt{reversemp}.  The page layout accomodates
+\texttt{a4paper} and \texttt{letterpaper} page sizes.
+
+Page layout options must be placed in the \texttt{documentclass}
+declaration, and each relevant option should be explicitly declared
+since the \texttt{AlbLaTeXDocumentTemplate} makefile parses document
+class options.  The following content is a typical example of the
+document class declaration.
+\begin{quote}
+\begin{verbatim}
+\documentclass[11pt,a4paper,oneside,titlepage]{alb-latex}
+\end{verbatim}
+\end{quote}
+
+
+
+\subsection{Indexing Commands}
+\label{sec:alb-journal:index-comm}
+
+The excellent \texttt{natbib} and \texttt{chapterbib} \LaTeX{} packages
+are recommended, along with the setup of the keyword and citation
+indices.
+
+The packages are included by the following preamble commands.
+\begin{quote}
+\begin{verbatim}
+\usepackage[sectionbib]{natbib}
+\usepackage{chapterbib}
+\usepackage{url}
+\end{verbatim}
+\end{quote}
+The \texttt{sectionbib} option ensures that the bibliography is placed
+under a section rather than a chapter, so that each entry should itself
+be organised into a chapter.  The \texttt{url} package improves the
+typesetting of URLs, which are increasingly common in bibliographic
+material.
+
+The keyword and citation indices are setup by the following preamble
+commands.
+\begin{quote}
+\begin{verbatim}
+\citeindextrue
+\makeglossary
+\makeindex
+\end{verbatim}
+\end{quote}
+The \albLtxCmd{citeindextrue} command causes each citation to generate
+an index entry and the author of the cited work.
+
+
+
+\subsection{Document Structure}
+\label{sec:alb-journal:docum-struct}
+
+In order to generate a bibliography for each journal entry, it is
+necessary to divide each journal entry into its own file and chapter.
+The master document includes these entry files, along with the files
+defining the title page, table of contents, and indices.  It is best to
+make chapter titles and filenames agree, and to base these names on the
+date of the journal entry.
+
+The following examples shows such a document structure.  The master file
+contains the preamble and the following document environment, where the
+list of included files in the main matter section varies.
+\begin{quote}
+\begin{verbatim}
+\begin{document}
+  \frontmatter
+  \include{title_page}
+  \include{table_cont}
+
+  \mainmatter
+  \include{read_01_mar_2005}
+  \include{read_03_apr_2005}
+
+  \backmatter
+  \include{indic}
+\end{document}
+\end{verbatim}
+\end{quote}
+The title page is up to the author, but the contents page is a very
+simple file containing only the following command.
+\begin{quote}
+\begin{verbatim}
+\tableofcontents
+\end{verbatim}
+\end{quote}
+Likewise, the index is a very simple file containing only the following
+commands.
+\begin{quote}
+\begin{verbatim}
+\chapter{Keyword Index}
+\printglossary
+
+\chapter{Citation Index}
+\printindex
+\end{verbatim}
+\end{quote}
+
+The document structure is completed by the inclusion of journal entries.
+Each journal entry is a file that must be included by the master
+document.  It begins with a chapter heading indicating the date, and
+concludes with commands to generate a biblography in the chapter.
+Research notes are marked up via the \texttt{albResearchNote}
+environment described in
+Section~\ref{sec:alb-journal:using-comm-envir}.
+
+The following content is a minimal example of a chapter.  The use of
+\texttt{chapter} to markup the date is mandatory, but the choice of
+sectioning to set out the themes is up to the author.  Finally, the
+bibliography commands are required in each chapter, and the style must
+be consistent throughout the document.
+\begin{quote}
+\begin{verbatim}
+\chapter{01 MAR 2005}
+
+Papers collected in the preparation of the grant application.
+
+\section{Wiki Research at SIAL}
+
+\begin{albResearchNote}%
+    {\citet{burrow04:_negot_acces_wiki}}%
+    {\glossary{wiki}, \glossary{access~rules}}
+\item Describes the negotiation of access rules in wiki
+\end{albResearchNote}
+
+\bibliographystyle{plainnat}
+\bibliography{alb-bibliography}
+\end{verbatim}
+\end{quote}
+
+
+
+%%%
+%%% USING THE COMMANDS AND ENVIRONMENTS
+%%%
+
+\section{Using the Commands and Environments}
+\label{sec:alb-journal:using-comm-envir}
+
+
+The single \texttt{albResearchNote} list environment of the
+\texttt{alb-journal} concerns the markup of notes for a source.
+
+\begin{description}
+\item[\albLtxEnv{albResearchNote}\albLtxArg{source}\albLtxArg{keywords}]
+  Typeset a research note identified by a citation and tagged with a
+  collection of keywords.  The first argument should contain a
+  \albLtxCmd{citet} command.  The second argument should contain
+  \albLtxCmd{glossary} commands.  The environment generates typeset
+  output for \albLtxCmd{glossary} commands in the second argument, but
+  does not parse structure in the entry.  Therefore, use only simple
+  glossary entries in this context, and write phrases using \verb|~| as
+  a separator character.
+
+  An important note from \citet[p99]{booth03:_craft_resear}
+  \begin{quote}
+    ``Clearly and unambiguously distinguish four kinds of references:
+    what you quote directly, what you paraphrase, what you summarize,
+    and what you write as your own thoughts.''
+  \end{quote}
+\end{description}
+
+
+
+%%%
+%%% MAKEFILE TARGETS
+%%%
+
+\section{Makefile Targets}
+\label{sec:alb-journal:makef-targ}
+
+Given documents of the \texttt{alb-journal} class are expected to
+contain an index, it makes good sense to use the makefile from the
+\texttt{AlbLaTeXDocumentTemplate} makefile.  This makefile will detect
+the existence of index commands and take the appropriate steps.  The
+target \texttt{all} is a synonym for \texttt{idx}, which generates the
+final PDF document such that the index references are correct.
+
+
+
+%%%
+%%% BIBLIOGRAPHY
+%%%
+
+\bibliographystyle{plainnat}
+\bibliography{alb-bibliography}
+
+
+
+\end{document}
+
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% ispell-local-dictionary: "british"
+%%% End:

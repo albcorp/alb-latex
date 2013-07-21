@@ -334,6 +334,7 @@ This function customises RefTeX."
      '("albAssertions" LaTeX-env-item))
     (if (featurep 'reftex)
         (progn
+          ;; Maintain counter for unique line number labels in proofs
           (add-hook 'local-write-file-hooks
                     (function
                      (lambda ()
@@ -345,6 +346,8 @@ This function customises RefTeX."
                            (alb-update-file-local-variable
                             'alb-LaTeX-assumption-counter
                             alb-LaTeX-assumption-counter)))))
+
+          ;; Specify new label types for proofs
           (reftex-add-label-environments
            '(("albAssumptions"      ?l "as:%f:"  "~\\ref{%s}"
               (alb-reftex-context-fn-assumption-display
@@ -352,9 +355,11 @@ This function customises RefTeX."
              ("albAssertions"       ?m "pf:%f:"  "~\\ref{%s}"
               (alb-reftex-context-fn-assertion-display
                . alb-reftex-context-fn-assertion-label))))
-          (setq reftex-insert-label-flags
-                (cons (concat (car reftex-insert-label-flags) "lm")
-                      (cdr reftex-insert-label-flags))))))))
+
+          ;; Auto generate labels for proofs
+          (set (make-local-variable 'reftex-insert-label-flags)
+               (cons (concat (car reftex-insert-label-flags) "lm")
+                     (cdr reftex-insert-label-flags))))))))
 
 
 

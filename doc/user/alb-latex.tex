@@ -1,0 +1,354 @@
+%%%
+%%% AlbLaTeX/doc/user/alb-latex.tex
+%%%
+%%%     See copyright notice and license in text.
+%%%
+%%%   - Documentation for the 'alb-latex' LaTeX document class.
+%%%
+
+
+
+\documentclass[11pt,a4paper,oneside,titlepage]{alb-latex}
+
+
+
+%
+% URL Typesetting
+%
+% See: 'url.sty'.
+
+\usepackage{url}
+
+
+%
+% Sloppy Line Breaks
+%
+% Turn off careful line breaks and hyphenation.
+
+\sloppy
+
+
+
+\begin{document}
+
+
+%%%
+%%% TITLE
+%%%
+
+\albTitle{%
+  Page Layout for \albLogo{}Corp Documents%
+}
+
+
+\begin{albTitlePage}
+
+  \albTitlePageSection{Author}
+
+  Andrew Lincoln Burrow\\
+  \url{albcorp@gmail.com}
+
+
+  \albTitlePageSection{Abstract}
+
+  The \texttt{AlbCorpLayout} package provides a single \texttt{alb-latex}
+  \LaTeX{} document class.  The class implements a book design for
+  \albLogo{}Corp documents that is designed for the documentation of
+  \LaTeX{} packages.  It sets up the page layout and section formatting.
+  It also provides a command to capture the document title, commands and
+  environments to typeset the title material, commands to typeset
+  \LaTeX{} commands, a collection of logo commands, and markup in the
+  \albLogo{} name space.  All commands and environments are available
+  through the \AUCTeX{} interface.
+
+
+  \albTitlePageSection{Copyright}
+
+  Copyright \copyright{} 2002--2006, 2013 Andrew Lincoln Burrow.\\
+  This program may be distributed and/or modified under the conditions
+  of the \LaTeX{} Project Public License, either version 1.3 of this
+  license or (at your option) any later version.
+
+  \medskip{}
+
+  The latest version of this license is in
+  \begin{quote}
+    \url{http://www.latex-project.org/lppl.txt}
+  \end{quote}
+  and version 1.3 or later is part of all distributions of LaTeX version
+  2005/12/01 or later.
+
+  \medskip{}
+
+  This work has the LPPL maintenance status `author-maintained'.
+
+  \medskip{}
+
+  This work consists of the files
+  \begin{quote}
+    \begin{flushleft}
+      \url{alb-algorithms.sty}, \url{alb-avm.sty}, \url{alb-latex.cls},
+      \url{alb-float-tools.sty}, \url{alb-graph-theory.sty},
+      \url{alb-journal.cls}, \url{alb-order-theory.sty},
+      \url{alb-proofs.sty}, \url{alb-theorems.sty},
+      \url{alb-thesis.cls}, \url{alb-algorithms.tex}, \url{alb-avm.tex},
+      \url{alb-latex.tex}, \url{alb-float-tools.tex},
+      \url{alb-graph-theory.tex}, \url{alb-journal.tex},
+      \url{alb-order-theory.tex}, \url{alb-proofs.tex},
+      \url{alb-theorems.tex}, \url{alb-thesis.tex}.
+      \url{alb-journal-glossary.ist}, \url{alb-journal-index.ist},
+      \url{alb-thesis-glossary.ist}, and \url{alb-thesis-index.ist}.
+    \end{flushleft}
+  \end{quote}
+
+
+  \albTitlePageSection{Version Information}
+
+  \verb$Revision$\\
+  \verb$Date$
+
+\end{albTitlePage}
+
+
+
+%%%
+%%% INTRODUCTION
+%%%
+
+\section{Introduction}
+\label{sec:alb-latex:intr}
+
+The \texttt{AlbCorpLayout} package is designed to assist in the
+documentation of \LaTeX{} packages.  It consists of the document class
+\texttt{alb-latex}.  This class is designed to achieve consistency and to
+provide guidance when writing documentation for \albLogo{} packages.
+The fictional \albLogo{} corporation is mnemonic for the naming
+conventions that prefix each identifier by \texttt{alb}.  The
+\texttt{alb-latex} class extends this fiction to the presentation of
+documentation for packages written by the author.
+
+The page layout provides a wide gutter margin for binding, and a narrow
+column close to the outer edge.  Large floats access the inner gutter
+via the \texttt{albInflate} environment of the \texttt{AlbFloatTools}
+package.
+
+Page numbers are placed in the running headers with the title and
+section information.  In twoside mode, the left header contains the page
+number and the document title, while the right header contains the
+current section title and page number.
+
+In addition to setting the document appearance, the class provides a
+single environment for creating a title page, an associated command for
+designating the title, another associated command for adding sections to
+the titlepage, simple commands for typesetting \LaTeX{} commands, and a
+collection of logo commands.  The class is supported by an emacs lisp
+file customising \AUCTeX{} to automate the insertion of these commands
+and environments.
+
+
+
+%%%
+%%% SUGGESTED DOCUMENT STRUCTURE
+%%%
+
+\section{Suggested Document Structure}
+\label{sec:alb-latex:sugg-docum-struct}
+
+The \texttt{alb-latex} document class places few restrictions on the
+document structure.  It is primarily intended for articles.  Documents
+must insert title information at the head of the document, since this
+information is used in the header.
+
+
+
+\subsection{Page Layout Options}
+\label{sec:alb-latex:page-layout-opti}
+
+The \texttt{alb-latex} document class attempts to respect page layout
+options.  In particular, you can use \texttt{oneside}, \texttt{twoside},
+\texttt{titlepage}, and \texttt{notitlepage} as global options.
+However, the page layout will not accomodate \texttt{twocolumn} or
+\texttt{reversemp}.  The page layout accomodates \texttt{a4paper} and
+\texttt{letterpaper} page sizes.
+
+Page layout options must be placed in the \texttt{documentclass}
+declaration, and each relevant option should be explicitly declared
+since the \texttt{AlbLaTeXDocumentTemplate} makefile parses document
+class options.  The following content is a typical example of the
+document class declaration.
+\begin{quote}
+\begin{verbatim}
+\documentclass[10pt,a4paper,twoside]{alb-journal}
+\end{verbatim}
+\end{quote}
+
+
+
+%%%
+%%% USING THE COMMANDS AND ENVIRONMENTS
+%%%
+
+\section{Using the Commands and Environments}
+\label{sec:alb-latex:using-comm-envir}
+
+The commands and environments of the \texttt{alb-latex} class are divided
+into three groups.  The first concerns the title page and title
+information.  These commands should occur early in the document.  The
+second group concerns the commands to typeset \LaTeX{} commands and
+environments.  The third group provides additional logos that are likely
+to be referred to whilst documenting \LaTeX{} packages.
+
+
+
+\subsection{Title Material}
+\label{sec:alb-latex:title-mater}
+
+Documents of the \texttt{alb-latex} class should begin with an
+\texttt{albTitle} command.  This command accepts a single argument,
+which is the title of the article.  The value is shared by the page
+headers as well as the title page.
+
+Documents should follow the \texttt{albTitle} command with an
+\texttt{albTitlePage} environment.  The contents of this environment
+should be sectioned by instances of the \texttt{albTitlePageSection}
+command, where each instance takes the name of the section as its
+argument, and is followed by the text of the section.
+
+For example, a document might begin with the following \LaTeX{} code.
+\begin{quote}
+\begin{verbatim}
+\albTitle{Example Title}
+
+\begin{albTitlePage}
+  \albTitlePageSection{Author}
+
+  Andrew Lincoln Burrow\\
+  \texttt{albcorp@gmail.com}\\
+  \albLogo{} Corp
+
+  \albTitlePageSection{Abstract}
+
+  This document is completely fictitious.
+  If you are reading this, then you should stop now.
+\end{albTitlePage}
+\end{verbatim}
+\end{quote}
+
+
+
+\subsection{Command Typesetting Commands}
+\label{sec:alb-latex:comm-types-comm}
+
+The next group of commands provided by the \texttt{alb-latex} class
+typeset \LaTeX{} commands.  In particular, they provide a simple markup
+scheme for the parts of a \LaTeX{} command or environment invocation so
+that it can be documented.
+
+\begin{description}
+\item[\albLtxCmd{albLtxCmd}\albLtxArg{cmd}] Typeset the \LaTeX{} command
+  \albLtxPrm{cmd} with the preceeding backslash.  For example,
+  \begin{quote}
+\begin{verbatim}
+\albLtxCmd{albLogo}
+\end{verbatim}
+  \end{quote}
+  produces \albLtxCmd{albLogo}.
+
+\item[\albLtxCmd{albLtxEnv}\albLtxArg{env}] Typeset the \LaTeX{}
+  environment \albLtxPrm{env} with the \texttt{begin} command that would
+  open the environment.  For example,
+  \begin{quote}
+\begin{verbatim}
+\albLtxEnv{albTitlePage}
+\end{verbatim}
+  \end{quote}
+  produces \albLtxEnv{albTitlePage}
+
+\item[%
+  \albLtxCmd{albLtxOpt}\albLtxArg{opt} and
+  \albLtxCmd{albLtxArg}\albLtxArg{arg}%
+  ] Typeset an optional argument \albLtxPrm{opt} or a mandatory argument
+  \albLtxPrm{arg} supplied to a \LaTeX{} command or environment, and use
+  the correct brackets.  For example,
+  \begin{quote}
+\begin{verbatim}
+\albLtxCmd{rule}%
+\albLtxOpt{lift}\albLtxArg{width}\albLtxArg{height}
+\end{verbatim}
+  \end{quote}
+  produces
+  \albLtxCmd{rule}\albLtxOpt{lift}\albLtxArg{width}\albLtxArg{height}.
+
+\item[\albLtxCmd{albLtxPrm}\albLtxArg{arg}] Typeset the formal parameter
+  of an optional or mandatory argument without the brackets so that it
+  can be used in the explanatory text.  For
+  example,
+  \begin{quote}
+\begin{verbatim}
+\albLtxPrm{arg}
+\end{verbatim}
+  \end{quote}
+  produces \albLtxPrm{arg}.
+\end{description}
+
+
+
+\subsection{Logo Commands}
+\label{sec:alb-latex:logo-comm}
+
+The remainder of the commands provided by the \texttt{alb-latex} class
+typeset logos.
+
+\begin{description}
+\item[\albLtxCmd{PDFLaTeX}] produces \PDFLaTeX{}.
+
+\item[\albLtxCmd{AUCTeX}] produces \AUCTeX{}.
+
+\item[\albLtxCmd{RefTeX}] produces \RefTeX{}.
+
+\item[\albLtxCmd{albLogo}] produces \albLogo{}.
+\end{description}
+
+
+
+%%%
+%%% AUCTEX CUSTOMISATIONS
+%%%
+
+\section{\AUCTeX{} Customisations}
+\label{sec:alb-latex:auctex-cust}
+
+Under \AUCTeX{} the file \texttt{alb-latex.el} is automatically loaded
+whenever the \texttt{alb-latex} class is used.  The customisation adds
+the symbols and environments to \AUCTeX{}.  This provides the following
+simple prompting.
+\begin{itemize}
+\item
+  \begin{flushleft}
+    Tab completion and argument prompting for the commands:\\
+    \texttt{albTitle}, \texttt{albTitlePageSection}, \texttt{albLtxCmd},
+    \texttt{albLtxEnv}, \texttt{albLtxOpt}, \texttt{albLtxArg},
+    \texttt{albLtxPrm}, \texttt{PDFLaTeX}, \texttt{AUCTeX},
+    \texttt{RefTeX}, and \texttt{albLogo}.
+  \end{flushleft}
+
+\item
+  \begin{flushleft}
+    Tab completion for the environments:\\
+    \texttt{albTitlePage}.
+  \end{flushleft}
+\end{itemize}
+The customisation is not context sensitive, and will not ensure that
+these commands and environments are used correctly.
+
+
+
+\end{document}
+
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% ispell-local-dictionary: "british"
+%%% End:

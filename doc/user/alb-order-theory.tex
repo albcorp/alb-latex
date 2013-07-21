@@ -1,0 +1,448 @@
+%%%
+%%% AlbLaTeX/doc/user/alb-order-theory.tex
+%%%
+%%%     See copyright notice and license in text.
+%%%
+%%%   - Documentation for the 'alb-order-theory' LaTeX package.
+%%%
+
+
+
+\documentclass[11pt,a4paper,oneside]{alb-latex}
+
+
+
+%
+% URL Typesetting
+%
+% See: 'url.sty'.
+
+\usepackage{url}
+
+
+%
+% The package being documented.
+
+\usepackage{alb-order-theory}
+
+
+%
+% Sloppy Line Breaks
+%
+% Turn off careful line breaks and hyphenation.
+
+\sloppy
+
+
+
+\begin{document}
+
+
+
+%%%
+%%% TITLE
+%%%
+
+\albTitle{%
+  Typesetting Order Theory Under \LaTeX{}%
+}
+
+\begin{albTitlePage}
+
+  \albTitlePageSection{Author}
+
+  Andrew Lincoln Burrow\\
+  \texttt{albcorp@gmail.com}
+
+
+  \albTitlePageSection{Abstract}
+
+  The \texttt{AlbOrderTheory} package provides a single
+  \texttt{alb-order-theory} \LaTeX{} package to provide markup for set
+  and order theory.  It is designed to make the \LaTeX{} input more
+  readable, to allow the actual symbols to be adjusted from a single
+  file, to enable the typesetting of set and order theoretic
+  constructions to be designed in the context of the entire suite of
+  required markup commands, and to place the extended markup in the
+  \albLogo{} namespace.  Therefore, the package provides a large
+  collection of math commands to markup operators, relations, and
+  functions.  The package is supported by an emacs lisp file customising
+  \AUCTeX{}, which provides command name completion and argument
+  prompting.
+
+
+  \albTitlePageSection{Copyright}
+
+  Copyright \copyright{} 1999--2006, 2013 Andrew Lincoln Burrow.\\
+  This program may be distributed and/or modified under the conditions
+  of the \LaTeX{} Project Public License, either version 1.3 of this
+  license or (at your option) any later version.
+
+  \medskip{}
+
+  The latest version of this license is in
+  \begin{quote}
+    \url{http://www.latex-project.org/lppl.txt}
+  \end{quote}
+  and version 1.3 or later is part of all distributions of LaTeX version
+  2005/12/01 or later.
+
+  \medskip{}
+
+  This work has the LPPL maintenance status `author-maintained'.
+
+  \medskip{}
+
+  This work consists of the files
+  \begin{quote}
+    \begin{flushleft}
+      \url{alb-algorithms.sty}, \url{alb-avm.sty}, \url{alb-latex.cls},
+      \url{alb-float-tools.sty}, \url{alb-graph-theory.sty},
+      \url{alb-journal.cls}, \url{alb-order-theory.sty},
+      \url{alb-proofs.sty}, \url{alb-theorems.sty},
+      \url{alb-thesis.cls}, \url{alb-algorithms.tex}, \url{alb-avm.tex},
+      \url{alb-latex.tex}, \url{alb-float-tools.tex},
+      \url{alb-graph-theory.tex}, \url{alb-journal.tex},
+      \url{alb-order-theory.tex}, \url{alb-proofs.tex},
+      \url{alb-theorems.tex}, \url{alb-thesis.tex}.
+      \url{alb-journal-glossary.ist}, \url{alb-journal-index.ist},
+      \url{alb-thesis-glossary.ist}, and \url{alb-thesis-index.ist}.
+    \end{flushleft}
+  \end{quote}
+
+
+  \albTitlePageSection{Version Information}
+
+  \verb$Revision$\\
+  \verb$Date$
+
+\end{albTitlePage}
+
+
+
+%%%
+%%% INTRODUCTION
+%%%
+
+\section{Introduction}
+\label{sec:alb-order-theory-documentation:intr}
+
+The \texttt{alb-order-theory} \LaTeX{} package is designed to typeset
+order theory.  In practice, this means that it supplies a large
+collection of simple math commands.  The main benefit is consistency,
+and the ability to easily change a decision about typesetting for all
+documents.
+
+
+
+%%%
+%%% USING THE COMMANDS AND ENVIRONMENTS
+%%%
+
+\section{Using the Commands and Environments}
+\label{sec:alb-order-theory-documentation:using-comm-envir}
+
+The commands and environments of the \texttt{alb-order-theory} \LaTeX{}
+package are divided into mathematical groups.  They are all used within
+math mode.
+
+
+
+\subsection{Logical Connectives}
+\label{sec:alb-order-theory-documentation:logical-conn}
+
+In lattice theory we use the vee and the wedge for join and meet.
+Therefore, we lack an obvious symbol for the logical connectives.  The
+current solution is just to use text labels.
+
+\begin{quote}
+  \begin{tabular}{p{0.5\textwidth}@{\qquad}p{0.3\textwidth}}
+    % The negation.
+    \verb$\albNot x$ & $\albNot x$ \\
+    %
+    % The and connective.
+    \verb$x \albAnd y$ & $x \albAnd y$ \\
+    %
+    % The or connective.
+    \verb$x \albOr y$ & $x \albOr y$
+  \end{tabular}
+\end{quote}
+
+
+
+\subsection{Set Theory}
+\label{sec:alb-order-theory-documentation:set-theory}
+
+Commands accepting arguments and generating set theory mathematical
+constructions.
+
+\begin{quote}
+  \begin{tabular}{p{0.5\textwidth}@{\qquad}p{0.3\textwidth}}
+    %
+    % The singleton set containing the element #1.
+    \verb$\albSingleton{x}$ & $\albSingleton{x}$ \\
+    %
+    % The cardinality of the set #1.
+    \verb$\albCardinality{X}$ & $\albCardinality{X}$ \\
+    %
+    % The tuple <#1>.
+    \verb$\albTuple{x, y, z}$ & $\albTuple{x, y, z}$ \\
+    %
+    % The powerset of #1.
+    \verb$\albPowerset{X}$ & $\albPowerset{X}$ \\
+    %
+    % The binary relation #1 over #2 x #3.
+    \verb$\albBinaryRelation{R}{X}{Y}$ & $\albBinaryRelation{R}{X}{Y}$ \\
+    %
+    % The partial map #1 from #2 to #3.
+    \verb$\albPartialMap{\alpha}{X}{Y}$ %
+    & $\albPartialMap{\alpha}{X}{Y}$ \\
+    %
+    % The total map #1 from #2 to #3.
+    \verb$\albTotalMap{\alpha}{X}{Y}$ %
+    & $\albTotalMap{\alpha}{X}{Y}$ \\
+    %
+    % The domain of map #1.
+    \verb$\albDomain{\alpha}$ & $\albDomain{\alpha}$ \\
+    %
+    % The range of map #1.
+    \verb$\albRange{\alpha}$ & $\albRange{\alpha}$ \\
+    %
+    % The binary operator of composition: `f compose g'.
+    \verb$f \albCompose g$ & $f \albCompose g$
+  \end{tabular}
+\end{quote}
+
+
+
+\subsection{Standard Sets}
+\label{sec:alb-order-theory-documentation:stand-sets}
+
+Commands without arguments representing the standard sets of arithmetic.
+
+\begin{quote}
+  \begin{tabular}{p{0.5\textwidth}@{\qquad}p{0.3\textwidth}}
+    %
+    % The set of natural numbers.
+    \verb$\albNaturals$ & $\albNaturals$ \\
+    %
+    % The set of real numbers.
+    \verb$\albReals$ & $\albReals$
+  \end{tabular}
+\end{quote}
+
+
+
+\subsection{Order Theory}
+\label{sec:alb-order-theory-documentation:order-theory}
+
+Commands accepting arguments and generating order theory mathematical
+constructions.
+
+\begin{quote}
+  \begin{tabular}{p{0.5\textwidth}@{\qquad}p{0.3\textwidth}}
+    %
+    % The binary non-comparability relation: `x and y are incomparable'.
+    \verb$x \albIncomparable y$ & $x \albIncomparable y$ \\
+    %
+    % The binary covering relation: `x is covered by y'.
+    \verb$x \albCoveredBy y$ & $x \albCoveredBy y$ \\
+    %
+    % The binary covering relation: `x covers y'.
+    \verb$x \albCovers y$ & $x \albCovers y$
+  \end{tabular}
+
+  \begin{tabular}{p{0.5\textwidth}@{\qquad}p{0.3\textwidth}}
+    %
+    % The equivalence class containing #1.
+    \verb$\albEquivClass{x}$ & $\albEquivClass{x}$ \\
+    %
+    % The dual of #1.
+    \verb$\albDual{P}$ & $\albDual{P}$
+  \end{tabular}
+
+  \begin{tabular}{p{0.5\textwidth}@{\qquad}p{0.3\textwidth}}
+    %
+    % The elements covering #2 in poset #1.
+    \verb$\albOver{P}{x}$ & $\albOver{P}{x}$ \\
+    %
+    % The elements covered by #2 in poset #1.
+    \verb$\albUnder{P}{x}$ & $\albUnder{P}{x}$ \\
+    %
+    % The maximum element of the poset #1.
+    \verb$\albMax{A}$ & $\albMax{A}$ \\
+    %
+    % The minimum element of the poset #1.
+    \verb$\albMin{A}$ & $\albMin{A}$ \\
+    %
+    % The set containing the maximal elements of the poset #1.
+    \verb$\albHeads{P}$ & $\albHeads{P}$ \\
+    %
+    % The set containing the minimal elements of the poset #1.
+    \verb$\albTails{P}$ & $\albTails{P}$
+  \end{tabular}
+
+  \begin{tabular}{p{0.5\textwidth}@{\qquad}p{0.3\textwidth}}
+    %
+    % The width of the poset #1.
+    \verb$\albWidth{P}$ & $\albWidth{P}$ \\
+    %
+    % The height of the poset #1.
+    \verb$\albHeight{P}$ & $\albHeight{P}$
+  \end{tabular}
+
+  \begin{tabular}{p{0.5\textwidth}@{\qquad}p{0.3\textwidth}}
+    %
+    % The binary join operator: `x join y'.
+    \verb$x \albJoin y$ & $x \albJoin y$ \\
+    %
+    % The join of the elements in #1.
+    \verb$\albJoinOf{A}$ & $\albJoinOf{A}$ \\
+    %
+    % The join in the ordered set #1 of the elements in #2.
+    \verb$\albJoinInOf{P}{A}$ & $\albJoinInOf{P}{A}$ \\
+    %
+    % The binary meet operator: `x meet y'.
+    \verb$x \albMeet y$ & $x \albMeet y$ \\
+    %
+    % The unary meet operator: `meet of S'.
+    \verb$\albMeetOf{A}$ & $\albMeetOf{A}$ \\
+    %
+    % The meet in the ordered set #1 of the elements in #2.
+    \verb$\albMeetInOf{P}{A}$ & $\albMeetInOf{P}{A}$
+  \end{tabular}
+
+  \begin{tabular}{p{0.5\textwidth}@{\qquad}p{0.3\textwidth}}
+    %
+    % The order embedding #1 from #2 to #3.
+    \verb$\albOrderEmbedding{\alpha}{O}{P}$ &
+    $\albOrderEmbedding{\alpha}{O}{P}$ \\
+    %
+    % The binary relation of order isomorphism: `P and Q are order-isomorphic.
+    \verb$O \albOrderIsomorphic P$ & $O \albOrderIsomorphic P$
+  \end{tabular}
+
+  \begin{tabular}{p{0.5\textwidth}@{\qquad}p{0.3\textwidth}}
+    %
+    % The down-closure of the elements in #1.
+    \verb$\albDown{A}$ & $\albDown{A}$ \\
+    %
+    % The up-closure of the elements in #1.
+    \verb$\albUp{A}$ & $\albUp{A}$ \\
+    %
+    % The down-closure in the ordered set #1 of the elements in #2.
+    \verb$\albDownInOf{P}{A}$ & $\albDownInOf{P}{A}$ \\
+    %
+    % The up-closure in the ordered set #1 of the elements in #2.
+    \verb$\albUpInOf{P}{A}$ & $\albUpInOf{P}{A}$
+  \end{tabular}
+
+  \begin{tabular}{p{0.5\textwidth}@{\qquad}p{0.3\textwidth}}
+    %
+    % The lower-bounds of the set #1.
+    \verb$\albLower{A}$ & $\albLower{A}$ \\
+    %
+    % The upper-bounds of the set #1.
+    \verb$\albUpper{A}$ & $\albUpper{A}$ \\
+    %
+    % The lower-bounds in the ordered set #1 of the set #2.
+    \verb$\albLowerInOf{P}{A}$ & $\albLowerInOf{P}{A}$ \\
+    %
+    % The upper-bounds in the ordered set #1 of the set #2.
+    \verb$\albUpperInOf{P}{A}$ & $\albUpperInOf{P}{A}$
+  \end{tabular}
+
+  \begin{tabular}{p{0.5\textwidth}@{\qquad}p{0.3\textwidth}}
+    %
+    % The family of down-sets of #1.
+    \verb$\albDownSets{P}$ & $\albDownSets{P}$ \\
+    %
+    % The rise of element #2 in poset #1.
+    \verb$\albRise{P}{x}$ & $\albRise{P}{x}$ \\
+    %
+    % The fall of element #2 in poset #1.
+    \verb$\albFall{P}{x}$ & $\albFall{P}{x}$ \\
+    %
+    % The Dedekind-MacNeille completion of #1.
+    \verb$\albDM{P}$ & $\albDM{P}$ \\
+    %
+    % The semilattice of consistent down-sets of #1.
+    \verb$\albCD{P}$ & $\albCD{P}$ \\
+    %
+    % The elements of poset #1 extending the consistent down-set #2.
+    \verb$\albExtenders{P}{A}$ & $\albExtenders{P}{A}$ \\
+    %
+    % The elements of poset #1 retracting the consistent down-set #2.
+    \verb$\albRetractors{P}{A}$ & $\albRetractors{P}{A}$
+  \end{tabular}
+\end{quote}
+
+
+
+\subsection{Notation for the Growth of Functions}
+\label{sec:alb-order-theory-documentation:notat-growth-funct}
+
+Commands accepting arguments and generating expressions for the growth
+of functions.
+
+\begin{quote}
+  \begin{tabular}{p{0.5\textwidth}@{\qquad}p{0.3\textwidth}}
+    %
+    % Asymptotic upper bound: big Oh notation.
+    \verb$\albBigOh{f}$ & $\albBigOh{f}$ \\
+    %
+    % Asymptotic lower bound: big Omega notation.
+    \verb$\albBigOmega{f}$ & $\albBigOmega{f}$ \\
+    %
+    % Asymptotic tight bound: big Theta notation.
+    \verb$\albBigTheta{f}$ & $\albBigTheta{f}$
+  \end{tabular}
+\end{quote}
+
+
+
+%%%
+%%% AUCTEX CUSTOMISATIONS
+%%%
+
+\section{\AUCTeX\ Customisations}
+\label{sec:alb-order-theory-documentation:auctex-cust}
+
+Under \AUCTeX{} the file \texttt{alb-order-theory.el} is automatically
+loaded whenever the \texttt{alb-order-theory} package is used.  The
+customisation adds the math commands to \AUCTeX{}.  This provides the
+simple prompting for all the supplied math commands.
+
+In addition, \texttt{alb-order-theory.el} causes a special equation
+number counter to be stored as a local variable.
+\texttt{alb-LaTeX-equation-counter} counts numbers assigned to labels
+for equations.  This ensures dirty numbers are not reissued, as
+reissuing a number could make stale references hard to detect.
+
+
+
+%%%
+%%% MAKEFILE TARGETS
+%%%
+
+\section{Makefile Targets}
+\label{sec:alb-order-theory-documentation:makef-targ}
+
+The \texttt{AlbLaTeXDocumentTemplate} makefile provides a target to
+relabel equations.  The \texttt{alb-relabel-eq} target edits the
+\LaTeX{} source in an attempt to match equation labels to equation
+numbers.  Labels of the form
+\texttt{eq:}\albLtxPrm{identifier}\texttt{:}\albLtxPrm{number} are
+processed.  \albLtxPrm{number} is rewritten to the last part of the
+equation number.  This is helpful in proof reading.
+
+
+
+\end{document}
+
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:

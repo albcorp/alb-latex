@@ -1,0 +1,50 @@
+#
+# .gitignore
+#
+#   - Project specific list of patterns that hg(1) should ignore loaded
+#
+
+# Use shell-style globs for ignore patterns
+syntax: glob
+
+#
+# MacOS specific ignores
+
+.DS_Store
+
+#
+# Emacs specific ignores
+
+# Ignore backup files
+*~
+
+# Ignore directory variables, and desktops
+.dir-locals.el
+.emacs.desktop*
+
+# Ignore AUCTeX auto generated files
+auto
+
+#
+# LaTeX specific ignores
+
+# Ignore LaTeX generated files
+*.aux
+*.bbl
+*.blg
+*.idx
+*.ilg
+*.ind
+*.log
+*.out
+*.toc
+
+#
+# AlbLaTeX makefile specific ignores
+
+# Ignore dependency files
+*.d
+
+# Ignore formatted examples
+make/serial/example-*.pdf
+make/monograph/example-*.pdf

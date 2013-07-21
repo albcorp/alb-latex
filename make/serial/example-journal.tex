@@ -1,0 +1,101 @@
+%
+% :Precis: Example master file for a reading journal
+% :Contact: albcorp@gmail.com
+% :Authors: Andrew Burrow
+% :Copyright: 2005-2008, 2013 Andrew Lincoln Burrow
+%
+
+\documentclass[10pt,a4paper,twoside,titlepage]{alb-journal}
+
+%
+% Author Year Citations
+%
+% See ``natbib.dvi``
+
+\usepackage[sectionbib,round]{natbib}
+
+% Increase the hanging indent
+\setlength{\bibhang}{2em}
+
+%
+% Per Chapter Bibliographies
+%
+% See: 'chapterbib.sty'.
+
+\usepackage{chapterbib}
+
+%
+% URL Typesetting
+%
+% See ``url.sty``
+
+\usepackage{url}
+
+%
+% Cross Referencing in Hypertext Environments
+%
+% This should be the one of the last packages loaded
+% See ``hyperref/manual.pdf``
+
+\usepackage[
+    colorlinks=true, raiselinks=true, plainpages=false,
+    bookmarks=true, bookmarksopen=true, bookmarksnumbered=true
+  ]{hyperref}
+
+%
+% Indices
+%
+% Commands to cause LaTeX to output index lists for processing by
+% makeindex(1)
+
+% Insert the citations into the main index.
+\citeindextrue
+
+% Make the keyword index.
+\makeglossary
+
+% Make the citation index.
+\makeindex
+
+%
+% ----------------------------------------------------------------------
+%
+
+\begin{document}
+
+%
+%
+% Front matter
+%
+
+\frontmatter
+
+\include{example-title_page}
+\include{example-table_cont}
+
+%
+%
+% Main matter
+%
+
+\mainmatter
+
+\include{example-read_2007_11_26}
+\include{example-read_2008_04_22}
+
+%
+%
+% Back matter
+%
+
+\backmatter
+
+\include{example-indic}
+
+\end{document}
+
+% Local Variables:
+% mode: latex
+% TeX-master: t
+% ispell-local-dictionary: "british"
+% End:

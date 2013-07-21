@@ -46,18 +46,15 @@
 
 (defun alb-LaTeX-find-file (string)
   "Prompt for a string from which to constract the basename of a file.
-Then open the file with a .TeX extension."
+Then open the file with a .tex extension."
   (interactive "sTitle: ")
   (let* ((bname (alb-construct-basename string))
-         (fname (concat default-directory bname ".tex"))
-         (uname (if (string-match alb-re-filename-at-home fname)
-                    (concat "~" (match-string 1 fname))
-                  fname)))
+         (fname (concat default-directory bname ".tex")))
     (if (file-exists-p fname)
-        ;; File already exists --- let find-file report errors opening.
+        ;; File already exists --- let find-file report errors opening
         (find-file fname)
       (progn
-        ;; New file -- load and build a rudimentary header.
+        ;; New file -- load and build a rudimentary header
         (find-file fname)
         (insert "%%% ")
         (newline)

@@ -488,6 +488,7 @@ This function customises RefTeX."
      alb-TeX-re-newIdent)
     (if (featurep 'reftex)
         (progn
+          ;; Maintain counter for unique line number labels in algorithms
           (add-hook 'local-write-file-hooks
                     (function
                      (lambda ()
@@ -495,6 +496,8 @@ This function customises RefTeX."
                            (alb-update-file-local-variable
                             'alb-LaTeX-line-counter
                             alb-LaTeX-line-counter)))))
+
+          ;; Specify new label types for algorithm floats and line numbers
           (reftex-add-label-environments
            '(("algorithm"          ?a "alg:%f:" "~\\ref{%s}"
               ("\\\\caption[[{]" . alb-reftex-context-fn-algorithm)
@@ -508,9 +511,11 @@ This function customises RefTeX."
              ("albAlgorithmic*"    ?j "ln:%f:"  "~\\ref{%s}"
               (alb-reftex-context-fn-albAlgorithmic-display
                . alb-reftex-context-fn-albAlgorithmic-label))))
-          (setq reftex-insert-label-flags
-                (cons (concat (car reftex-insert-label-flags) "aj")
-                      (cdr reftex-insert-label-flags))))))))
+
+          ;; Auto generate labels for algorithm floats and line numbers
+          (set (make-local-variable 'reftex-insert-label-flags)
+               (cons (concat (car reftex-insert-label-flags) "aj")
+                     (cdr reftex-insert-label-flags))))))))
 
 
 

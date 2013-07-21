@@ -1,0 +1,135 @@
+%
+% :Precis: Example source file for LaTeX article
+% :Contact: albcorp@gmail.com
+% :Authors: Andrew Burrow
+% :Copyright: 2012, 2013 Andrew Burrow
+%
+
+\documentclass[10pt,a4paper,oneside]{alb-latex}
+
+%
+% Encapsulated postscript handling
+%
+% See ``grfguide.pdf``
+
+\usepackage{graphicx}
+
+%
+% Set and order theoretic mathematical constructs
+%
+% See ``alb-order-theory.pdf``
+
+\usepackage{alb-order-theory}
+
+%
+% Tools for typesetting floats
+%
+% See ``alb-float-tools.pdf``
+
+\usepackage{alb-float-tools}
+
+%
+% Cross referencing in hypertext environments
+%
+% This should be the one of the last packages loaded
+% See ``hyperref/manual.pdf``
+
+\usepackage[
+    colorlinks=false, raiselinks=false, plainpages=false,
+    bookmarks=true, bookmarksopen=true, bookmarksnumbered=true
+  ]{hyperref}
+
+%
+% ----------------------------------------------------------------------
+%
+
+\begin{document}
+
+%
+%
+% Title
+%
+
+\albTitle{My Small Article}
+
+\begin{albTitlePage}
+
+  \albTitlePageSection{Author}
+
+  John Citizen\\
+  \url{john.citizen@example.com}
+
+
+  \albTitlePageSection{Abstract}
+
+  Parturient aenean ac metus eu lorem, cras vel ullamcorper proin
+  pellentesque proin ipsum, aliquam rutrum at eu nec. Fusce quis integer
+  dolorem sed ut, dui neque vitae duis vel, ut varius massa sed nec
+  convallis. Vestibulum hendrerit, dui iaculis nec neque sollicitudin,
+  id amet euismod quam ac aliquam, per suscipit ante cras netus lacus,
+  mollis et sed ante pellentesque ut. Et diam rhoncus, justo velit,
+  ligula natoque. Quam quis tristique ad consectetuer risus, dictumst
+  sodales libero placerat euismod proin, enim odio volutpat sem nullam
+  penatibus justo, a ut eu eget pharetra. Donec hac ut at fusce etiam,
+  et sit vestibulum phasellus urna. Massa congue cras, sem neque mi ac
+  aenean vivamus. Ornare sed quam, tortor molestie taciti est
+  ullamcorper etiam, sollicitudin at luctus facilisis elit et, sapien
+  luctus integer lacus ante aut. Luctus ullamcorper. Laoreet
+  tincidunt. Nunc wisi semper, consectetuer tellus elementum magna
+  luctus sit vitae, a sit sed dui mauris a nec, est in integer
+  vestibulum nulla duis.
+
+\end{albTitlePage}
+
+%
+%
+% Propositions
+%
+
+\section{Propositions}
+\label{sec:alb-latex-article:prop}
+
+Parturient aenean ac metus eu lorem, cras vel ullamcorper proin
+pellentesque proin ipsum, aliquam rutrum at eu nec. Fusce quis integer
+dolorem sed ut, dui neque vitae duis vel, ut varius massa sed nec
+convallis. Vestibulum hendrerit, dui iaculis nec neque sollicitudin, id
+amet euismod quam ac aliquam, per suscipit ante cras netus lacus, mollis
+et sed ante pellentesque ut. Et diam rhoncus, justo velit, ligula
+natoque. Quam quis tristique ad consectetuer risus, dictumst sodales
+libero placerat euismod proin, enim odio volutpat sem nullam penatibus
+justo, a ut eu eget pharetra. Donec hac ut at fusce etiam, et sit
+vestibulum phasellus urna. Massa congue cras, sem neque mi ac aenean
+vivamus. Ornare sed quam, tortor molestie taciti est ullamcorper etiam,
+sollicitudin at luctus facilisis elit et, sapien luctus integer lacus
+ante aut. Luctus ullamcorper. Laoreet tincidunt. Nunc wisi semper,
+consectetuer tellus elementum magna luctus sit vitae, a sit sed dui
+mauris a nec, est in integer vestibulum nulla duis.
+
+%
+% More Propositions
+
+\subsection{More Propositions}
+\label{sec:alb-latex-article:more-prop}
+
+\begin{enumerate}
+\item Quam quis tristique ad consectetuer risus, dictumst sodales libero
+  placerat euismod proin, enim odio volutpat sem nullam penatibus justo,
+  a ut eu eget pharetra.
+\item Donec hac ut at fusce etiam, et sit vestibulum phasellus
+  urna. Massa congue cras, sem neque mi ac aenean vivamus.
+\item Ornare sed quam, tortor molestie taciti est ullamcorper etiam,
+  sollicitudin at luctus facilisis elit et, sapien luctus integer lacus
+  ante aut.
+\item Luctus ullamcorper.
+\item Laoreet tincidunt.
+\item Nunc wisi semper, consectetuer tellus elementum magna luctus sit
+  vitae, a sit sed dui mauris a nec, est in integer vestibulum nulla
+  duis.
+\end{enumerate}
+
+\end{document}
+
+% Local Variables:
+% mode: latex
+% TeX-master: t
+% End:

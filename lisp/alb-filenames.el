@@ -40,13 +40,6 @@
 ;;; *** VARIABLE DECLARATIONS *************************************************
 
 
-(defconst alb-re-filename-at-home
-  (concat (regexp-quote (getenv "HOME")) "\\(/.+\\)")
-  "Regexp matching the filename of a file reachable from the home
-directory.  The first subexpression matches the path from the home
-directory.")
-
-
 
 ;;; *** FUNCTION DEFINITIONS **************************************************
 

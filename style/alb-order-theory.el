@@ -193,6 +193,7 @@ This function customises RefTeX."
      '("albBigTheta" "Asymptote function"))
     (if (featurep 'reftex)
         (progn
+          ;; Maintain counter for unique equation labels
           (add-hook 'local-write-file-hooks
                     (function
                      (lambda ()
@@ -200,32 +201,33 @@ This function customises RefTeX."
                            (alb-update-file-local-variable
                             'alb-LaTeX-equation-counter
                             alb-LaTeX-equation-counter)))))
-          (setq reftex-label-alist
-                (append reftex-label-alist
-                        '(("align"              ?e nil       nil
-                           (alb-reftex-context-fn-equation-display
-                            . alb-reftex-context-fn-equation-label))
-                          ("gather"             ?e nil       nil
-                           (alb-reftex-context-fn-equation-display
-                            . alb-reftex-context-fn-equation-label))
-                          ("multline"           ?e nil       nil
-                           (alb-reftex-context-fn-equation-display
-                            . alb-reftex-context-fn-equation-label))
-                          ("flalign"            ?e nil       nil
-                           (alb-reftex-context-fn-equation-display
-                            . alb-reftex-context-fn-equation-label))
-                          ("alignat"            ?e nil       nil
-                           (alb-reftex-context-fn-equation-display
-                            . alb-reftex-context-fn-equation-label))
-                          ("xalignat"           ?e nil       nil
-                           (alb-reftex-context-fn-equation-display
-                            . alb-reftex-context-fn-equation-label))
-                          ("xxalignat"          ?e nil       nil
-                           (alb-reftex-context-fn-equation-display
-                            . alb-reftex-context-fn-equation-label))
-                          ("subequations"       ?e nil       nil
-                           (alb-reftex-context-fn-equation-display
-                            . alb-reftex-context-fn-equation-label))))))))))
+
+          ;; Re-specify new label types for algorithm floats and line numbers
+          (reftex-add-label-environments
+           '(("align"              ?e nil       nil
+              (alb-reftex-context-fn-equation-display
+               . alb-reftex-context-fn-equation-label))
+             ("gather"             ?e nil       nil
+              (alb-reftex-context-fn-equation-display
+               . alb-reftex-context-fn-equation-label))
+             ("multline"           ?e nil       nil
+              (alb-reftex-context-fn-equation-display
+               . alb-reftex-context-fn-equation-label))
+             ("flalign"            ?e nil       nil
+              (alb-reftex-context-fn-equation-display
+               . alb-reftex-context-fn-equation-label))
+             ("alignat"            ?e nil       nil
+              (alb-reftex-context-fn-equation-display
+               . alb-reftex-context-fn-equation-label))
+             ("xalignat"           ?e nil       nil
+              (alb-reftex-context-fn-equation-display
+               . alb-reftex-context-fn-equation-label))
+             ("xxalignat"          ?e nil       nil
+              (alb-reftex-context-fn-equation-display
+               . alb-reftex-context-fn-equation-label))
+             ("subequations"       ?e nil       nil
+              (alb-reftex-context-fn-equation-display
+               . alb-reftex-context-fn-equation-label)))))))))
 
 
 

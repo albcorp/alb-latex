@@ -1,0 +1,96 @@
+%
+% :Precis: Example source file for LaTeX letter
+% :Contact: albcorp@gmail.com
+% :Authors: Andrew Burrow
+% :Copyright: 2012, 2013 Andrew Burrow
+%
+
+\documentclass[a4paper,11pt]{letter}
+
+%
+% Precise page dimension setup
+%
+% See ``geometry.pdf``
+
+\usepackage[
+  top=15mm, bottom=30mm, left=25mm, right=25mm,
+  headheight=6mm, headsep=10mm, nofoot%
+  ]{geometry}
+
+%
+% ----------------------------------------------------------------------
+%
+
+\begin{document}
+
+%
+%
+%
+% SENDER DETAILS
+%
+
+\name{%
+  John Citizen%
+}
+\signature{%
+  John Citizen%
+}
+\address{%
+  Fictitious Laboratory\\
+  Imaginary Organisation\\
+  Level 7 17 Jones St
+  North Sydney\quad{}NSW\quad{}2060\\
+  AUSTRALIA\\[1ex]
+  \textsc{Phone:} +61 491 570 156\\
+  \textsc{Email:} \texttt{john.citizen@example.com}
+}
+\def\today{%
+  26 April 2023%
+}
+
+%
+%
+%
+% LETTER TO ...
+%
+
+\begin{letter}{%
+    Ms S Pollard\\
+    1 Chapel Hill\\
+    Heswall\\
+    BOURNEMOUTH\\
+    BH1 1AA
+  }
+
+  \opening{Dear Ms Pollard,}
+
+  \begin{center}
+    \textbf{RE:} Proin eu urna tellus
+  \end{center}
+
+  Integer vel lectus elit, sed ultricies nulla. Nam sed elit viverra
+  felis vestibulum placerat sit amet ac nunc. Cum sociis natoque
+  penatibus et magnis dis parturient montes, nascetur ridiculus mus. In
+  sit amet nisi ligula, nec facilisis neque.
+
+  Vivamus consequat eros in mauris tempus ornare. Quisque malesuada,
+  dolor et rutrum accumsan, libero sem ullamcorper turpis, id accumsan
+  leo tellus facilisis lacus. Aliquam erat volutpat. Donec bibendum
+  condimentum sem accumsan ullamcorper. In vel mauris ac massa ultrices
+  laoreet. Sed sed leo risus, imperdiet fermentum orci. Praesent
+  suscipit vulputate nibh et laoreet.
+
+  Sed bibendum varius tortor eu aliquet. Suspendisse aliquam lorem
+  scelerisque sem fermentum vel ullamcorper sem dignissim.
+
+  \closing{Yours faithfully,}
+
+\end{letter}
+
+\end{document}
+
+% Local Variables:
+% mode: latex
+% TeX-master: t
+% ispell-local-dictionary: "british"
+% End:

@@ -17,11 +17,11 @@
 %%%     This work has the LPPL maintenance status 'author-maintained'.
 %%%
 %%%     This work consists of the files 'alb-algorithms.sty',
-%%%     'alb-avm.sty', 'alb-corp.cls', 'alb-float-tools.sty',
+%%%     'alb-avm.sty', 'alb-latex.cls', 'alb-float-tools.sty',
 %%%     'alb-graph-theory.sty', 'alb-journal.cls',
 %%%     'alb-order-theory.sty', 'alb-proofs.sty', 'alb-theorems.sty',
 %%%     'alb-thesis.cls', 'alb-algorithms.tex', 'alb-avm.tex',
-%%%     'alb-corp.tex', 'alb-float-tools.tex', 'alb-graph-theory.tex',
+%%%     'alb-latex.tex', 'alb-float-tools.tex', 'alb-graph-theory.tex',
 %%%     'alb-journal.tex', 'alb-order-theory.tex', 'alb-proofs.tex',
 %%%     'alb-theorems.tex', 'alb-thesis.tex',
 %%%     'alb-journal-glossary.ist', 'alb-journal-index.ist',
@@ -264,7 +264,7 @@
 % Also call \markboth with uppercase chapter title, as for contents etc.
 \ifthenelse{\boolean{@reversemargin}}{% THEN ... reverse margin layout
   \renewcommand{\@makeschapterhead}[1]{%
-    \float@addtolists{\protect\addvspace{10pt}}%
+    \ifdefined\float@addtolists\float@addtolists{\protect\addvspace{10pt}}\fi%
     \vspace*{25pt}%
     \begin{list}{}{%
         \setlength{\leftmargin}{0pt - \marginparsep - \marginparwidth}%
@@ -281,7 +281,7 @@
   }%
 }{% ELSE .. non-reverse margin layout
   \renewcommand{\@makeschapterhead}[1]{%
-    \float@addtolists{\protect\addvspace{10pt}}%
+    \ifdefined\float@addtolists\float@addtolists{\protect\addvspace{10pt}}\fi%
     \vspace*{25pt}%
     \begin{list}{}{%
         \setlength{\leftmargin}{0pt}%
@@ -303,7 +303,7 @@
 % label to the edge of the text and the same side.
 \ifthenelse{\boolean{@reversemargin}}{% THEN ... reverse margin layout
   \renewcommand{\@makechapterhead}[1]{%
-    \float@addtolists{\protect\addvspace{10pt}}%
+    \ifdefined\float@addtolists\float@addtolists{\protect\addvspace{10pt}}\fi%
     \vspace*{25pt}%
     \begin{flushleft}%
       \normalfont\bfseries%
@@ -324,7 +324,7 @@
   }%
 }{% ELSE .. non-reverse margin layout
   \renewcommand{\@makechapterhead}[1]{%
-    \float@addtolists{\protect\addvspace{10pt}}%
+    \ifdefined\float@addtolists\float@addtolists{\protect\addvspace{10pt}}\fi%
     \vspace*{25pt}%
     \begin{flushright}%
       \normalfont\bfseries%

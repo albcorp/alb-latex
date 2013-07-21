@@ -1,0 +1,268 @@
+%
+% :Precis: Example readings for 26 NOV 2007
+% :Contact: albcorp@gmail.com
+% :Authors: Andrew Burrow
+% :Copyright: 2005-2008, 2013 Andrew Lincoln Burrow
+%
+
+%
+%
+%
+% 26 NOV 2007
+%
+
+\chapter{26 NOV 2007}
+\label{cha:read_2007_11_26:26-nov-2007}
+
+Papers collected on agent systems for recommenders and team formation in
+the setting of hypertext collaboration tools.
+
+%
+%
+% Background
+%
+
+\section{Background}
+\label{sec:read_2007_11_26:backgr}
+
+%
+% pan03:_light_ontol_repos
+
+\begin{albResearchNote}{%
+    \citet{pan03:_light_ontol_repos}%
+  }{%
+    \glossary{multi-agent~system}, \glossary{ontology~repository}%
+  }
+\item Describes the \emph{Otago Ontology Repository} and its RESTful
+  architecture.  Ontologies are published as RDF documents via HTTP.
+\end{albResearchNote}
+
+%
+% mui02:_notion_reput_multi_agent_system
+
+\begin{albResearchNote}{%
+    \citet{mui02:_notion_reput_multi_agent_system}%
+  }{%
+    \glossary{multi-agent~system}, \glossary{reputation}%
+  }
+\item Surveys existing work on reputation to construct a reputation
+  typology.
+\item Claims to quantitatively compare the different notions of
+  reputation by simulation using evolutionary game theory.
+\end{albResearchNote}
+
+%
+%
+% Recommender systems
+%
+
+\section{Recommender Systems}
+\label{sec:read_2007_11_26:recomm-syst}
+
+One approach to supporting human group-formation via a multi-agent
+system, is a recommender system implemented by personal information
+agents.  In this scenario, each user is represented by a personal
+information agent that make recommendations on collaborators and
+documents reachable through the wiki.
+
+%
+% somlo03:_using_web_helper_agent_profil_query_gener
+
+\begin{albResearchNote}{%
+    \citet{somlo03:_using_web_helper_agent_profil_query_gener}%
+  }{%
+    \glossary{personal~information~agent},
+    \glossary{recommender~system}%
+  }
+\item Describes a personal information agent called \emph{SurfAgent}
+  that learns relevance to the user by positive feedback in order to
+  recommend new documents.
+\item Describes user profile in terms of \emph{TF-IDF vectors}, namely
+  ranking by term frequency and inverse document frequency.
+\item Distinguishes between \emph{retrieval queries} and \emph{filter
+    queries}.
+\end{albResearchNote}
+
+%
+% somlo04:_query
+
+\begin{albResearchNote}{%
+    \citet{somlo04:_query}%
+  }{%
+    \glossary{personal~information~agent},
+    \glossary{recommender~system}%
+  }
+\item Describes a personal information agent called \emph{QueryTracker}
+  that builds a user profile by ``unsupervised clustering methods on
+  documents judged relevant by the user,'' in order to track persistent
+  information needs by then constructing queries, and filtering the
+  results.
+\item Describes user profile in terms of \emph{TF-IDF vectors}, namely
+  ranking by term frequency and inverse document frequency.
+\item Finesses the output by performing change detection to cover the
+  case where previous documents have changed in interesting ways as
+  determined by the user profile.
+\end{albResearchNote}
+
+%
+% birukov05:_implic
+
+\begin{albResearchNote}{%
+    \citet{birukov05:_implic}%
+  }{%
+    \glossary{multi-agent~system},
+    \glossary{personal~information~agent},
+    \glossary{recommender~system}%
+  }
+\item Describes a multi-agent system called \emph{Implicit} in which
+  each personal information agent learns relevance to the user, and
+  personal information agents cooperate to exchange information that
+  improves the filtering query.
+\item Claims that collaboration between personal information agents
+  induces group behaviour in new users.
+\item Note that the groups preexist and are implicitly considered
+  reliable.
+\end{albResearchNote}
+
+%
+% birukou06:_multi_agent_system_facil_scien_public_searc
+
+\begin{albResearchNote}{%
+    \citet{birukou06:_multi_agent_system_facil_scien_public_searc}%
+  }{%
+    \glossary{multi-agent~system},
+    \glossary{personal~information~agent},
+    \glossary{recommender~system}%
+  }
+\item Describes a multi-agent system that extends the capabilities and
+  applicability of the system described in \citep{birukov05:_implic}.
+\item Claims improvements to similar recommender system by accommodating
+  groups composed of inexpert users, better filtering the
+  recommendations, and exploiting implicit feedback found in the
+  citation graph.
+\item Claims expertise can be transmitted by cloning an expert's
+  personal information agent.
+\end{albResearchNote}
+
+%
+% yu03:_searc_social_networ
+
+\begin{albResearchNote}{%
+    \citet{yu03:_searc_social_networ}%
+  }{%
+    \glossary{multi-agent~system},
+    \glossary{personal~information~agent}, \glossary{referral~system}%
+  }
+\item Describes a multi-agent system in which each personal information
+  agent learns relevance to the user and maintains beliefs about the
+  user's acquaintances, in order to perform distributed search through
+  referrals in response to requests for information.
+\item Describes personal information agents that model both expertise
+  and sociability, and describes
+\item Note the referral system could be construed as a recommender of
+  people rather than documents.
+\end{albResearchNote}
+
+%
+%
+% Agent group-formation
+%
+
+\section{Agent Group-Formation}
+\label{sec:read_2007_11_26:agent-group-form}
+
+A useful analogy can be drawn between human group-formation and agent
+group-formation in multi-agent systems.  Furthermore, this analogy can
+be realised by noting that both collections of pages, and collections of
+users are justifiable starting points for clustering users.  By setting
+a multi-agent system the goal of forming groups of pages, it is possible
+to influence human group-formation in the wiki.  Envisage a multi-agent
+system in which agents develop beliefs about the clustering of pages,
+and hence of users.
+
+%
+% legras03:_lotto
+
+\begin{albResearchNote}{%
+    \citet{legras03:_lotto}%
+  }{%
+    \glossary{multi-agent~system}, \glossary{agent~group-formation}%
+  }
+\item Describes a group-formation in a multi-agent system based on
+  overhearing messages.
+\item Extends earlier work to consider the case of many agents with
+  limited memory.
+\item Describes group-formation via partitions of the set of agents,
+  where agents hold incomplete and possibly incompatible beliefs about
+  the partition, and the agent system attempts to optimise the coherence
+  of these distinct beliefs.
+\item Describes small collection of propositional attitudes covering the
+  required communications.
+\end{albResearchNote}
+
+%
+% gaston05:_agent_organ_networ_dynam_team_format
+
+\begin{albResearchNote}{%
+    \citet{gaston05:_agent_organ_networ_dynam_team_format}%
+  }{%
+    \glossary{multi-agent~system}, \glossary{agent~group-formation}%
+  }
+\item Describes a multi-agent system in which agents make local
+  modifications to the network by which agents locate one another.
+\item Defines an \emph{agent-organized network} (AON) as ``an
+  organizational network structure, or agent-to-agent interaction
+  topology, that is the result of local rewiring decisions made by the
+  individual agents.''
+\item Considers AON strategies for cooperative multi-agent systems, and
+  describes a strategy that preserves certain structural invariants on
+  the network.
+\item Demonstrates the affect of the AON strategy on dynamic
+  group-formation in the agent system.
+\end{albResearchNote}
+
+%
+%
+% Human group-formation
+%
+
+\section{Human Group-Formation}
+\label{sec:read_2007_11_26:human-group-form}
+
+%
+% debenham05:_multiag_system_manag_collab_emerg_proces
+
+\begin{albResearchNote}{%
+    \citet{debenham05:_multiag_system_manag_collab_emerg_proces}%
+  }{%
+    \glossary{multi-agent~system}%
+  }
+\item Defines \emph{emergent processes} as ``non-routine, collaborative
+  business processes whose execution is guided by the knowledge that
+  emerges during a process instance.''
+\item Claims ``the goal of an emergent process instance may not be used
+  as a focus for the process management system''.  Hence, the agent
+  system manages the collaboration rather than the process
+\item Observes that the integrity of information about the process
+  decays with time.
+\item Enumerates questions that an emergent process agent considers,
+  including ``who to ask to assist'', ``who can I rely on'', ``who wroks
+  well with who'', ``who do I want to build a relationship with''
+\item Decomposes collaboration into the acts of \emph{joining}, and
+  \emph{delegating} and claims information passing bears witness to
+  these acts.
+\end{albResearchNote}
+
+%
+%
+% Bibliography
+%
+
+\bibliographystyle{plainnat}
+\bibliography{example-bibliography}
+
+% Local Variables:
+% mode: latex
+% TeX-master: "example-journal"
+% ispell-local-dictionary: "british"
+% End:
