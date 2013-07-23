@@ -61,7 +61,9 @@ scripts to achieve these ends.
 
   One approach is to place the repository under the directory
   ``~/Config`` and add the following fragment to a login script such as
-  ``~/.bash_profile``::
+  ``~/.bash_profile``
+
+  ::
 
       # Set LaTeX and MakeIndex to search the working directory and the
       # standard directories
@@ -85,7 +87,9 @@ scripts to achieve these ends.
   file.  It updates the load path, and AUCTeX style path.
 
   Again, one approach is to place the repository under the directory
-  ``~/Config`` and add the following fragment to ``~/.emacs``::
+  ``~/Config`` and add the following fragment to ``~/.emacs``
+
+  ::
 
       ;;
       ;;
@@ -96,8 +100,8 @@ scripts to achieve these ends.
       (mapcar 'load
               (file-expand-wildcards "~/Config/*/*-start.el" t))
 
-   Change the filename ``${HOME}/Config`` to suit your personal
-   directory structure.
+  Change the filename ``${HOME}/Config`` to suit your personal
+  directory structure.
 
 Additional configuration
 ========================
@@ -105,7 +109,7 @@ Additional configuration
 The above installation steps are the least obtrusive to make the
 software available within LaTeX and Emacs.  However, there are steps you
 may wish to take to enjoy additional features.  Some of these are noted
-below as code snippets to add to ``~.emacs`` or set using the customize
+below as code snippets to add to ``~/.emacs`` or set using the customize
 tools in emacs.
 
 - Automate construction for section, figure, table, and equation
