@@ -4,9 +4,8 @@ README.AlbLaTeX
 
 :Precis: /albcorp/ LaTeX packages with supporting AUCTeX extensions
 :Authors: Andrew Lincoln Burrow
-:Contact: albcorp@gmail.com
 :Copyright: 2000-2010, 2012-2013 Andrew Lincoln Burrow
-:Version: 0.9.1
+:Version: 0.9.2
 
 --------
 Overview

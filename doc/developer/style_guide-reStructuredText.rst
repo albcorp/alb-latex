@@ -4,8 +4,7 @@ Style Guide for reStructuredText
 
 :Precis: How to use reStructuredText to document software
 :Authors: Andrew Lincoln Burrow
-:Contact: albcorp@gmail.com
-:Copyright: 2006, 2012 Andrew Lincoln Burrow
+:Copyright: 2006, 2012, 2013 Andrew Lincoln Burrow
 :License:
     Permission is granted to copy, distribute and/or modify this
     document under the terms of the GNU Free Documentation License,

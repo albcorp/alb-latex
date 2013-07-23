@@ -4,7 +4,6 @@ Style guide for git
 
 :Precis: How to use git in a software project
 :Authors: Andrew Lincoln Burrow
-:Contact: albcorp@gmail.com
 :Copyright: 2013 Andrew Lincoln Burrow
 :License:
     Permission is granted to copy, distribute and/or modify this

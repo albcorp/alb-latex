@@ -4,8 +4,7 @@ Style Guide for LaTeX
 
 :Precis: A style guide for LaTeX documents and packages, and BibTeX databases
 :Authors: Andrew Lincoln Burrow
-:Contact: albcorp@gmail.com
-:Copyright: 2012 Andrew Lincoln Burrow
+:Copyright: 2012, 2013 Andrew Lincoln Burrow
 :License:
     Permission is granted to copy, distribute and/or modify this
     document under the terms of the GNU Free Documentation License,
@@ -133,7 +132,6 @@ For example::
 
     %
     % :Precis: Source file for LaTeX article
-    % :Contact: albcorp@gmail.com
     % :Authors: Andrew Burrow
     % :Copyright: 2012 Andrew Burrow
     %
