@@ -4,7 +4,7 @@ Style guide for git
 
 :Precis: How to use git in a software project
 :Authors: Andrew Lincoln Burrow
-:Copyright: 2013 Andrew Lincoln Burrow
+:Copyright: 2013, 2014 Andrew Lincoln Burrow
 :License:
     Permission is granted to copy, distribute and/or modify this
     document under the terms of the GNU Free Documentation License,
@@ -43,9 +43,9 @@ commands
 The best reference for XXX is `Reference for XXX`_.  Also of use is the
 `Another place for XXX`_.
 
-.. _Reference for XXX: \
+.. _Reference for XXX:
    http://docutils.sourceforge.net/docs/user/rst/quickref.html
-.. _Another place for XXX: \
+.. _Another place for XXX:
    http://docutils.sourceforge.net/rst.html
 
 --------

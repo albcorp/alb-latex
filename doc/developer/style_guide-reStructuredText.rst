@@ -4,7 +4,8 @@ Style Guide for reStructuredText
 
 :Precis: How to use reStructuredText to document software
 :Authors: Andrew Lincoln Burrow
-:Copyright: 2006, 2012, 2013 Andrew Lincoln Burrow
+:Contact: albcorp@gmail.com
+:Copyright: 2006, 2012, 2013, 2014 Andrew Lincoln Burrow
 :License:
     Permission is granted to copy, distribute and/or modify this
     document under the terms of the GNU Free Documentation License,
@@ -15,58 +16,42 @@ Style Guide for reStructuredText
     The latest version of this license is in
     http://www.gnu.org/copyleft/fdl.html
 
----------
-XXX To Do
----------
-
-- Match up structure between style guides and look for missing sections
-
-- Talk about achieving homogenous lists in reStructuredText
-
-  + Either make all elements in a list paragraph free, or make all
-    elements contain paragraphs
-  + Note how this is achieved
-
 ------------
 Introduction
 ------------
 
-This document is a template for documentation written in
-reStructuredText.  It is both an example of the most common markup, and
-a discussion of writing software documentation.  It includes suggestions
-for the markup for sections, identifiers, literals, and example code,
-and relates these suggestions to the generation of software
-documentation.
+The following style guide covers the use of reStructuredText to document
+source code.  It covers the usage of reStructuredText for document
+markup, how to refer to source code within a reStructuredText document,
+and how to use reStructuredText to markup documentation within the
+source code.  It is not a general writing style guide.  To simplify the
+language it is written in the imperative as if instructing the user.
 
 The best reference for the markup rules is `Quick reStructuredText`_.
 Also of use is the `reStructuredText homepage`_.
 
-.. _Quick reStructuredText: \
+.. _Quick reStructuredText:
    http://docutils.sourceforge.net/docs/user/rst/quickref.html
-.. _reStructuredText homepage: \
+.. _reStructuredText homepage:
    http://docutils.sourceforge.net/rst.html
 
------------------------------
-Document Structure and Markup
------------------------------
+---------------
+Document Markup
+---------------
 
-This section describes the suggested formats for headings, and the
-initial text of the document.
+How to markup the document title.  How to markup section headings.  How
+to use reStructuredText lists.  How to insert a figure.  How to markup
+tabular material.
 
-Suggested Fields in the Opening Text
-====================================
+Document Title
+==============
 
-The opening text of the documentation should set out the copyright of
-the file and briefly summarise its contents.  Therefore, the following
-structure is suggested.
-
-- Begin each file with a top level heading.  The text of this heading is
-  the title of the document.  The suggested markup is described in the
-  section.
-
-- Follow the title with a field list.  The purpose is to provide a
-  one-line summary, a contact point, and an assertion of the authorship
-  and copyright.  See the top of the document for an example.
+Begin each file with a top level heading.  The text of this heading is
+the title of the document.  The suggested markup for this heading is
+described in the following section.  Follow the title with a field list.
+The purpose is to provide a one-line summary, a contact point, and an
+assertion of the authorship and copyright.  See the top of the document
+for an example.
 
 Section Markup
 ==============
@@ -82,9 +67,11 @@ of a single character section.  The heading above is an example.  The
 patterns are allocated a heading level according to their occurrence in
 the document.
 
-The following hierarchy of heading patterns is suggested.  Notice the
-logical progression from double to single underlining, and from over and
-underlining to just underlining.
+Use the the hierarchy of heading patterns.  Notice the logical
+progression from double to single underlining, and from over and
+underlining to just underlining.  Configure the emacs ``rst-mode`` to
+use this hierarchy, as it provides helpful commands to reformat section
+headings.
 
 **Document Title**
     At the start of the file markup the document title in the following
@@ -133,8 +120,200 @@ underlining to just underlining.
     function docstring.  In particular, the *Contract* section of the
     function docstring should use this pattern.
 
-Below subsubsections, use other strategies like description lists.  The
-above list is an example of such markup.
+**Paragraph Level**
+    If required, divide subsubsections into paragraphs and markup the
+    paragraph titles in the following manner::
+
+        Paragraph Level
+        :::::::::::::::
+
+    Note that reStructuredText does not allow the use of out-of-place
+    heading levels.  For example, it is not possible to put a paragraph
+    level directly under a section level.  At this low level of
+    sectioning, this often works against the document intent, e.g.,
+    where the paragraph heading is used to introduce an example.  One
+    solution is to use description lists instead for these structures.
+
+**Paragraph Level**
+
+    Finally, if required, divide paragraphs into subparagraphs and
+    markup the subparagraph titles in the following manner::
+
+        Subparagraph Level
+        ..................
+
+    Note the comments for paragraphs above.
+
+Bulleted Lists
+==============
+
+Create bulleted lists using the characters ``-``, ``+``, and ``*`` as
+bullets.  Nest bulleted lists no further than 4 deep.  The simplest way
+to keep track of nesting depth is to us ``-`` for the first level, ``+``
+for the second level, and ``*`` for the third and fourth level of
+bulleted list.
+
+- First outer element
+
+  + First inner element
+  + Second inner element
+
+    * The first inner, inner element
+    * The second inner, inner element
+
+  + Third inner element
+
+    Note that adding inner lists or paragraphs, simply requires that
+    additional blank lines be introduced.
+
+    * The third inner, inner element
+
+      * First at 4 deep
+      * Second at 4 deep
+
+Enumerated Lists
+================
+
+Create enumerated lists with auto-numbering using ``#.`` as the bullet.
+Nest enumerated lists no further than 4 deep.
+
+#. This is a numbered element
+#. Another numbered element
+
+   #. This is the indented list element
+   #. Another indented list element
+
+      #. This is the further indented list element
+      #. Another further indented list element
+
+         #. This is the even further indented list element
+         #. Another even further indented list element
+
+Create enumerated lists with special numbering requirements using the
+numbering as the bullet, for example, ``a.`` or ``iv)``.  Note that it
+is not possible to create compound numbering formats like 2.3.
+
+1. This is a numbered element
+2. Another numbered element
+
+   a. This is the indented list element
+   b. Another indented list element
+
+        i) This is the further indented list element
+        ii) Another further indented list element
+
+            I. This is the even further indented list
+            II. This is another even further indented list
+
+Definition Lists
+================
+
+Create definition lists by setting the term on the first line of a
+paragraph, and indenting the remainder of the paragraph.
+
+Lorem ipsum
+   dolor sit amet, consectetuer adipiscing elit. Donec hendrerit tempor
+   tellus.
+
+   Donec
+      pretium posuere tellus.
+
+   Cum
+      sociis natoque penatibus et magnis dis parturient montes, nascetur
+      ridiculus mus.
+
+      - Nulla posuere.
+      - Donec vitae dolor.
+      - Nullam tristique diam non turpis.
+
+Options Lists
+=============
+
+Create options lists when documenting command options by using the
+option as a bullet and leaving at least two spaces to the explanatory
+text.
+
+-a            command-line option "a"
+-b file       options can have arguments
+              and long descriptions
+--long        options can be long also
+--input=file  long options can also have
+              arguments
+/V            DOS/VMS-style options too
+
+              - Nulla posuere.
+              - Donec vitae dolor.
+              - Nullam tristique diam non turpis.
+
+Figures
+=======
+
+Use the ``figure`` directive to insert figures.  The directive accepts
+the filename of an image, and fields including the scaling.
+
+There is no simple way to manage the cross references, because the LaTeX
+figure numbers are not accessible from within reStructuredText.  Instead
+label the figure with a label that matches the one made by LaTeX, and
+use that to reference the figure.  For example, see `Figure 1`_.  This
+will require manual renumbering, but this is unlikely to be a problem
+for field notes.
+
+.. _`Figure 1`:
+
+.. figure:: figures/small-poset.pdf
+            :scale: 75 %
+
+            Example of a diagram in PDF format
+
+Tables
+======
+
+Use one of the advanced table directive to insert tables.  The
+``csv-table`` directive accepts data in CSV format, and fields including
+the header row and the relative column widths.  See the example in
+`Table 1`_.  The ``list-table`` directive accepts data as a nested
+bulleted list, and fields including the relative column widths.  See the
+example in `Table 2`_.
+
+There is no simple way to manage cross references to tables, because the
+LaTeX table numbers are not accessible from within reStructuredText.
+Instead label the table to match LaTeX, and use that label to reference
+the table.  This will require manual renumbering, but this is unlikely
+to be a problem for field notes.
+
+.. _`Table 1`:
+
+.. csv-table:: Example of a table from CSV data
+   :header: "Treat", "Quantity", "Description"
+   :widths: 15, 10, 30
+
+   "Albatross", 2.99, "On a stick!"
+   "Crunchy Frog", 1.49, "If we took the bones out, it wouldn't be
+   crunchy, now would it?"
+   "Gannet Ripple", 1.99, "On a stick!"
+
+.. _`Table 2`:
+
+.. list-table:: Example of a table from list data
+   :widths: 15 10 30
+   :header-rows: 1
+
+   -
+     + Treat
+     + Quantity
+     + Description
+   -
+     + Albatross
+     + 2.99
+     + On a stick!
+   -
+     + Crunchy Frog
+     + 1.49
+     + If we took the bones out, it wouldn't be crunchy, now would it?
+   -
+     + Gannet Ripple
+     + 1.99
+     + On a stick!
 
 Whitespace and Line Breaking
 ============================
@@ -150,51 +329,76 @@ between paragraphs and headings.
 
 Break all lines to fit a 72 character line.
 
-Referring to Implementation
-===========================
-
-In documenting a piece of software, it will be necessary to refer to the
-implementation.  If it is presumed that a script exists that parses code
-to recover the main structure and accompanying inline documentation, how
-does one make references to this documentation?
-
-Manifest of Files
+-----------------
+About Source Code
 -----------------
 
-The simplest solution is to refer to the documentation for a module as a
-monolithic object.  This is most easily achieved by setting up a section
-in the documentation that lists a manifest of files.
+How to markup examples of source code within a reStructuredText
+document.
 
-The following example shows how a manifest is marked up for two
-documentation extracted from two python files ``ClassOne.py`` and
-``ClassTwo.py``.  A named *external hyperlink* is recorded for each
-implementation file, so that the document can easily refer to the
-implementing file.
+Inline Literals
+===============
 
-``ClassOne.py``
-    Widgets for use in widget washing.
+Inline fragments of source code are marked up using the inline literal
+syntax.  For example, this is ``inline`` source code.
 
-    See the documentation in `ClassOne`_
+Literal Blocks
+==============
 
-``ClassTwo.py``
-    Additional widgets for use in widget washing.
+A paragraph containing only two colons indicates that the following
+indented or quoted text is a literal block.
 
-    See the documentation in `ClassTwo`_
+::
 
-.. _ClassOne: ClassOne.html
-.. _ClassTwo: ClassTwo.html
+  Whitespace, newlines, blank lines, and all kinds of markup (like
+  *this* or \this) is preserved by literal blocks.
 
-Location of Documentation
--------------------------
+  The paragraph containing only '::' will be omitted from the result.
 
-In case the code is parsed for documentation, this document is the head
-of the documentation.  In particular, architectural overviews are
-documented here.  In contrast, implementation details are documented in
-the implementation files, especially when other implementations would be
-consistent with the overall architecture.
+The ``::`` may be tacked onto the very end of any paragraph. The ``::``
+will be omitted if it is preceded by whitespace.  The ``::`` will be
+converted to a single colon if preceded by text, like this::
 
-Documentation must be place in comments and docstrings according to the
-language of the source code.  The placement of documentation within
+  It's very convenient to use this form.
+
+Literal blocks end when text returns to the preceding paragraph's
+indentation.  This means that something like this is possible::
+
+      We start here
+    and continue here
+  and end here.
+
+Formatting long lines of literal text can present problems.  Break
+literal blocks to ensure that line length does not exceed 68 characters,
+excluding the initial blanks.  For example, consider the following LaTeX
+fragment::
+
+    % 68 characters
+    % 012345678901234567890123456789012345678901234567890123456789ABCDEF
+    \begin{albPropositions}
+    \item Let $\approx$ be the binary relation such that $x \approx y$
+      if and only if $x \lhd y$ and $y \lhd x$.  Then, $\approx$ is an
+      equivalence relation.
+
+    \item Let $C = \{ \albEquivClass{x} \mid x \in P \}$, and let $\leq$
+      be the binary relation such that $\albEquivClass{x} \leq
+      \albEquivClass{y}$ if and only if $x \lhd y$.  Then, $\leq$ is a
+      partial order.
+    \end{albPropositions}
+
+------------------
+Within Source Code
+------------------
+
+How to use reStructuredText to markup document strings within the source
+code.  See the specific style guides for additional guidance on using
+reStructuredText within a particular language.
+
+Docstrings
+==========
+
+Place documentation in comments and docstrings according to the language
+of the source code.  The placement of documentation within
 implementation files must satisfy several constraints.
 
 1. Documentation must be consistent to be effectively rendered.
@@ -225,13 +429,13 @@ and JavaScript code.
 **Python Code**
     Python code carries documentation in docstrings, as well as
     comments.  Inline comments are an important tool, but documentation
-    should go in the file, class, and function docstrings.  There are no
-    restrictions on the syntax within a docstring that are likely to
+    should go in the module, class, and function docstrings.  There are
+    no restrictions on the syntax within a docstring that are likely to
     effect reStructuredText.
 
     For example, this is the docstring of a function::
 
-        Sets the score from one to five of the comment
+        Set the score from one to five of the comment
 
         Sets the score of the comment to an integer between 1 and 5.
 
@@ -274,15 +478,15 @@ and JavaScript code.
         // Event Handlers
         // ==============
 
-        function siaResizeEditor(event) {
-            // Resize `sia-edit-pane` iframe in response to event
+        function albResizeEditor(event) {
+            // Resize `alb-edit-pane` iframe in response to event
             //
-            // Retrieve `sia-edit-pane` element and compute height from window
+            // Retrieve `alb-edit-pane` element and compute height from window
             // height and height of header.  Does not work in IE.  See:
             // http://www.quirksmode.org/viewport/compatibility.html
 
             // Get the editor object and reset its height
-            var editor = document.getElementById('sia-edit-pane');
+            var editor = document.getElementById('alb-edit-pane');
             editor.height = ( self.innerHeight - editor.offsetTop );
         }
 
@@ -293,16 +497,27 @@ and JavaScript code.
         ==============
 
         ----------------------
-        siaResizeEditor(event)
+        albResizeEditor(event)
         ----------------------
 
-        Resize `sia-edit-pane` iframe in response to event
+        Resize `alb-edit-pane` iframe in response to event
 
-        Retrieve `sia-edit-pane` element and compute height from window
+        Retrieve `alb-edit-pane` element and compute height from window
         height and height of header.  Does not work in IE.  See:
         http://www.quirksmode.org/viewport/compatibility.html
 
     note that the last comment is dropped.
+
+Inline Comments
+===============
+
+Inline comments are those that will not be picked up by a documentation
+generator, but are never the less important to the legibility of code.
+In this context, use reStructuredText sparingly to markup for emphasis
+and to clarify references to filenames and functions.  Use emphasis for
+the titles of external documents being referred to, use stromg emphasis
+to highlight a point, and use interpretted text for references to
+filenames, modules, classes, and functions.
 
 .. Local Variables:
 .. mode: rst
