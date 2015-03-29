@@ -1,14 +1,11 @@
 #
 # .gitignore
 #
-#   - Project specific list of patterns that hg(1) should ignore loaded
+#   - Repository specific list of patterns that git(1) should ignore
 #
 
-# Use shell-style globs for ignore patterns
-syntax: glob
-
 #
-# MacOS specific ignores
+# OS X specific ignores
 
 .DS_Store
 
@@ -17,10 +14,15 @@ syntax: glob
 
 # Ignore backup files
 *~
+\#*
+.\#*
 
 # Ignore directory variables, and desktops
 .dir-locals.el
 .emacs.desktop*
+
+# Ignore byte compiled files
+*.elc
 
 # Ignore AUCTeX auto generated files
 auto
