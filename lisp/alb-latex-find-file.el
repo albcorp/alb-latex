@@ -1,7 +1,7 @@
 ;;;
 ;;; AlbLaTeX/lisp/alb-latex-find-file.el
 ;;;
-;;;     Copyright (C) 2003-2008, 2013 Andrew Lincoln Burrow
+;;;     Copyright (C) 2003-2008, 2013, 2017 Andrew Lincoln Burrow
 ;;;
 ;;;     This library is free software; you can redistribute it and/or
 ;;;     modify it under the terms of the GNU General Public License as
@@ -45,7 +45,7 @@
 
 
 (defun alb-LaTeX-find-file (string)
-  "Prompt for a string from which to constract the basename of a file.
+  "Prompt for a string from which to construct the basename of a file.
 Then open the file with a .tex extension."
   (interactive "sTitle: ")
   (let* ((bname (alb-construct-basename string))
@@ -56,20 +56,48 @@ Then open the file with a .tex extension."
       (progn
         ;; New file -- load and build a rudimentary header
         (find-file fname)
-        (insert "%%% ")
+        (insert "% ")
         (newline)
-        (insert (concat "%%% :Precis: " string))
+        (insert (concat "% :Precis: " string))
         (newline)
-        (insert (concat "%%% :Copyright: " (format-time-string "%Y")
+        (insert (concat "% :Authors: " user-full-name))
+        (newline)
+        (insert (concat "% :Contact: " user-mail-address))
+        (newline)
+        (insert (concat "% :Copyright: " (format-time-string "%Y")
                         " " user-full-name))
         (newline)
-        (insert (concat "%%% :Authors: " user-full-name))
+        (insert "% ")
+        (newline 3)
+        (forward-line -1)))))
+
+
+
+(defun alb-LaTeX-find-letter (string)
+  "Prompt for the name of the recipient from which to construct
+the basename of a letter file.  Then open the file with a .tex
+extension."
+  (interactive "sTo: ")
+  (let* ((addressee (string-join (split-string string) "-"))
+         (today (format-time-string "%Y-%m-%d"))
+         (fname (concat "correspondence-to-" addressee "-" today ".tex")))
+    (if (file-exists-p fname)
+        ;; File already exists --- let find-file report errors opening
+        (find-file fname)
+      (progn
+        ;; New file -- load and build a rudimentary header
+        (find-file fname)
+        (insert "% ")
         (newline)
-        (insert (concat "%%% :Contact: " user-mail-address))
+        (insert (concat "% :Precis: Letter to " string))
         (newline)
-        (insert "%%% ")
-        (newline 6)
-        (forward-line -3)))))
+        (insert (concat "% :Authors: " user-full-name))
+        (newline)
+        (insert (concat "% :Contact: " user-mail-address))
+        (newline)
+        (insert "% ")
+        (newline 3)
+        (forward-line -1)))))
 
 
 
