@@ -1,5 +1,5 @@
 ;;;
-;;; AlbLaTeX/lisp/alb-latex-find-file.el
+;;; alb-latex/lisp/alb-latex-find-file.el
 ;;;
 ;;;     Copyright (C) 2003-2008, 2013, 2017 Andrew Lincoln Burrow
 ;;;

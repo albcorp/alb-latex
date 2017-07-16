@@ -1,7 +1,7 @@
 %%%
-%%% AlbLaTeX/latex/alb-journal.cls
+%%% alb-latex/latex/alb-journal.cls
 %%%
-%%%     Copyright (C) 2005-2008, 2013 Andrew Lincoln Burrow
+%%%     Copyright (C) 2005-2008, 2013, 2017 Andrew Lincoln Burrow
 %%%
 %%%     This program may be distributed and/or modified under the
 %%%     conditions of the LaTeX Project Public License, either version

@@ -1,7 +1,7 @@
 ;;;
-;;; AlbLaTeX/style/alb-avm.el
+;;; alb-latex/style/alb-avm.el
 ;;;
-;;;     Copyright (C) 1999-2003, 2013 Andrew Lincoln Burrow
+;;;     Copyright (C) 1999-2003, 2013, 2017 Andrew Lincoln Burrow
 ;;;
 ;;;     This library is free software; you can redistribute it and/or
 ;;;     modify it under the terms of the GNU General Public License as

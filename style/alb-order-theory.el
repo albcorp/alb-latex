@@ -1,7 +1,7 @@
 ;;;
-;;; AlbLaTeX/style/alb-order-theory.el
+;;; alb-latex/style/alb-order-theory.el
 ;;;
-;;;     Copyright (C) 2000-2005, 2013 Andrew Lincoln Burrow
+;;;     Copyright (C) 2000-2005, 2013, 2017 Andrew Lincoln Burrow
 ;;;
 ;;;     This library is free software; you can redistribute it and/or
 ;;;     modify it under the terms of the GNU General Public License as

@@ -1,7 +1,7 @@
 #
-# AlbLaTeX/make/monograph/Makefile
+# alb-latex/make/monograph/Makefile
 #
-#     Copyright (C) 2003-2008, 2012-2013 Andrew Lincoln Burrow
+#     Copyright (C) 2003-2008, 2012-2013, 2017 Andrew Lincoln Burrow
 #
 #     This library is free software; you can redistribute it and/or
 #     modify it under the terms of the GNU General Public License as
@@ -22,7 +22,7 @@
 #     makeindex(1) to a single complex LaTeX documents using detailed
 #     dependency information gathered by parsing source files
 #
-#   - This makefile is preferred over AlbLaTeX/make/serial/Makefile for
+#   - This makefile is preferred over alb-latex/make/serial/Makefile for
 #     single complex documents, because it is simpler to extend to
 #     unusual LaTeX extensions that might be present in a large project
 #

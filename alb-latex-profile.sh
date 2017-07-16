@@ -1,5 +1,5 @@
 #
-# AlbLaTeX/alb-latex-profile.sh
+# alb-latex/alb-latex-profile.sh
 #
 #   - Profile script to enable the alb LaTeX packages
 #
