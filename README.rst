@@ -1,17 +1,17 @@
-===============
-README.AlbLaTeX
-===============
+========================
+README for ``alb-latex``
+========================
 
-:Precis: /albcorp/ LaTeX packages with supporting AUCTeX extensions
+:Precis: LaTeX packages for technical writing in computer science
 :Authors: Andrew Lincoln Burrow
-:Copyright: 2000-2010, 2012-2013 Andrew Lincoln Burrow
+:Copyright: 2000-2010, 2012-2013, 2017 Andrew Lincoln Burrow
 :Version: 0.9.2
 
 --------
 Overview
 --------
 
-*AlbLaTeX* is software to support technical writing in mathematics and
+*alb-latex* is software to support technical writing in mathematics and
 computer science.  It comprises LaTeX, Emacs lisp, and Makefile source
 code.  The LaTeX component is a small collection of classes and styles
 files to format theorems, proofs, and algorithms, and to layout floating
@@ -38,7 +38,7 @@ expect to use the issue tracker.
 Installation
 ------------
 
-To install *AlbLaTeX* simply place the contents of the repository in a
+To install *alb-latex* simply place the contents of the repository in a
 convenient location.  The source code is installed once LaTeX can find
 the class and style files, Emacs can locate the emacs lisp files, and
 AUXTeX can locate the style files.  These cases are covered in the
@@ -48,7 +48,7 @@ in the subsection on additional configuration.
 Minimal installation
 ====================
 
-To install *AlbLaTeX* simply place the contents of the repository in a
+To install *alb-latex* simply place the contents of the repository in a
 convenient location.  The source code is installed once LaTeX can find
 the class and style files, Emacs can locate the emacs lisp files, and
 AUXTeX can locate the style files.  The repository contains helper
@@ -79,8 +79,8 @@ scripts to achieve these ends.
       done
       unset i
 
-  Change the filename ``${HOME}/Config`` to suit your personal
-  directory structure.
+  Change the filename ``${HOME}/Config`` to suit your personal directory
+  structure.
 
 ``alb-latex-start.el``
   This emacs lisp code can be sourced from your personal emacs init
@@ -135,65 +135,55 @@ The collection of LaTeX style files and classes comprise a small set of
 document layouts for technical writing.  These are supplemented by
 macros for formatting mathematics and computer algorithms.
 
-`alb-latex.cls`
-  Document layout for documentation of the /albcorp/ LaTeX packages
+``alb-latex.cls``
+  Document class for *alb-latex* package documentation
 
   See ``alb-latex.pdf`` for further information.
 
-`alb-journal.cls`
-  LaTeX book design for a research journal
+``alb-journal.cls``
+  Document class for a research journal
 
   See ``alb-journal.pdf`` for further information.
 
-`alb-thesis.cls`
-  LaTeX book design for a thesis
+``alb-thesis.cls``
+  Document class for a thesis
 
   See ``alb-thesis.pdf`` for further information.
 
-`alb-float-tools.sty`
-  LaTeX style file for typesetting float material and captions
+``alb-float-tools.sty``
+  Style file to typeset float material and captions
 
-  Provides environments and commands for typesetting float material and
-  captions.  These include: an environment to typeset float material
-  across the page including the marginpar allocation; a list environment
-  to flow subcaptioned items across the available width; and commands to
-  select the caption style according to the page on which a float falls.
   See ``alb-float-tools.pdf`` for further information.
 
-`alb-order-theory.sty`
-  Provides a collection of macros to make set and order theoretic
-  mathematical constructs more readable and consistent in their
-  formatting.  See ``alb-order-theory.pdf`` for further
-  information.
+``alb-order-theory.sty``
+  Style file to typeset mathematics in order theory
 
-`alb-graph-theory.sty`
-  Provides a collection of macros to make graph theoretic mathematical
-  constructs more readable and consistent in their formatting.  The
-  collection is biased toward directed graphs.  See
-  ``alb-graph-theory.pdf`` for further information.
+  See ``alb-order-theory.pdf`` for further information.
 
-`alb-theorems.sty`
-  Provides a minimal collection of theorem type environments.  See
-  ``alb-theorems.pdf`` for further information.
+``alb-graph-theory.sty``
+  Style file to typeset mathematics in graph theory
 
-`alb-algorithms.sty`
-  Provides environments and commands for typesetting algorithms and
-  floats containing algorithms, including commands to define identifiers
-  for accessor functions and procedures.  See
-  ``alb-algorithms.pdf`` for further information.
+  See ``alb-graph-theory.pdf`` for further information.
 
-`alb-proofs.sty`
-  Provides the `albProof` environment which implements Lamport's
-  structured proofs described in the paper:
+``alb-theorems.sty``
+  Style file to typeset theorems
 
-    Leslie Lamport, *How to Write a Proof*, 1993.
+  See ``alb-theorems.pdf`` for further information.
+
+``alb-algorithms.sty``
+  Style file to typeset algorithms and their floats
+
+  See ``alb-algorithms.pdf`` for further information.
+
+``alb-proofs.sty``
+  Style file to typeset Lamport's structured proofs
 
   See ``alb-proofs.pdf`` for further information.
 
-`alb-avm.sty`
-  Provides environments and commands to typeset typed feature structures
-  and inequated typed feature structures in attribute-value matrix (AVM)
-  notation.  See ``alb-avm.pdf`` for further information.
+``alb-avm.sty``
+  Style file to typeset attribute-value matrix (AVM) notation
+
+  See ``alb-avm.pdf`` for further information.
 
 ------------------
 Emacs lisp modules
@@ -224,14 +214,14 @@ by parsing source files.  They are parameterised by a single variable
 specifying the master LaTeX files.
 
 ``make\monograph\Makefile``
-  A makefile parameterised by the make variable ``TEX_MASTER`` to accept
-  a single document.  The directory also contains example LaTeX source
-  code to demonstrate the features.
+   A makefile parameterised by the make variable ``TEX_MASTER`` to
+   accept a single document.  The directory also contains example LaTeX
+   source code to demonstrate the features.
 
 ``make\serial\Makefile``
-  A makefile parameterised by the make variable ``TEX_MASTERS`` to
-  accept a series of documents.  The directory also contains example
-  LaTeX source code to demonstrate the features.
+   A makefile parameterised by the make variable ``TEX_MASTERS`` to
+   accept a series of documents.  The directory also contains example
+   LaTeX source code to demonstrate the features.
 
 .. Local Variables:
 .. mode: rst
