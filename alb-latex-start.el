@@ -57,8 +57,12 @@
 ;;
 
 (autoload 'alb-LaTeX-find-file "alb-latex-find-file"
-  "Prompt for a string from which to constract the basename of a file.
+  "Prompt for a string from which to construct the basename of a file.
 Then open the file with a .tex extension." t)
+
+(autoload 'alb-LaTeX-find-letter "alb-latex-find-file"
+  "Prompt for the name of the recipient from which to construct the
+basename of a letter file. Then open the file with a .tex extension." t)
 
 (eval-after-load 'tex
   ;; Put the style files from this package at the front of `TeX-style-path`
