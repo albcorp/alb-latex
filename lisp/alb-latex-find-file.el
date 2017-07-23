@@ -78,7 +78,7 @@ Then open the file with a .tex extension."
 the basename of a letter file.  Then open the file with a .tex
 extension."
   (interactive "sTo: ")
-  (let* ((addressee (string-join (split-string string) "-"))
+  (let* ((addressee (combine-and-quote-strings (split-string string) "-"))
          (today (format-time-string "%Y-%m-%d"))
          (fname (concat "correspondence-to-" addressee "-" today ".tex")))
     (if (file-exists-p fname)
