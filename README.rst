@@ -27,7 +27,7 @@ includes notes on related features of the Emacs lisp and Makefile
 components.
 
 Status
-======
+====== 
 
 The software has been in use for many years, but there are some
 eccentricities in the documentation and installation that arise from its
